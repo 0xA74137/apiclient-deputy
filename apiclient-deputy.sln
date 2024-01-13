@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Av.ApiClient.Deputy", "src\Av.ApiClient.Deputy\Av.ApiClient.Deputy.csproj", "{F06D70C7-AC4C-4AC7-BF04-D0190B2941A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Av.ApiClients.Deputy", "src\Av.ApiClient.Deputy\Av.ApiClients.Deputy.csproj", "{F06D70C7-AC4C-4AC7-BF04-D0190B2941A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Av.ApiClient.Deputy.Tests", "src\Av.ApiClient.Deputy.Tests\Av.ApiClient.Deputy.Tests.csproj", "{46764B9D-DDFF-4C7A-B617-0C998C906AC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Av.ApiClients.Deputy.Tests", "src\Av.ApiClient.Deputy.Tests\Av.ApiClients.Deputy.Tests.csproj", "{46764B9D-DDFF-4C7A-B617-0C998C906AC3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Av.ApiClients.Deputy.ResourceGenerator", "Av.ApiClient.Deputy.ResourceGenerator\Av.ApiClients.Deputy.ResourceGenerator.csproj", "{DCBBBEA9-D634-4A45-A7FD-1DA5D99E5AD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{46764B9D-DDFF-4C7A-B617-0C998C906AC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46764B9D-DDFF-4C7A-B617-0C998C906AC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46764B9D-DDFF-4C7A-B617-0C998C906AC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCBBBEA9-D634-4A45-A7FD-1DA5D99E5AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCBBBEA9-D634-4A45-A7FD-1DA5D99E5AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCBBBEA9-D634-4A45-A7FD-1DA5D99E5AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCBBBEA9-D634-4A45-A7FD-1DA5D99E5AD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {28540CB1-72A8-4C11-9B34-51070DD005C0}
 	EndGlobalSection
 EndGlobal
