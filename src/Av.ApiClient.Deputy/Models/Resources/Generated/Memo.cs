@@ -6,38 +6,189 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Memo>))]
-public class Memo : IResource
+public class Memo : IResource, IHasPropertyTracker<MemoPropertyTracker>
 {
+    private long? _Id;
+    private DateTimeOffset? _ShowFrom;
+    private bool? _Active;
+    private DateTimeOffset? _ShowTill;
+    private string? _Title;
+    private string? _Content;
+    private long? _Type;
+    private long? _File;
+    private string? _Url;
+    private string? _ConfirmText;
+    private string? _Keyword;
+    private bool? _DisableComment;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private MemoPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("ShowFrom")]
-    public DateTimeOffset? ShowFrom { get; set; }
+    public DateTimeOffset? ShowFrom { get => _ShowFrom; set { _ShowFrom = value; _tracker.ShowFrom = true; }}
     [JsonPropertyName("Active")]
-    public bool? Active { get; set; }
+    public bool? Active { get => _Active; set { _Active = value; _tracker.Active = true; }}
     [JsonPropertyName("ShowTill")]
-    public DateTimeOffset? ShowTill { get; set; }
+    public DateTimeOffset? ShowTill { get => _ShowTill; set { _ShowTill = value; _tracker.ShowTill = true; }}
     [JsonPropertyName("Title")]
-    public string? Title { get; set; }
+    public string? Title { get => _Title; set { _Title = value; _tracker.Title = true; }}
     [JsonPropertyName("Content")]
-    public string? Content { get; set; }
+    public string? Content { get => _Content; set { _Content = value; _tracker.Content = true; }}
     [JsonPropertyName("Type")]
-    public long? Type { get; set; }
+    public long? Type { get => _Type; set { _Type = value; _tracker.Type = true; }}
     [JsonPropertyName("File")]
-    public long? File { get; set; }
+    public long? File { get => _File; set { _File = value; _tracker.File = true; }}
     [JsonPropertyName("Url")]
-    public string? Url { get; set; }
+    public string? Url { get => _Url; set { _Url = value; _tracker.Url = true; }}
     [JsonPropertyName("ConfirmText")]
-    public string? ConfirmText { get; set; }
+    public string? ConfirmText { get => _ConfirmText; set { _ConfirmText = value; _tracker.ConfirmText = true; }}
     [JsonPropertyName("Keyword")]
-    public string? Keyword { get; set; }
+    public string? Keyword { get => _Keyword; set { _Keyword = value; _tracker.Keyword = true; }}
     [JsonPropertyName("DisableComment")]
-    public bool? DisableComment { get; set; }
+    public bool? DisableComment { get => _DisableComment; set { _DisableComment = value; _tracker.DisableComment = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    MemoPropertyTracker IHasPropertyTracker<MemoPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<MemoPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<MemoPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class MemoPropertyTracker
+{
+    internal bool Id;
+    internal bool ShowFrom;
+    internal bool Active;
+    internal bool ShowTill;
+    internal bool Title;
+    internal bool Content;
+    internal bool Type;
+    internal bool File;
+    internal bool Url;
+    internal bool ConfirmText;
+    internal bool Keyword;
+    internal bool DisableComment;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        ShowFrom = false;
+        Active = false;
+        ShowTill = false;
+        Title = false;
+        Content = false;
+        Type = false;
+        File = false;
+        Url = false;
+        ConfirmText = false;
+        Keyword = false;
+        DisableComment = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class MemoSerializer : JsonConverter<Memo>
+{
+    public override Memo? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Memo value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<MemoPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.ShowFrom)
+        {
+            writer.WritePropertyName("ShowFrom");
+            JsonSerializer.Serialize(writer,value.ShowFrom,options);
+        }
+        if (tracker.Active)
+        {
+            writer.WritePropertyName("Active");
+            JsonSerializer.Serialize(writer,value.Active,options);
+        }
+        if (tracker.ShowTill)
+        {
+            writer.WritePropertyName("ShowTill");
+            JsonSerializer.Serialize(writer,value.ShowTill,options);
+        }
+        if (tracker.Title)
+        {
+            writer.WritePropertyName("Title");
+            JsonSerializer.Serialize(writer,value.Title,options);
+        }
+        if (tracker.Content)
+        {
+            writer.WritePropertyName("Content");
+            JsonSerializer.Serialize(writer,value.Content,options);
+        }
+        if (tracker.Type)
+        {
+            writer.WritePropertyName("Type");
+            JsonSerializer.Serialize(writer,value.Type,options);
+        }
+        if (tracker.File)
+        {
+            writer.WritePropertyName("File");
+            JsonSerializer.Serialize(writer,value.File,options);
+        }
+        if (tracker.Url)
+        {
+            writer.WritePropertyName("Url");
+            JsonSerializer.Serialize(writer,value.Url,options);
+        }
+        if (tracker.ConfirmText)
+        {
+            writer.WritePropertyName("ConfirmText");
+            JsonSerializer.Serialize(writer,value.ConfirmText,options);
+        }
+        if (tracker.Keyword)
+        {
+            writer.WritePropertyName("Keyword");
+            JsonSerializer.Serialize(writer,value.Keyword,options);
+        }
+        if (tracker.DisableComment)
+        {
+            writer.WritePropertyName("DisableComment");
+            JsonSerializer.Serialize(writer,value.DisableComment,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

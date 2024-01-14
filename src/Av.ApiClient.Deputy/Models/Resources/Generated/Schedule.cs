@@ -6,44 +6,219 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Schedule>))]
-public class Schedule : IResource
+public class Schedule : IResource, IHasPropertyTracker<SchedulePropertyTracker>
 {
+    private long? _Id;
+    private string? _Name;
+    private DateTimeOffset? _StartDate;
+    private DateTimeOffset? _StartTime;
+    private DateTimeOffset? _EndTime;
+    private long? _RepeatType;
+    private long? _RepeatEvery;
+    private string? _WeeklyOnDays;
+    private string? _MonthlyOnDates;
+    private string? _MonthlyOnDays;
+    private DateTimeOffset? _EndDate;
+    private string? _Exception;
+    private bool? _Saved;
+    private string? _Orm;
+    private bool? _Template;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private SchedulePropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Name")]
-    public string? Name { get; set; }
+    public string? Name { get => _Name; set { _Name = value; _tracker.Name = true; }}
     [JsonPropertyName("StartDate")]
-    public DateTimeOffset? StartDate { get; set; }
+    public DateTimeOffset? StartDate { get => _StartDate; set { _StartDate = value; _tracker.StartDate = true; }}
     [JsonPropertyName("StartTime")]
-    public DateTimeOffset? StartTime { get; set; }
+    public DateTimeOffset? StartTime { get => _StartTime; set { _StartTime = value; _tracker.StartTime = true; }}
     [JsonPropertyName("EndTime")]
-    public DateTimeOffset? EndTime { get; set; }
+    public DateTimeOffset? EndTime { get => _EndTime; set { _EndTime = value; _tracker.EndTime = true; }}
     [JsonPropertyName("RepeatType")]
-    public long? RepeatType { get; set; }
+    public long? RepeatType { get => _RepeatType; set { _RepeatType = value; _tracker.RepeatType = true; }}
     [JsonPropertyName("RepeatEvery")]
-    public long? RepeatEvery { get; set; }
+    public long? RepeatEvery { get => _RepeatEvery; set { _RepeatEvery = value; _tracker.RepeatEvery = true; }}
     [JsonPropertyName("WeeklyOnDays")]
-    public string? WeeklyOnDays { get; set; }
+    public string? WeeklyOnDays { get => _WeeklyOnDays; set { _WeeklyOnDays = value; _tracker.WeeklyOnDays = true; }}
     [JsonPropertyName("MonthlyOnDates")]
-    public string? MonthlyOnDates { get; set; }
+    public string? MonthlyOnDates { get => _MonthlyOnDates; set { _MonthlyOnDates = value; _tracker.MonthlyOnDates = true; }}
     [JsonPropertyName("MonthlyOnDays")]
-    public string? MonthlyOnDays { get; set; }
+    public string? MonthlyOnDays { get => _MonthlyOnDays; set { _MonthlyOnDays = value; _tracker.MonthlyOnDays = true; }}
     [JsonPropertyName("EndDate")]
-    public DateTimeOffset? EndDate { get; set; }
+    public DateTimeOffset? EndDate { get => _EndDate; set { _EndDate = value; _tracker.EndDate = true; }}
     [JsonPropertyName("Exception")]
-    public string? Exception { get; set; }
+    public string? Exception { get => _Exception; set { _Exception = value; _tracker.Exception = true; }}
     [JsonPropertyName("Saved")]
-    public bool? Saved { get; set; }
+    public bool? Saved { get => _Saved; set { _Saved = value; _tracker.Saved = true; }}
     [JsonPropertyName("Orm")]
-    public string? Orm { get; set; }
+    public string? Orm { get => _Orm; set { _Orm = value; _tracker.Orm = true; }}
     [JsonPropertyName("Template")]
-    public bool? Template { get; set; }
+    public bool? Template { get => _Template; set { _Template = value; _tracker.Template = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    SchedulePropertyTracker IHasPropertyTracker<SchedulePropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<SchedulePropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<SchedulePropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class SchedulePropertyTracker
+{
+    internal bool Id;
+    internal bool Name;
+    internal bool StartDate;
+    internal bool StartTime;
+    internal bool EndTime;
+    internal bool RepeatType;
+    internal bool RepeatEvery;
+    internal bool WeeklyOnDays;
+    internal bool MonthlyOnDates;
+    internal bool MonthlyOnDays;
+    internal bool EndDate;
+    internal bool Exception;
+    internal bool Saved;
+    internal bool Orm;
+    internal bool Template;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Name = false;
+        StartDate = false;
+        StartTime = false;
+        EndTime = false;
+        RepeatType = false;
+        RepeatEvery = false;
+        WeeklyOnDays = false;
+        MonthlyOnDates = false;
+        MonthlyOnDays = false;
+        EndDate = false;
+        Exception = false;
+        Saved = false;
+        Orm = false;
+        Template = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class ScheduleSerializer : JsonConverter<Schedule>
+{
+    public override Schedule? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Schedule value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<SchedulePropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Name)
+        {
+            writer.WritePropertyName("Name");
+            JsonSerializer.Serialize(writer,value.Name,options);
+        }
+        if (tracker.StartDate)
+        {
+            writer.WritePropertyName("StartDate");
+            JsonSerializer.Serialize(writer,value.StartDate,options);
+        }
+        if (tracker.StartTime)
+        {
+            writer.WritePropertyName("StartTime");
+            JsonSerializer.Serialize(writer,value.StartTime,options);
+        }
+        if (tracker.EndTime)
+        {
+            writer.WritePropertyName("EndTime");
+            JsonSerializer.Serialize(writer,value.EndTime,options);
+        }
+        if (tracker.RepeatType)
+        {
+            writer.WritePropertyName("RepeatType");
+            JsonSerializer.Serialize(writer,value.RepeatType,options);
+        }
+        if (tracker.RepeatEvery)
+        {
+            writer.WritePropertyName("RepeatEvery");
+            JsonSerializer.Serialize(writer,value.RepeatEvery,options);
+        }
+        if (tracker.WeeklyOnDays)
+        {
+            writer.WritePropertyName("WeeklyOnDays");
+            JsonSerializer.Serialize(writer,value.WeeklyOnDays,options);
+        }
+        if (tracker.MonthlyOnDates)
+        {
+            writer.WritePropertyName("MonthlyOnDates");
+            JsonSerializer.Serialize(writer,value.MonthlyOnDates,options);
+        }
+        if (tracker.MonthlyOnDays)
+        {
+            writer.WritePropertyName("MonthlyOnDays");
+            JsonSerializer.Serialize(writer,value.MonthlyOnDays,options);
+        }
+        if (tracker.EndDate)
+        {
+            writer.WritePropertyName("EndDate");
+            JsonSerializer.Serialize(writer,value.EndDate,options);
+        }
+        if (tracker.Exception)
+        {
+            writer.WritePropertyName("Exception");
+            JsonSerializer.Serialize(writer,value.Exception,options);
+        }
+        if (tracker.Saved)
+        {
+            writer.WritePropertyName("Saved");
+            JsonSerializer.Serialize(writer,value.Saved,options);
+        }
+        if (tracker.Orm)
+        {
+            writer.WritePropertyName("Orm");
+            JsonSerializer.Serialize(writer,value.Orm,options);
+        }
+        if (tracker.Template)
+        {
+            writer.WritePropertyName("Template");
+            JsonSerializer.Serialize(writer,value.Template,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

@@ -6,48 +6,239 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<CustomField>))]
-public class CustomField : IResource
+public class CustomField : IResource, IHasPropertyTracker<CustomFieldPropertyTracker>
 {
+    private long? _Id;
+    private string? _System;
+    private string? _Name;
+    private string? _ApiName;
+    private string? _DeputyField;
+    private long? _SortOrder;
+    private string? _Default;
+    private long? _Type;
+    private long? _DisplayTiming;
+    private string? _ConditionalRules;
+    private long? _Action;
+    private long? _Published;
+    private string? _Valuelist;
+    private bool? _Visible;
+    private long? _TriggerScript;
+    private string? _Validation;
+    private string? _Helptext;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private CustomFieldPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("System")]
-    public string? System { get; set; }
+    public string? System { get => _System; set { _System = value; _tracker.System = true; }}
     [JsonPropertyName("Name")]
-    public string? Name { get; set; }
+    public string? Name { get => _Name; set { _Name = value; _tracker.Name = true; }}
     [JsonPropertyName("ApiName")]
-    public string? ApiName { get; set; }
+    public string? ApiName { get => _ApiName; set { _ApiName = value; _tracker.ApiName = true; }}
     [JsonPropertyName("DeputyField")]
-    public string? DeputyField { get; set; }
+    public string? DeputyField { get => _DeputyField; set { _DeputyField = value; _tracker.DeputyField = true; }}
     [JsonPropertyName("SortOrder")]
-    public long? SortOrder { get; set; }
+    public long? SortOrder { get => _SortOrder; set { _SortOrder = value; _tracker.SortOrder = true; }}
     [JsonPropertyName("Default")]
-    public string? Default { get; set; }
+    public string? Default { get => _Default; set { _Default = value; _tracker.Default = true; }}
     [JsonPropertyName("Type")]
-    public long? Type { get; set; }
+    public long? Type { get => _Type; set { _Type = value; _tracker.Type = true; }}
     [JsonPropertyName("DisplayTiming")]
-    public long? DisplayTiming { get; set; }
+    public long? DisplayTiming { get => _DisplayTiming; set { _DisplayTiming = value; _tracker.DisplayTiming = true; }}
     [JsonPropertyName("ConditionalRules")]
-    public string? ConditionalRules { get; set; }
+    public string? ConditionalRules { get => _ConditionalRules; set { _ConditionalRules = value; _tracker.ConditionalRules = true; }}
     [JsonPropertyName("Action")]
-    public long? Action { get; set; }
+    public long? Action { get => _Action; set { _Action = value; _tracker.Action = true; }}
     [JsonPropertyName("Published")]
-    public long? Published { get; set; }
+    public long? Published { get => _Published; set { _Published = value; _tracker.Published = true; }}
     [JsonPropertyName("Valuelist")]
-    public string? Valuelist { get; set; }
+    public string? Valuelist { get => _Valuelist; set { _Valuelist = value; _tracker.Valuelist = true; }}
     [JsonPropertyName("Visible")]
-    public bool? Visible { get; set; }
+    public bool? Visible { get => _Visible; set { _Visible = value; _tracker.Visible = true; }}
     [JsonPropertyName("TriggerScript")]
-    public long? TriggerScript { get; set; }
+    public long? TriggerScript { get => _TriggerScript; set { _TriggerScript = value; _tracker.TriggerScript = true; }}
     [JsonPropertyName("Validation")]
-    public string? Validation { get; set; }
+    public string? Validation { get => _Validation; set { _Validation = value; _tracker.Validation = true; }}
     [JsonPropertyName("Helptext")]
-    public string? Helptext { get; set; }
+    public string? Helptext { get => _Helptext; set { _Helptext = value; _tracker.Helptext = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    CustomFieldPropertyTracker IHasPropertyTracker<CustomFieldPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<CustomFieldPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<CustomFieldPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class CustomFieldPropertyTracker
+{
+    internal bool Id;
+    internal bool System;
+    internal bool Name;
+    internal bool ApiName;
+    internal bool DeputyField;
+    internal bool SortOrder;
+    internal bool Default;
+    internal bool Type;
+    internal bool DisplayTiming;
+    internal bool ConditionalRules;
+    internal bool Action;
+    internal bool Published;
+    internal bool Valuelist;
+    internal bool Visible;
+    internal bool TriggerScript;
+    internal bool Validation;
+    internal bool Helptext;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        System = false;
+        Name = false;
+        ApiName = false;
+        DeputyField = false;
+        SortOrder = false;
+        Default = false;
+        Type = false;
+        DisplayTiming = false;
+        ConditionalRules = false;
+        Action = false;
+        Published = false;
+        Valuelist = false;
+        Visible = false;
+        TriggerScript = false;
+        Validation = false;
+        Helptext = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class CustomFieldSerializer : JsonConverter<CustomField>
+{
+    public override CustomField? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,CustomField value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<CustomFieldPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.System)
+        {
+            writer.WritePropertyName("System");
+            JsonSerializer.Serialize(writer,value.System,options);
+        }
+        if (tracker.Name)
+        {
+            writer.WritePropertyName("Name");
+            JsonSerializer.Serialize(writer,value.Name,options);
+        }
+        if (tracker.ApiName)
+        {
+            writer.WritePropertyName("ApiName");
+            JsonSerializer.Serialize(writer,value.ApiName,options);
+        }
+        if (tracker.DeputyField)
+        {
+            writer.WritePropertyName("DeputyField");
+            JsonSerializer.Serialize(writer,value.DeputyField,options);
+        }
+        if (tracker.SortOrder)
+        {
+            writer.WritePropertyName("SortOrder");
+            JsonSerializer.Serialize(writer,value.SortOrder,options);
+        }
+        if (tracker.Default)
+        {
+            writer.WritePropertyName("Default");
+            JsonSerializer.Serialize(writer,value.Default,options);
+        }
+        if (tracker.Type)
+        {
+            writer.WritePropertyName("Type");
+            JsonSerializer.Serialize(writer,value.Type,options);
+        }
+        if (tracker.DisplayTiming)
+        {
+            writer.WritePropertyName("DisplayTiming");
+            JsonSerializer.Serialize(writer,value.DisplayTiming,options);
+        }
+        if (tracker.ConditionalRules)
+        {
+            writer.WritePropertyName("ConditionalRules");
+            JsonSerializer.Serialize(writer,value.ConditionalRules,options);
+        }
+        if (tracker.Action)
+        {
+            writer.WritePropertyName("Action");
+            JsonSerializer.Serialize(writer,value.Action,options);
+        }
+        if (tracker.Published)
+        {
+            writer.WritePropertyName("Published");
+            JsonSerializer.Serialize(writer,value.Published,options);
+        }
+        if (tracker.Valuelist)
+        {
+            writer.WritePropertyName("Valuelist");
+            JsonSerializer.Serialize(writer,value.Valuelist,options);
+        }
+        if (tracker.Visible)
+        {
+            writer.WritePropertyName("Visible");
+            JsonSerializer.Serialize(writer,value.Visible,options);
+        }
+        if (tracker.TriggerScript)
+        {
+            writer.WritePropertyName("TriggerScript");
+            JsonSerializer.Serialize(writer,value.TriggerScript,options);
+        }
+        if (tracker.Validation)
+        {
+            writer.WritePropertyName("Validation");
+            JsonSerializer.Serialize(writer,value.Validation,options);
+        }
+        if (tracker.Helptext)
+        {
+            writer.WritePropertyName("Helptext");
+            JsonSerializer.Serialize(writer,value.Helptext,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

@@ -6,30 +6,149 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<StressProfile>))]
-public class StressProfile : IResource
+public class StressProfile : IResource, IHasPropertyTracker<StressProfilePropertyTracker>
 {
+    private long? _Id;
+    private string? _Name;
+    private double? _MaxHoursPerShift;
+    private double? _MaxHoursPerPeriod;
+    private double? _MaxDaysPerPeriod;
+    private double? _MaxHoursPerDay;
+    private double? _GapHoursBetweenShifts;
+    private string? _CustomRules;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private StressProfilePropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Name")]
-    public string? Name { get; set; }
+    public string? Name { get => _Name; set { _Name = value; _tracker.Name = true; }}
     [JsonPropertyName("MaxHoursPerShift")]
-    public double? MaxHoursPerShift { get; set; }
+    public double? MaxHoursPerShift { get => _MaxHoursPerShift; set { _MaxHoursPerShift = value; _tracker.MaxHoursPerShift = true; }}
     [JsonPropertyName("MaxHoursPerPeriod")]
-    public double? MaxHoursPerPeriod { get; set; }
+    public double? MaxHoursPerPeriod { get => _MaxHoursPerPeriod; set { _MaxHoursPerPeriod = value; _tracker.MaxHoursPerPeriod = true; }}
     [JsonPropertyName("MaxDaysPerPeriod")]
-    public double? MaxDaysPerPeriod { get; set; }
+    public double? MaxDaysPerPeriod { get => _MaxDaysPerPeriod; set { _MaxDaysPerPeriod = value; _tracker.MaxDaysPerPeriod = true; }}
     [JsonPropertyName("MaxHoursPerDay")]
-    public double? MaxHoursPerDay { get; set; }
+    public double? MaxHoursPerDay { get => _MaxHoursPerDay; set { _MaxHoursPerDay = value; _tracker.MaxHoursPerDay = true; }}
     [JsonPropertyName("GapHoursBetweenShifts")]
-    public double? GapHoursBetweenShifts { get; set; }
+    public double? GapHoursBetweenShifts { get => _GapHoursBetweenShifts; set { _GapHoursBetweenShifts = value; _tracker.GapHoursBetweenShifts = true; }}
     [JsonPropertyName("CustomRules")]
-    public string? CustomRules { get; set; }
+    public string? CustomRules { get => _CustomRules; set { _CustomRules = value; _tracker.CustomRules = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    StressProfilePropertyTracker IHasPropertyTracker<StressProfilePropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<StressProfilePropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<StressProfilePropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class StressProfilePropertyTracker
+{
+    internal bool Id;
+    internal bool Name;
+    internal bool MaxHoursPerShift;
+    internal bool MaxHoursPerPeriod;
+    internal bool MaxDaysPerPeriod;
+    internal bool MaxHoursPerDay;
+    internal bool GapHoursBetweenShifts;
+    internal bool CustomRules;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Name = false;
+        MaxHoursPerShift = false;
+        MaxHoursPerPeriod = false;
+        MaxDaysPerPeriod = false;
+        MaxHoursPerDay = false;
+        GapHoursBetweenShifts = false;
+        CustomRules = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class StressProfileSerializer : JsonConverter<StressProfile>
+{
+    public override StressProfile? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,StressProfile value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<StressProfilePropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Name)
+        {
+            writer.WritePropertyName("Name");
+            JsonSerializer.Serialize(writer,value.Name,options);
+        }
+        if (tracker.MaxHoursPerShift)
+        {
+            writer.WritePropertyName("MaxHoursPerShift");
+            JsonSerializer.Serialize(writer,value.MaxHoursPerShift,options);
+        }
+        if (tracker.MaxHoursPerPeriod)
+        {
+            writer.WritePropertyName("MaxHoursPerPeriod");
+            JsonSerializer.Serialize(writer,value.MaxHoursPerPeriod,options);
+        }
+        if (tracker.MaxDaysPerPeriod)
+        {
+            writer.WritePropertyName("MaxDaysPerPeriod");
+            JsonSerializer.Serialize(writer,value.MaxDaysPerPeriod,options);
+        }
+        if (tracker.MaxHoursPerDay)
+        {
+            writer.WritePropertyName("MaxHoursPerDay");
+            JsonSerializer.Serialize(writer,value.MaxHoursPerDay,options);
+        }
+        if (tracker.GapHoursBetweenShifts)
+        {
+            writer.WritePropertyName("GapHoursBetweenShifts");
+            JsonSerializer.Serialize(writer,value.GapHoursBetweenShifts,options);
+        }
+        if (tracker.CustomRules)
+        {
+            writer.WritePropertyName("CustomRules");
+            JsonSerializer.Serialize(writer,value.CustomRules,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

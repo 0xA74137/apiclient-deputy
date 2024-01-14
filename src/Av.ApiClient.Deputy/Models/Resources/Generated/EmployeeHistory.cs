@@ -6,54 +6,269 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<EmployeeHistory>))]
-public class EmployeeHistory : IResource
+public class EmployeeHistory : IResource, IHasPropertyTracker<EmployeeHistoryPropertyTracker>
 {
+    private long? _Id;
+    private long? _Company;
+    private string? _FirstName;
+    private string? _LastName;
+    private string? _DisplayName;
+    private string? _OtherName;
+    private string? _Salutation;
+    private long? _MainAddress;
+    private long? _PostalAddress;
+    private long? _EmergencyAddress;
+    private DateTimeOffset? _DateOfBirth;
+    private long? _Gender;
+    private long? _Photo;
+    private long? _JobAppId;
+    private bool? _Active;
+    private DateTimeOffset? _StartDate;
+    private DateTimeOffset? _TerminationDate;
+    private string? _Position;
+    private long? _Role;
+    private long? _EmployeeId;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private EmployeeHistoryPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Company")]
-    public long? Company { get; set; }
+    public long? Company { get => _Company; set { _Company = value; _tracker.Company = true; }}
     [JsonPropertyName("FirstName")]
-    public string? FirstName { get; set; }
+    public string? FirstName { get => _FirstName; set { _FirstName = value; _tracker.FirstName = true; }}
     [JsonPropertyName("LastName")]
-    public string? LastName { get; set; }
+    public string? LastName { get => _LastName; set { _LastName = value; _tracker.LastName = true; }}
     [JsonPropertyName("DisplayName")]
-    public string? DisplayName { get; set; }
+    public string? DisplayName { get => _DisplayName; set { _DisplayName = value; _tracker.DisplayName = true; }}
     [JsonPropertyName("OtherName")]
-    public string? OtherName { get; set; }
+    public string? OtherName { get => _OtherName; set { _OtherName = value; _tracker.OtherName = true; }}
     [JsonPropertyName("Salutation")]
-    public string? Salutation { get; set; }
+    public string? Salutation { get => _Salutation; set { _Salutation = value; _tracker.Salutation = true; }}
     [JsonPropertyName("MainAddress")]
-    public long? MainAddress { get; set; }
+    public long? MainAddress { get => _MainAddress; set { _MainAddress = value; _tracker.MainAddress = true; }}
     [JsonPropertyName("PostalAddress")]
-    public long? PostalAddress { get; set; }
+    public long? PostalAddress { get => _PostalAddress; set { _PostalAddress = value; _tracker.PostalAddress = true; }}
     [JsonPropertyName("EmergencyAddress")]
-    public long? EmergencyAddress { get; set; }
+    public long? EmergencyAddress { get => _EmergencyAddress; set { _EmergencyAddress = value; _tracker.EmergencyAddress = true; }}
     [JsonPropertyName("DateOfBirth")]
-    public DateTimeOffset? DateOfBirth { get; set; }
+    public DateTimeOffset? DateOfBirth { get => _DateOfBirth; set { _DateOfBirth = value; _tracker.DateOfBirth = true; }}
     [JsonPropertyName("Gender")]
-    public long? Gender { get; set; }
+    public long? Gender { get => _Gender; set { _Gender = value; _tracker.Gender = true; }}
     [JsonPropertyName("Photo")]
-    public long? Photo { get; set; }
+    public long? Photo { get => _Photo; set { _Photo = value; _tracker.Photo = true; }}
     [JsonPropertyName("JobAppId")]
-    public long? JobAppId { get; set; }
+    public long? JobAppId { get => _JobAppId; set { _JobAppId = value; _tracker.JobAppId = true; }}
     [JsonPropertyName("Active")]
-    public bool? Active { get; set; }
+    public bool? Active { get => _Active; set { _Active = value; _tracker.Active = true; }}
     [JsonPropertyName("StartDate")]
-    public DateTimeOffset? StartDate { get; set; }
+    public DateTimeOffset? StartDate { get => _StartDate; set { _StartDate = value; _tracker.StartDate = true; }}
     [JsonPropertyName("TerminationDate")]
-    public DateTimeOffset? TerminationDate { get; set; }
+    public DateTimeOffset? TerminationDate { get => _TerminationDate; set { _TerminationDate = value; _tracker.TerminationDate = true; }}
     [JsonPropertyName("Position")]
-    public string? Position { get; set; }
+    public string? Position { get => _Position; set { _Position = value; _tracker.Position = true; }}
     [JsonPropertyName("Role")]
-    public long? Role { get; set; }
+    public long? Role { get => _Role; set { _Role = value; _tracker.Role = true; }}
     [JsonPropertyName("EmployeeId")]
-    public long? EmployeeId { get; set; }
+    public long? EmployeeId { get => _EmployeeId; set { _EmployeeId = value; _tracker.EmployeeId = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    EmployeeHistoryPropertyTracker IHasPropertyTracker<EmployeeHistoryPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<EmployeeHistoryPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<EmployeeHistoryPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class EmployeeHistoryPropertyTracker
+{
+    internal bool Id;
+    internal bool Company;
+    internal bool FirstName;
+    internal bool LastName;
+    internal bool DisplayName;
+    internal bool OtherName;
+    internal bool Salutation;
+    internal bool MainAddress;
+    internal bool PostalAddress;
+    internal bool EmergencyAddress;
+    internal bool DateOfBirth;
+    internal bool Gender;
+    internal bool Photo;
+    internal bool JobAppId;
+    internal bool Active;
+    internal bool StartDate;
+    internal bool TerminationDate;
+    internal bool Position;
+    internal bool Role;
+    internal bool EmployeeId;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Company = false;
+        FirstName = false;
+        LastName = false;
+        DisplayName = false;
+        OtherName = false;
+        Salutation = false;
+        MainAddress = false;
+        PostalAddress = false;
+        EmergencyAddress = false;
+        DateOfBirth = false;
+        Gender = false;
+        Photo = false;
+        JobAppId = false;
+        Active = false;
+        StartDate = false;
+        TerminationDate = false;
+        Position = false;
+        Role = false;
+        EmployeeId = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class EmployeeHistorySerializer : JsonConverter<EmployeeHistory>
+{
+    public override EmployeeHistory? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,EmployeeHistory value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<EmployeeHistoryPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Company)
+        {
+            writer.WritePropertyName("Company");
+            JsonSerializer.Serialize(writer,value.Company,options);
+        }
+        if (tracker.FirstName)
+        {
+            writer.WritePropertyName("FirstName");
+            JsonSerializer.Serialize(writer,value.FirstName,options);
+        }
+        if (tracker.LastName)
+        {
+            writer.WritePropertyName("LastName");
+            JsonSerializer.Serialize(writer,value.LastName,options);
+        }
+        if (tracker.DisplayName)
+        {
+            writer.WritePropertyName("DisplayName");
+            JsonSerializer.Serialize(writer,value.DisplayName,options);
+        }
+        if (tracker.OtherName)
+        {
+            writer.WritePropertyName("OtherName");
+            JsonSerializer.Serialize(writer,value.OtherName,options);
+        }
+        if (tracker.Salutation)
+        {
+            writer.WritePropertyName("Salutation");
+            JsonSerializer.Serialize(writer,value.Salutation,options);
+        }
+        if (tracker.MainAddress)
+        {
+            writer.WritePropertyName("MainAddress");
+            JsonSerializer.Serialize(writer,value.MainAddress,options);
+        }
+        if (tracker.PostalAddress)
+        {
+            writer.WritePropertyName("PostalAddress");
+            JsonSerializer.Serialize(writer,value.PostalAddress,options);
+        }
+        if (tracker.EmergencyAddress)
+        {
+            writer.WritePropertyName("EmergencyAddress");
+            JsonSerializer.Serialize(writer,value.EmergencyAddress,options);
+        }
+        if (tracker.DateOfBirth)
+        {
+            writer.WritePropertyName("DateOfBirth");
+            JsonSerializer.Serialize(writer,value.DateOfBirth,options);
+        }
+        if (tracker.Gender)
+        {
+            writer.WritePropertyName("Gender");
+            JsonSerializer.Serialize(writer,value.Gender,options);
+        }
+        if (tracker.Photo)
+        {
+            writer.WritePropertyName("Photo");
+            JsonSerializer.Serialize(writer,value.Photo,options);
+        }
+        if (tracker.JobAppId)
+        {
+            writer.WritePropertyName("JobAppId");
+            JsonSerializer.Serialize(writer,value.JobAppId,options);
+        }
+        if (tracker.Active)
+        {
+            writer.WritePropertyName("Active");
+            JsonSerializer.Serialize(writer,value.Active,options);
+        }
+        if (tracker.StartDate)
+        {
+            writer.WritePropertyName("StartDate");
+            JsonSerializer.Serialize(writer,value.StartDate,options);
+        }
+        if (tracker.TerminationDate)
+        {
+            writer.WritePropertyName("TerminationDate");
+            JsonSerializer.Serialize(writer,value.TerminationDate,options);
+        }
+        if (tracker.Position)
+        {
+            writer.WritePropertyName("Position");
+            JsonSerializer.Serialize(writer,value.Position,options);
+        }
+        if (tracker.Role)
+        {
+            writer.WritePropertyName("Role");
+            JsonSerializer.Serialize(writer,value.Role,options);
+        }
+        if (tracker.EmployeeId)
+        {
+            writer.WritePropertyName("EmployeeId");
+            JsonSerializer.Serialize(writer,value.EmployeeId,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

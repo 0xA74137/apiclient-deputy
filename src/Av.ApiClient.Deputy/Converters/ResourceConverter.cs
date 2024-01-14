@@ -22,6 +22,8 @@ namespace Av.ApiClients.Deputy.Converters
         {
             var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
+            //if(typeof(T))
+
             writer.WriteStartObject();
             foreach (var prop in props)
             {

@@ -6,67 +6,303 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<TaskSetup>))]
-public class TaskSetup : IResource
+public class TaskSetup : IResource, IHasPropertyTracker<TaskSetupPropertyTracker>
 {
+    private long? _Id;
+    private long? _GroupId;
+    private long? _Type;
+    private long? _Parent;
+    private string? _Question;
+    private string? _Default;
+    private long? _SortOrder;
+    private long? _Schedule;
+    private string? _OnYes;
+    private string? _OnNo;
+    private string? _RenderFunc;
+    private bool? _Active;
+    private string? _AvailableAfter;
+    private bool? _RepeatIfNotCompleted;
+    private string? _Time;
+    private string? _Section;
+    private string? _Priority;
+    private string? _Helptext;
+    private bool? _SupercedePrev;
+    private string? _Colour;
+    private string? _OnStart;
+    private string? _OnSubmit;
+    private long? _Duration;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private TaskSetupPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("GroupId")]
-    public long? GroupId { get; set; }
+    public long? GroupId { get => _GroupId; set { _GroupId = value; _tracker.GroupId = true; }}
     [JsonPropertyName("Type")]
-    public long? Type { get; set; }
+    public long? Type { get => _Type; set { _Type = value; _tracker.Type = true; }}
     [JsonPropertyName("Parent")]
-    public long? Parent { get; set; }
+    public long? Parent { get => _Parent; set { _Parent = value; _tracker.Parent = true; }}
     [JsonPropertyName("Question")]
-    public string? Question { get; set; }
+    public string? Question { get => _Question; set { _Question = value; _tracker.Question = true; }}
     [JsonPropertyName("Default")]
-    public string? Default { get; set; }
+    public string? Default { get => _Default; set { _Default = value; _tracker.Default = true; }}
     [JsonPropertyName("SortOrder")]
-    public long? SortOrder { get; set; }
+    public long? SortOrder { get => _SortOrder; set { _SortOrder = value; _tracker.SortOrder = true; }}
     [JsonPropertyName("Schedule")]
-    public long? Schedule { get; set; }
+    public long? Schedule { get => _Schedule; set { _Schedule = value; _tracker.Schedule = true; }}
     [JsonPropertyName("OnYes")]
-    public string? OnYes { get; set; }
+    public string? OnYes { get => _OnYes; set { _OnYes = value; _tracker.OnYes = true; }}
     [JsonPropertyName("OnNo")]
-    public string? OnNo { get; set; }
+    public string? OnNo { get => _OnNo; set { _OnNo = value; _tracker.OnNo = true; }}
     [JsonPropertyName("RenderFunc")]
-    public string? RenderFunc { get; set; }
+    public string? RenderFunc { get => _RenderFunc; set { _RenderFunc = value; _tracker.RenderFunc = true; }}
     [JsonPropertyName("Active")]
-    public bool? Active { get; set; }
+    public bool? Active { get => _Active; set { _Active = value; _tracker.Active = true; }}
     [JsonPropertyName("AvailableAfter")]
-    public string? AvailableAfter { get; set; }
+    public string? AvailableAfter { get => _AvailableAfter; set { _AvailableAfter = value; _tracker.AvailableAfter = true; }}
     [JsonPropertyName("RepeatIfNotCompleted")]
-    public bool? RepeatIfNotCompleted { get; set; }
+    public bool? RepeatIfNotCompleted { get => _RepeatIfNotCompleted; set { _RepeatIfNotCompleted = value; _tracker.RepeatIfNotCompleted = true; }}
     [JsonPropertyName("Time")]
-    public string? Time { get; set; }
+    public string? Time { get => _Time; set { _Time = value; _tracker.Time = true; }}
     [JsonPropertyName("Section")]
-    public string? Section { get; set; }
+    public string? Section { get => _Section; set { _Section = value; _tracker.Section = true; }}
     [JsonPropertyName("Priority")]
-    public string? Priority { get; set; }
+    public string? Priority { get => _Priority; set { _Priority = value; _tracker.Priority = true; }}
     [JsonPropertyName("Helptext")]
-    public string? Helptext { get; set; }
+    public string? Helptext { get => _Helptext; set { _Helptext = value; _tracker.Helptext = true; }}
     [JsonPropertyName("SupercedePrev")]
-    public bool? SupercedePrev { get; set; }
+    public bool? SupercedePrev { get => _SupercedePrev; set { _SupercedePrev = value; _tracker.SupercedePrev = true; }}
     [JsonPropertyName("Colour")]
-    public string? Colour { get; set; }
+    public string? Colour { get => _Colour; set { _Colour = value; _tracker.Colour = true; }}
     [JsonPropertyName("OnStart")]
-    public string? OnStart { get; set; }
+    public string? OnStart { get => _OnStart; set { _OnStart = value; _tracker.OnStart = true; }}
     [JsonPropertyName("OnSubmit")]
-    public string? OnSubmit { get; set; }
+    public string? OnSubmit { get => _OnSubmit; set { _OnSubmit = value; _tracker.OnSubmit = true; }}
     [JsonPropertyName("Duration")]
-    public long? Duration { get; set; }
+    public long? Duration { get => _Duration; set { _Duration = value; _tracker.Duration = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<TaskGroupSetup>))]
     public Join<TaskGroupSetup>? Group { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Schedule>))]
     public Join<Schedule>? ScheduleObject { get; set; }
+    TaskSetupPropertyTracker IHasPropertyTracker<TaskSetupPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<TaskSetupPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<TaskSetupPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class TaskSetupPropertyTracker
+{
+    internal bool Id;
+    internal bool GroupId;
+    internal bool Type;
+    internal bool Parent;
+    internal bool Question;
+    internal bool Default;
+    internal bool SortOrder;
+    internal bool Schedule;
+    internal bool OnYes;
+    internal bool OnNo;
+    internal bool RenderFunc;
+    internal bool Active;
+    internal bool AvailableAfter;
+    internal bool RepeatIfNotCompleted;
+    internal bool Time;
+    internal bool Section;
+    internal bool Priority;
+    internal bool Helptext;
+    internal bool SupercedePrev;
+    internal bool Colour;
+    internal bool OnStart;
+    internal bool OnSubmit;
+    internal bool Duration;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        GroupId = false;
+        Type = false;
+        Parent = false;
+        Question = false;
+        Default = false;
+        SortOrder = false;
+        Schedule = false;
+        OnYes = false;
+        OnNo = false;
+        RenderFunc = false;
+        Active = false;
+        AvailableAfter = false;
+        RepeatIfNotCompleted = false;
+        Time = false;
+        Section = false;
+        Priority = false;
+        Helptext = false;
+        SupercedePrev = false;
+        Colour = false;
+        OnStart = false;
+        OnSubmit = false;
+        Duration = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class TaskSetupSerializer : JsonConverter<TaskSetup>
+{
+    public override TaskSetup? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,TaskSetup value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<TaskSetupPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.GroupId)
+        {
+            writer.WritePropertyName("GroupId");
+            JsonSerializer.Serialize(writer,value.GroupId,options);
+        }
+        if (tracker.Type)
+        {
+            writer.WritePropertyName("Type");
+            JsonSerializer.Serialize(writer,value.Type,options);
+        }
+        if (tracker.Parent)
+        {
+            writer.WritePropertyName("Parent");
+            JsonSerializer.Serialize(writer,value.Parent,options);
+        }
+        if (tracker.Question)
+        {
+            writer.WritePropertyName("Question");
+            JsonSerializer.Serialize(writer,value.Question,options);
+        }
+        if (tracker.Default)
+        {
+            writer.WritePropertyName("Default");
+            JsonSerializer.Serialize(writer,value.Default,options);
+        }
+        if (tracker.SortOrder)
+        {
+            writer.WritePropertyName("SortOrder");
+            JsonSerializer.Serialize(writer,value.SortOrder,options);
+        }
+        if (tracker.Schedule)
+        {
+            writer.WritePropertyName("Schedule");
+            JsonSerializer.Serialize(writer,value.Schedule,options);
+        }
+        if (tracker.OnYes)
+        {
+            writer.WritePropertyName("OnYes");
+            JsonSerializer.Serialize(writer,value.OnYes,options);
+        }
+        if (tracker.OnNo)
+        {
+            writer.WritePropertyName("OnNo");
+            JsonSerializer.Serialize(writer,value.OnNo,options);
+        }
+        if (tracker.RenderFunc)
+        {
+            writer.WritePropertyName("RenderFunc");
+            JsonSerializer.Serialize(writer,value.RenderFunc,options);
+        }
+        if (tracker.Active)
+        {
+            writer.WritePropertyName("Active");
+            JsonSerializer.Serialize(writer,value.Active,options);
+        }
+        if (tracker.AvailableAfter)
+        {
+            writer.WritePropertyName("AvailableAfter");
+            JsonSerializer.Serialize(writer,value.AvailableAfter,options);
+        }
+        if (tracker.RepeatIfNotCompleted)
+        {
+            writer.WritePropertyName("RepeatIfNotCompleted");
+            JsonSerializer.Serialize(writer,value.RepeatIfNotCompleted,options);
+        }
+        if (tracker.Time)
+        {
+            writer.WritePropertyName("Time");
+            JsonSerializer.Serialize(writer,value.Time,options);
+        }
+        if (tracker.Section)
+        {
+            writer.WritePropertyName("Section");
+            JsonSerializer.Serialize(writer,value.Section,options);
+        }
+        if (tracker.Priority)
+        {
+            writer.WritePropertyName("Priority");
+            JsonSerializer.Serialize(writer,value.Priority,options);
+        }
+        if (tracker.Helptext)
+        {
+            writer.WritePropertyName("Helptext");
+            JsonSerializer.Serialize(writer,value.Helptext,options);
+        }
+        if (tracker.SupercedePrev)
+        {
+            writer.WritePropertyName("SupercedePrev");
+            JsonSerializer.Serialize(writer,value.SupercedePrev,options);
+        }
+        if (tracker.Colour)
+        {
+            writer.WritePropertyName("Colour");
+            JsonSerializer.Serialize(writer,value.Colour,options);
+        }
+        if (tracker.OnStart)
+        {
+            writer.WritePropertyName("OnStart");
+            JsonSerializer.Serialize(writer,value.OnStart,options);
+        }
+        if (tracker.OnSubmit)
+        {
+            writer.WritePropertyName("OnSubmit");
+            JsonSerializer.Serialize(writer,value.OnSubmit,options);
+        }
+        if (tracker.Duration)
+        {
+            writer.WritePropertyName("Duration");
+            JsonSerializer.Serialize(writer,value.Duration,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

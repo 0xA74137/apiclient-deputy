@@ -6,52 +6,215 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Company>))]
-public class Company : IResource
+public class Company : IResource, IHasPropertyTracker<CompanyPropertyTracker>
 {
+    private long? _Id;
+    private long? _Portfolio;
+    private string? _Code;
+    private bool? _Active;
+    private long? _ParentCompany;
+    private string? _CompanyName;
+    private string? _TradingName;
+    private string? _BusinessNumber;
+    private string? _CompanyNumber;
+    private bool? _IsWorkplace;
+    private bool? _IsPayrollEntity;
+    private string? _PayrollExportCode;
+    private long? _Address;
+    private long? _Contact;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private CompanyPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Portfolio")]
-    public long? Portfolio { get; set; }
+    public long? Portfolio { get => _Portfolio; set { _Portfolio = value; _tracker.Portfolio = true; }}
     [JsonPropertyName("Code")]
-    public string? Code { get; set; }
+    public string? Code { get => _Code; set { _Code = value; _tracker.Code = true; }}
     [JsonPropertyName("Active")]
-    public bool? Active { get; set; }
+    public bool? Active { get => _Active; set { _Active = value; _tracker.Active = true; }}
     [JsonPropertyName("ParentCompany")]
-    public long? ParentCompany { get; set; }
+    public long? ParentCompany { get => _ParentCompany; set { _ParentCompany = value; _tracker.ParentCompany = true; }}
     [JsonPropertyName("CompanyName")]
-    public string? CompanyName { get; set; }
+    public string? CompanyName { get => _CompanyName; set { _CompanyName = value; _tracker.CompanyName = true; }}
     [JsonPropertyName("TradingName")]
-    public string? TradingName { get; set; }
+    public string? TradingName { get => _TradingName; set { _TradingName = value; _tracker.TradingName = true; }}
     [JsonPropertyName("BusinessNumber")]
-    public string? BusinessNumber { get; set; }
+    public string? BusinessNumber { get => _BusinessNumber; set { _BusinessNumber = value; _tracker.BusinessNumber = true; }}
     [JsonPropertyName("CompanyNumber")]
-    public string? CompanyNumber { get; set; }
+    public string? CompanyNumber { get => _CompanyNumber; set { _CompanyNumber = value; _tracker.CompanyNumber = true; }}
     [JsonPropertyName("IsWorkplace")]
-    public bool? IsWorkplace { get; set; }
+    public bool? IsWorkplace { get => _IsWorkplace; set { _IsWorkplace = value; _tracker.IsWorkplace = true; }}
     [JsonPropertyName("IsPayrollEntity")]
-    public bool? IsPayrollEntity { get; set; }
+    public bool? IsPayrollEntity { get => _IsPayrollEntity; set { _IsPayrollEntity = value; _tracker.IsPayrollEntity = true; }}
     [JsonPropertyName("PayrollExportCode")]
-    public string? PayrollExportCode { get; set; }
+    public string? PayrollExportCode { get => _PayrollExportCode; set { _PayrollExportCode = value; _tracker.PayrollExportCode = true; }}
     [JsonPropertyName("Address")]
-    public long? Address { get; set; }
+    public long? Address { get => _Address; set { _Address = value; _tracker.Address = true; }}
     [JsonPropertyName("Contact")]
-    public long? Contact { get; set; }
+    public long? Contact { get => _Contact; set { _Contact = value; _tracker.Contact = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<Company>))]
     public Join<Company>? ParentCompanyObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Address>))]
     public Join<Address>? AddressObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Contact>))]
     public Join<Contact>? ContactObject { get; set; }
+    CompanyPropertyTracker IHasPropertyTracker<CompanyPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<CompanyPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<CompanyPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class CompanyPropertyTracker
+{
+    internal bool Id;
+    internal bool Portfolio;
+    internal bool Code;
+    internal bool Active;
+    internal bool ParentCompany;
+    internal bool CompanyName;
+    internal bool TradingName;
+    internal bool BusinessNumber;
+    internal bool CompanyNumber;
+    internal bool IsWorkplace;
+    internal bool IsPayrollEntity;
+    internal bool PayrollExportCode;
+    internal bool Address;
+    internal bool Contact;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Portfolio = false;
+        Code = false;
+        Active = false;
+        ParentCompany = false;
+        CompanyName = false;
+        TradingName = false;
+        BusinessNumber = false;
+        CompanyNumber = false;
+        IsWorkplace = false;
+        IsPayrollEntity = false;
+        PayrollExportCode = false;
+        Address = false;
+        Contact = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class CompanySerializer : JsonConverter<Company>
+{
+    public override Company? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Company value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<CompanyPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Portfolio)
+        {
+            writer.WritePropertyName("Portfolio");
+            JsonSerializer.Serialize(writer,value.Portfolio,options);
+        }
+        if (tracker.Code)
+        {
+            writer.WritePropertyName("Code");
+            JsonSerializer.Serialize(writer,value.Code,options);
+        }
+        if (tracker.Active)
+        {
+            writer.WritePropertyName("Active");
+            JsonSerializer.Serialize(writer,value.Active,options);
+        }
+        if (tracker.ParentCompany)
+        {
+            writer.WritePropertyName("ParentCompany");
+            JsonSerializer.Serialize(writer,value.ParentCompany,options);
+        }
+        if (tracker.CompanyName)
+        {
+            writer.WritePropertyName("CompanyName");
+            JsonSerializer.Serialize(writer,value.CompanyName,options);
+        }
+        if (tracker.TradingName)
+        {
+            writer.WritePropertyName("TradingName");
+            JsonSerializer.Serialize(writer,value.TradingName,options);
+        }
+        if (tracker.BusinessNumber)
+        {
+            writer.WritePropertyName("BusinessNumber");
+            JsonSerializer.Serialize(writer,value.BusinessNumber,options);
+        }
+        if (tracker.CompanyNumber)
+        {
+            writer.WritePropertyName("CompanyNumber");
+            JsonSerializer.Serialize(writer,value.CompanyNumber,options);
+        }
+        if (tracker.IsWorkplace)
+        {
+            writer.WritePropertyName("IsWorkplace");
+            JsonSerializer.Serialize(writer,value.IsWorkplace,options);
+        }
+        if (tracker.IsPayrollEntity)
+        {
+            writer.WritePropertyName("IsPayrollEntity");
+            JsonSerializer.Serialize(writer,value.IsPayrollEntity,options);
+        }
+        if (tracker.PayrollExportCode)
+        {
+            writer.WritePropertyName("PayrollExportCode");
+            JsonSerializer.Serialize(writer,value.PayrollExportCode,options);
+        }
+        if (tracker.Address)
+        {
+            writer.WritePropertyName("Address");
+            JsonSerializer.Serialize(writer,value.Address,options);
+        }
+        if (tracker.Contact)
+        {
+            writer.WritePropertyName("Contact");
+            JsonSerializer.Serialize(writer,value.Contact,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

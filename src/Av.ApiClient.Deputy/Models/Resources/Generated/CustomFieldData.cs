@@ -6,274 +6,1369 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<CustomFieldData>))]
-public class CustomFieldData : IResource
+public class CustomFieldData : IResource, IHasPropertyTracker<CustomFieldDataPropertyTracker>
 {
+    private long? _Id;
+    private string? _System;
+    private string? _F01;
+    private string? _F02;
+    private string? _F03;
+    private string? _F04;
+    private string? _F05;
+    private string? _F06;
+    private string? _F07;
+    private string? _F08;
+    private string? _F09;
+    private string? _F10;
+    private string? _F11;
+    private string? _F12;
+    private string? _F13;
+    private string? _F14;
+    private string? _F15;
+    private string? _F16;
+    private string? _F17;
+    private string? _F18;
+    private string? _F19;
+    private string? _F20;
+    private string? _F21;
+    private string? _F22;
+    private string? _F23;
+    private string? _F24;
+    private string? _F25;
+    private string? _F26;
+    private string? _F27;
+    private string? _F28;
+    private string? _F29;
+    private string? _F30;
+    private string? _F31;
+    private string? _F32;
+    private string? _F33;
+    private string? _F34;
+    private string? _F35;
+    private string? _F36;
+    private string? _F37;
+    private string? _F38;
+    private string? _F39;
+    private string? _F40;
+    private string? _F41;
+    private string? _F42;
+    private string? _F43;
+    private string? _F44;
+    private string? _F45;
+    private string? _F46;
+    private string? _F47;
+    private string? _F48;
+    private string? _F49;
+    private string? _F50;
+    private string? _F51;
+    private string? _F52;
+    private string? _F53;
+    private string? _F54;
+    private string? _F55;
+    private string? _F56;
+    private string? _F57;
+    private string? _F58;
+    private string? _F59;
+    private string? _F60;
+    private string? _F61;
+    private string? _F62;
+    private string? _F63;
+    private string? _F64;
+    private string? _F65;
+    private string? _F66;
+    private string? _F67;
+    private string? _F68;
+    private string? _F69;
+    private string? _F70;
+    private string? _F71;
+    private string? _F72;
+    private string? _F73;
+    private string? _F74;
+    private string? _F75;
+    private string? _F76;
+    private string? _F77;
+    private string? _F78;
+    private string? _F79;
+    private string? _F80;
+    private string? _F81;
+    private string? _F82;
+    private string? _F83;
+    private string? _F84;
+    private string? _F85;
+    private string? _F86;
+    private string? _F87;
+    private string? _F88;
+    private string? _F89;
+    private string? _F90;
+    private string? _F91;
+    private string? _F92;
+    private string? _F93;
+    private string? _F94;
+    private string? _F95;
+    private string? _F96;
+    private string? _F97;
+    private string? _F98;
+    private string? _F99;
+    private string? _F100;
+    private string? _F101;
+    private string? _F102;
+    private string? _F103;
+    private string? _F104;
+    private string? _F105;
+    private string? _F106;
+    private string? _F107;
+    private string? _F108;
+    private string? _F109;
+    private string? _F110;
+    private string? _F111;
+    private string? _F112;
+    private string? _F113;
+    private string? _F114;
+    private string? _F115;
+    private string? _F116;
+    private string? _F117;
+    private string? _F118;
+    private string? _F119;
+    private string? _F120;
+    private string? _F121;
+    private string? _F122;
+    private string? _F123;
+    private string? _F124;
+    private string? _F125;
+    private string? _F126;
+    private string? _F127;
+    private string? _F128;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private CustomFieldDataPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("System")]
-    public string? System { get; set; }
+    public string? System { get => _System; set { _System = value; _tracker.System = true; }}
     [JsonPropertyName("F01")]
-    public string? F01 { get; set; }
+    public string? F01 { get => _F01; set { _F01 = value; _tracker.F01 = true; }}
     [JsonPropertyName("F02")]
-    public string? F02 { get; set; }
+    public string? F02 { get => _F02; set { _F02 = value; _tracker.F02 = true; }}
     [JsonPropertyName("F03")]
-    public string? F03 { get; set; }
+    public string? F03 { get => _F03; set { _F03 = value; _tracker.F03 = true; }}
     [JsonPropertyName("F04")]
-    public string? F04 { get; set; }
+    public string? F04 { get => _F04; set { _F04 = value; _tracker.F04 = true; }}
     [JsonPropertyName("F05")]
-    public string? F05 { get; set; }
+    public string? F05 { get => _F05; set { _F05 = value; _tracker.F05 = true; }}
     [JsonPropertyName("F06")]
-    public string? F06 { get; set; }
+    public string? F06 { get => _F06; set { _F06 = value; _tracker.F06 = true; }}
     [JsonPropertyName("F07")]
-    public string? F07 { get; set; }
+    public string? F07 { get => _F07; set { _F07 = value; _tracker.F07 = true; }}
     [JsonPropertyName("F08")]
-    public string? F08 { get; set; }
+    public string? F08 { get => _F08; set { _F08 = value; _tracker.F08 = true; }}
     [JsonPropertyName("F09")]
-    public string? F09 { get; set; }
+    public string? F09 { get => _F09; set { _F09 = value; _tracker.F09 = true; }}
     [JsonPropertyName("F10")]
-    public string? F10 { get; set; }
+    public string? F10 { get => _F10; set { _F10 = value; _tracker.F10 = true; }}
     [JsonPropertyName("F11")]
-    public string? F11 { get; set; }
+    public string? F11 { get => _F11; set { _F11 = value; _tracker.F11 = true; }}
     [JsonPropertyName("F12")]
-    public string? F12 { get; set; }
+    public string? F12 { get => _F12; set { _F12 = value; _tracker.F12 = true; }}
     [JsonPropertyName("F13")]
-    public string? F13 { get; set; }
+    public string? F13 { get => _F13; set { _F13 = value; _tracker.F13 = true; }}
     [JsonPropertyName("F14")]
-    public string? F14 { get; set; }
+    public string? F14 { get => _F14; set { _F14 = value; _tracker.F14 = true; }}
     [JsonPropertyName("F15")]
-    public string? F15 { get; set; }
+    public string? F15 { get => _F15; set { _F15 = value; _tracker.F15 = true; }}
     [JsonPropertyName("F16")]
-    public string? F16 { get; set; }
+    public string? F16 { get => _F16; set { _F16 = value; _tracker.F16 = true; }}
     [JsonPropertyName("F17")]
-    public string? F17 { get; set; }
+    public string? F17 { get => _F17; set { _F17 = value; _tracker.F17 = true; }}
     [JsonPropertyName("F18")]
-    public string? F18 { get; set; }
+    public string? F18 { get => _F18; set { _F18 = value; _tracker.F18 = true; }}
     [JsonPropertyName("F19")]
-    public string? F19 { get; set; }
+    public string? F19 { get => _F19; set { _F19 = value; _tracker.F19 = true; }}
     [JsonPropertyName("F20")]
-    public string? F20 { get; set; }
+    public string? F20 { get => _F20; set { _F20 = value; _tracker.F20 = true; }}
     [JsonPropertyName("F21")]
-    public string? F21 { get; set; }
+    public string? F21 { get => _F21; set { _F21 = value; _tracker.F21 = true; }}
     [JsonPropertyName("F22")]
-    public string? F22 { get; set; }
+    public string? F22 { get => _F22; set { _F22 = value; _tracker.F22 = true; }}
     [JsonPropertyName("F23")]
-    public string? F23 { get; set; }
+    public string? F23 { get => _F23; set { _F23 = value; _tracker.F23 = true; }}
     [JsonPropertyName("F24")]
-    public string? F24 { get; set; }
+    public string? F24 { get => _F24; set { _F24 = value; _tracker.F24 = true; }}
     [JsonPropertyName("F25")]
-    public string? F25 { get; set; }
+    public string? F25 { get => _F25; set { _F25 = value; _tracker.F25 = true; }}
     [JsonPropertyName("F26")]
-    public string? F26 { get; set; }
+    public string? F26 { get => _F26; set { _F26 = value; _tracker.F26 = true; }}
     [JsonPropertyName("F27")]
-    public string? F27 { get; set; }
+    public string? F27 { get => _F27; set { _F27 = value; _tracker.F27 = true; }}
     [JsonPropertyName("F28")]
-    public string? F28 { get; set; }
+    public string? F28 { get => _F28; set { _F28 = value; _tracker.F28 = true; }}
     [JsonPropertyName("F29")]
-    public string? F29 { get; set; }
+    public string? F29 { get => _F29; set { _F29 = value; _tracker.F29 = true; }}
     [JsonPropertyName("F30")]
-    public string? F30 { get; set; }
+    public string? F30 { get => _F30; set { _F30 = value; _tracker.F30 = true; }}
     [JsonPropertyName("F31")]
-    public string? F31 { get; set; }
+    public string? F31 { get => _F31; set { _F31 = value; _tracker.F31 = true; }}
     [JsonPropertyName("F32")]
-    public string? F32 { get; set; }
+    public string? F32 { get => _F32; set { _F32 = value; _tracker.F32 = true; }}
     [JsonPropertyName("F33")]
-    public string? F33 { get; set; }
+    public string? F33 { get => _F33; set { _F33 = value; _tracker.F33 = true; }}
     [JsonPropertyName("F34")]
-    public string? F34 { get; set; }
+    public string? F34 { get => _F34; set { _F34 = value; _tracker.F34 = true; }}
     [JsonPropertyName("F35")]
-    public string? F35 { get; set; }
+    public string? F35 { get => _F35; set { _F35 = value; _tracker.F35 = true; }}
     [JsonPropertyName("F36")]
-    public string? F36 { get; set; }
+    public string? F36 { get => _F36; set { _F36 = value; _tracker.F36 = true; }}
     [JsonPropertyName("F37")]
-    public string? F37 { get; set; }
+    public string? F37 { get => _F37; set { _F37 = value; _tracker.F37 = true; }}
     [JsonPropertyName("F38")]
-    public string? F38 { get; set; }
+    public string? F38 { get => _F38; set { _F38 = value; _tracker.F38 = true; }}
     [JsonPropertyName("F39")]
-    public string? F39 { get; set; }
+    public string? F39 { get => _F39; set { _F39 = value; _tracker.F39 = true; }}
     [JsonPropertyName("F40")]
-    public string? F40 { get; set; }
+    public string? F40 { get => _F40; set { _F40 = value; _tracker.F40 = true; }}
     [JsonPropertyName("F41")]
-    public string? F41 { get; set; }
+    public string? F41 { get => _F41; set { _F41 = value; _tracker.F41 = true; }}
     [JsonPropertyName("F42")]
-    public string? F42 { get; set; }
+    public string? F42 { get => _F42; set { _F42 = value; _tracker.F42 = true; }}
     [JsonPropertyName("F43")]
-    public string? F43 { get; set; }
+    public string? F43 { get => _F43; set { _F43 = value; _tracker.F43 = true; }}
     [JsonPropertyName("F44")]
-    public string? F44 { get; set; }
+    public string? F44 { get => _F44; set { _F44 = value; _tracker.F44 = true; }}
     [JsonPropertyName("F45")]
-    public string? F45 { get; set; }
+    public string? F45 { get => _F45; set { _F45 = value; _tracker.F45 = true; }}
     [JsonPropertyName("F46")]
-    public string? F46 { get; set; }
+    public string? F46 { get => _F46; set { _F46 = value; _tracker.F46 = true; }}
     [JsonPropertyName("F47")]
-    public string? F47 { get; set; }
+    public string? F47 { get => _F47; set { _F47 = value; _tracker.F47 = true; }}
     [JsonPropertyName("F48")]
-    public string? F48 { get; set; }
+    public string? F48 { get => _F48; set { _F48 = value; _tracker.F48 = true; }}
     [JsonPropertyName("F49")]
-    public string? F49 { get; set; }
+    public string? F49 { get => _F49; set { _F49 = value; _tracker.F49 = true; }}
     [JsonPropertyName("F50")]
-    public string? F50 { get; set; }
+    public string? F50 { get => _F50; set { _F50 = value; _tracker.F50 = true; }}
     [JsonPropertyName("F51")]
-    public string? F51 { get; set; }
+    public string? F51 { get => _F51; set { _F51 = value; _tracker.F51 = true; }}
     [JsonPropertyName("F52")]
-    public string? F52 { get; set; }
+    public string? F52 { get => _F52; set { _F52 = value; _tracker.F52 = true; }}
     [JsonPropertyName("F53")]
-    public string? F53 { get; set; }
+    public string? F53 { get => _F53; set { _F53 = value; _tracker.F53 = true; }}
     [JsonPropertyName("F54")]
-    public string? F54 { get; set; }
+    public string? F54 { get => _F54; set { _F54 = value; _tracker.F54 = true; }}
     [JsonPropertyName("F55")]
-    public string? F55 { get; set; }
+    public string? F55 { get => _F55; set { _F55 = value; _tracker.F55 = true; }}
     [JsonPropertyName("F56")]
-    public string? F56 { get; set; }
+    public string? F56 { get => _F56; set { _F56 = value; _tracker.F56 = true; }}
     [JsonPropertyName("F57")]
-    public string? F57 { get; set; }
+    public string? F57 { get => _F57; set { _F57 = value; _tracker.F57 = true; }}
     [JsonPropertyName("F58")]
-    public string? F58 { get; set; }
+    public string? F58 { get => _F58; set { _F58 = value; _tracker.F58 = true; }}
     [JsonPropertyName("F59")]
-    public string? F59 { get; set; }
+    public string? F59 { get => _F59; set { _F59 = value; _tracker.F59 = true; }}
     [JsonPropertyName("F60")]
-    public string? F60 { get; set; }
+    public string? F60 { get => _F60; set { _F60 = value; _tracker.F60 = true; }}
     [JsonPropertyName("F61")]
-    public string? F61 { get; set; }
+    public string? F61 { get => _F61; set { _F61 = value; _tracker.F61 = true; }}
     [JsonPropertyName("F62")]
-    public string? F62 { get; set; }
+    public string? F62 { get => _F62; set { _F62 = value; _tracker.F62 = true; }}
     [JsonPropertyName("F63")]
-    public string? F63 { get; set; }
+    public string? F63 { get => _F63; set { _F63 = value; _tracker.F63 = true; }}
     [JsonPropertyName("F64")]
-    public string? F64 { get; set; }
+    public string? F64 { get => _F64; set { _F64 = value; _tracker.F64 = true; }}
     [JsonPropertyName("F65")]
-    public string? F65 { get; set; }
+    public string? F65 { get => _F65; set { _F65 = value; _tracker.F65 = true; }}
     [JsonPropertyName("F66")]
-    public string? F66 { get; set; }
+    public string? F66 { get => _F66; set { _F66 = value; _tracker.F66 = true; }}
     [JsonPropertyName("F67")]
-    public string? F67 { get; set; }
+    public string? F67 { get => _F67; set { _F67 = value; _tracker.F67 = true; }}
     [JsonPropertyName("F68")]
-    public string? F68 { get; set; }
+    public string? F68 { get => _F68; set { _F68 = value; _tracker.F68 = true; }}
     [JsonPropertyName("F69")]
-    public string? F69 { get; set; }
+    public string? F69 { get => _F69; set { _F69 = value; _tracker.F69 = true; }}
     [JsonPropertyName("F70")]
-    public string? F70 { get; set; }
+    public string? F70 { get => _F70; set { _F70 = value; _tracker.F70 = true; }}
     [JsonPropertyName("F71")]
-    public string? F71 { get; set; }
+    public string? F71 { get => _F71; set { _F71 = value; _tracker.F71 = true; }}
     [JsonPropertyName("F72")]
-    public string? F72 { get; set; }
+    public string? F72 { get => _F72; set { _F72 = value; _tracker.F72 = true; }}
     [JsonPropertyName("F73")]
-    public string? F73 { get; set; }
+    public string? F73 { get => _F73; set { _F73 = value; _tracker.F73 = true; }}
     [JsonPropertyName("F74")]
-    public string? F74 { get; set; }
+    public string? F74 { get => _F74; set { _F74 = value; _tracker.F74 = true; }}
     [JsonPropertyName("F75")]
-    public string? F75 { get; set; }
+    public string? F75 { get => _F75; set { _F75 = value; _tracker.F75 = true; }}
     [JsonPropertyName("F76")]
-    public string? F76 { get; set; }
+    public string? F76 { get => _F76; set { _F76 = value; _tracker.F76 = true; }}
     [JsonPropertyName("F77")]
-    public string? F77 { get; set; }
+    public string? F77 { get => _F77; set { _F77 = value; _tracker.F77 = true; }}
     [JsonPropertyName("F78")]
-    public string? F78 { get; set; }
+    public string? F78 { get => _F78; set { _F78 = value; _tracker.F78 = true; }}
     [JsonPropertyName("F79")]
-    public string? F79 { get; set; }
+    public string? F79 { get => _F79; set { _F79 = value; _tracker.F79 = true; }}
     [JsonPropertyName("F80")]
-    public string? F80 { get; set; }
+    public string? F80 { get => _F80; set { _F80 = value; _tracker.F80 = true; }}
     [JsonPropertyName("F81")]
-    public string? F81 { get; set; }
+    public string? F81 { get => _F81; set { _F81 = value; _tracker.F81 = true; }}
     [JsonPropertyName("F82")]
-    public string? F82 { get; set; }
+    public string? F82 { get => _F82; set { _F82 = value; _tracker.F82 = true; }}
     [JsonPropertyName("F83")]
-    public string? F83 { get; set; }
+    public string? F83 { get => _F83; set { _F83 = value; _tracker.F83 = true; }}
     [JsonPropertyName("F84")]
-    public string? F84 { get; set; }
+    public string? F84 { get => _F84; set { _F84 = value; _tracker.F84 = true; }}
     [JsonPropertyName("F85")]
-    public string? F85 { get; set; }
+    public string? F85 { get => _F85; set { _F85 = value; _tracker.F85 = true; }}
     [JsonPropertyName("F86")]
-    public string? F86 { get; set; }
+    public string? F86 { get => _F86; set { _F86 = value; _tracker.F86 = true; }}
     [JsonPropertyName("F87")]
-    public string? F87 { get; set; }
+    public string? F87 { get => _F87; set { _F87 = value; _tracker.F87 = true; }}
     [JsonPropertyName("F88")]
-    public string? F88 { get; set; }
+    public string? F88 { get => _F88; set { _F88 = value; _tracker.F88 = true; }}
     [JsonPropertyName("F89")]
-    public string? F89 { get; set; }
+    public string? F89 { get => _F89; set { _F89 = value; _tracker.F89 = true; }}
     [JsonPropertyName("F90")]
-    public string? F90 { get; set; }
+    public string? F90 { get => _F90; set { _F90 = value; _tracker.F90 = true; }}
     [JsonPropertyName("F91")]
-    public string? F91 { get; set; }
+    public string? F91 { get => _F91; set { _F91 = value; _tracker.F91 = true; }}
     [JsonPropertyName("F92")]
-    public string? F92 { get; set; }
+    public string? F92 { get => _F92; set { _F92 = value; _tracker.F92 = true; }}
     [JsonPropertyName("F93")]
-    public string? F93 { get; set; }
+    public string? F93 { get => _F93; set { _F93 = value; _tracker.F93 = true; }}
     [JsonPropertyName("F94")]
-    public string? F94 { get; set; }
+    public string? F94 { get => _F94; set { _F94 = value; _tracker.F94 = true; }}
     [JsonPropertyName("F95")]
-    public string? F95 { get; set; }
+    public string? F95 { get => _F95; set { _F95 = value; _tracker.F95 = true; }}
     [JsonPropertyName("F96")]
-    public string? F96 { get; set; }
+    public string? F96 { get => _F96; set { _F96 = value; _tracker.F96 = true; }}
     [JsonPropertyName("F97")]
-    public string? F97 { get; set; }
+    public string? F97 { get => _F97; set { _F97 = value; _tracker.F97 = true; }}
     [JsonPropertyName("F98")]
-    public string? F98 { get; set; }
+    public string? F98 { get => _F98; set { _F98 = value; _tracker.F98 = true; }}
     [JsonPropertyName("F99")]
-    public string? F99 { get; set; }
+    public string? F99 { get => _F99; set { _F99 = value; _tracker.F99 = true; }}
     [JsonPropertyName("F100")]
-    public string? F100 { get; set; }
+    public string? F100 { get => _F100; set { _F100 = value; _tracker.F100 = true; }}
     [JsonPropertyName("F101")]
-    public string? F101 { get; set; }
+    public string? F101 { get => _F101; set { _F101 = value; _tracker.F101 = true; }}
     [JsonPropertyName("F102")]
-    public string? F102 { get; set; }
+    public string? F102 { get => _F102; set { _F102 = value; _tracker.F102 = true; }}
     [JsonPropertyName("F103")]
-    public string? F103 { get; set; }
+    public string? F103 { get => _F103; set { _F103 = value; _tracker.F103 = true; }}
     [JsonPropertyName("F104")]
-    public string? F104 { get; set; }
+    public string? F104 { get => _F104; set { _F104 = value; _tracker.F104 = true; }}
     [JsonPropertyName("F105")]
-    public string? F105 { get; set; }
+    public string? F105 { get => _F105; set { _F105 = value; _tracker.F105 = true; }}
     [JsonPropertyName("F106")]
-    public string? F106 { get; set; }
+    public string? F106 { get => _F106; set { _F106 = value; _tracker.F106 = true; }}
     [JsonPropertyName("F107")]
-    public string? F107 { get; set; }
+    public string? F107 { get => _F107; set { _F107 = value; _tracker.F107 = true; }}
     [JsonPropertyName("F108")]
-    public string? F108 { get; set; }
+    public string? F108 { get => _F108; set { _F108 = value; _tracker.F108 = true; }}
     [JsonPropertyName("F109")]
-    public string? F109 { get; set; }
+    public string? F109 { get => _F109; set { _F109 = value; _tracker.F109 = true; }}
     [JsonPropertyName("F110")]
-    public string? F110 { get; set; }
+    public string? F110 { get => _F110; set { _F110 = value; _tracker.F110 = true; }}
     [JsonPropertyName("F111")]
-    public string? F111 { get; set; }
+    public string? F111 { get => _F111; set { _F111 = value; _tracker.F111 = true; }}
     [JsonPropertyName("F112")]
-    public string? F112 { get; set; }
+    public string? F112 { get => _F112; set { _F112 = value; _tracker.F112 = true; }}
     [JsonPropertyName("F113")]
-    public string? F113 { get; set; }
+    public string? F113 { get => _F113; set { _F113 = value; _tracker.F113 = true; }}
     [JsonPropertyName("F114")]
-    public string? F114 { get; set; }
+    public string? F114 { get => _F114; set { _F114 = value; _tracker.F114 = true; }}
     [JsonPropertyName("F115")]
-    public string? F115 { get; set; }
+    public string? F115 { get => _F115; set { _F115 = value; _tracker.F115 = true; }}
     [JsonPropertyName("F116")]
-    public string? F116 { get; set; }
+    public string? F116 { get => _F116; set { _F116 = value; _tracker.F116 = true; }}
     [JsonPropertyName("F117")]
-    public string? F117 { get; set; }
+    public string? F117 { get => _F117; set { _F117 = value; _tracker.F117 = true; }}
     [JsonPropertyName("F118")]
-    public string? F118 { get; set; }
+    public string? F118 { get => _F118; set { _F118 = value; _tracker.F118 = true; }}
     [JsonPropertyName("F119")]
-    public string? F119 { get; set; }
+    public string? F119 { get => _F119; set { _F119 = value; _tracker.F119 = true; }}
     [JsonPropertyName("F120")]
-    public string? F120 { get; set; }
+    public string? F120 { get => _F120; set { _F120 = value; _tracker.F120 = true; }}
     [JsonPropertyName("F121")]
-    public string? F121 { get; set; }
+    public string? F121 { get => _F121; set { _F121 = value; _tracker.F121 = true; }}
     [JsonPropertyName("F122")]
-    public string? F122 { get; set; }
+    public string? F122 { get => _F122; set { _F122 = value; _tracker.F122 = true; }}
     [JsonPropertyName("F123")]
-    public string? F123 { get; set; }
+    public string? F123 { get => _F123; set { _F123 = value; _tracker.F123 = true; }}
     [JsonPropertyName("F124")]
-    public string? F124 { get; set; }
+    public string? F124 { get => _F124; set { _F124 = value; _tracker.F124 = true; }}
     [JsonPropertyName("F125")]
-    public string? F125 { get; set; }
+    public string? F125 { get => _F125; set { _F125 = value; _tracker.F125 = true; }}
     [JsonPropertyName("F126")]
-    public string? F126 { get; set; }
+    public string? F126 { get => _F126; set { _F126 = value; _tracker.F126 = true; }}
     [JsonPropertyName("F127")]
-    public string? F127 { get; set; }
+    public string? F127 { get => _F127; set { _F127 = value; _tracker.F127 = true; }}
     [JsonPropertyName("F128")]
-    public string? F128 { get; set; }
+    public string? F128 { get => _F128; set { _F128 = value; _tracker.F128 = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    CustomFieldDataPropertyTracker IHasPropertyTracker<CustomFieldDataPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<CustomFieldDataPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<CustomFieldDataPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class CustomFieldDataPropertyTracker
+{
+    internal bool Id;
+    internal bool System;
+    internal bool F01;
+    internal bool F02;
+    internal bool F03;
+    internal bool F04;
+    internal bool F05;
+    internal bool F06;
+    internal bool F07;
+    internal bool F08;
+    internal bool F09;
+    internal bool F10;
+    internal bool F11;
+    internal bool F12;
+    internal bool F13;
+    internal bool F14;
+    internal bool F15;
+    internal bool F16;
+    internal bool F17;
+    internal bool F18;
+    internal bool F19;
+    internal bool F20;
+    internal bool F21;
+    internal bool F22;
+    internal bool F23;
+    internal bool F24;
+    internal bool F25;
+    internal bool F26;
+    internal bool F27;
+    internal bool F28;
+    internal bool F29;
+    internal bool F30;
+    internal bool F31;
+    internal bool F32;
+    internal bool F33;
+    internal bool F34;
+    internal bool F35;
+    internal bool F36;
+    internal bool F37;
+    internal bool F38;
+    internal bool F39;
+    internal bool F40;
+    internal bool F41;
+    internal bool F42;
+    internal bool F43;
+    internal bool F44;
+    internal bool F45;
+    internal bool F46;
+    internal bool F47;
+    internal bool F48;
+    internal bool F49;
+    internal bool F50;
+    internal bool F51;
+    internal bool F52;
+    internal bool F53;
+    internal bool F54;
+    internal bool F55;
+    internal bool F56;
+    internal bool F57;
+    internal bool F58;
+    internal bool F59;
+    internal bool F60;
+    internal bool F61;
+    internal bool F62;
+    internal bool F63;
+    internal bool F64;
+    internal bool F65;
+    internal bool F66;
+    internal bool F67;
+    internal bool F68;
+    internal bool F69;
+    internal bool F70;
+    internal bool F71;
+    internal bool F72;
+    internal bool F73;
+    internal bool F74;
+    internal bool F75;
+    internal bool F76;
+    internal bool F77;
+    internal bool F78;
+    internal bool F79;
+    internal bool F80;
+    internal bool F81;
+    internal bool F82;
+    internal bool F83;
+    internal bool F84;
+    internal bool F85;
+    internal bool F86;
+    internal bool F87;
+    internal bool F88;
+    internal bool F89;
+    internal bool F90;
+    internal bool F91;
+    internal bool F92;
+    internal bool F93;
+    internal bool F94;
+    internal bool F95;
+    internal bool F96;
+    internal bool F97;
+    internal bool F98;
+    internal bool F99;
+    internal bool F100;
+    internal bool F101;
+    internal bool F102;
+    internal bool F103;
+    internal bool F104;
+    internal bool F105;
+    internal bool F106;
+    internal bool F107;
+    internal bool F108;
+    internal bool F109;
+    internal bool F110;
+    internal bool F111;
+    internal bool F112;
+    internal bool F113;
+    internal bool F114;
+    internal bool F115;
+    internal bool F116;
+    internal bool F117;
+    internal bool F118;
+    internal bool F119;
+    internal bool F120;
+    internal bool F121;
+    internal bool F122;
+    internal bool F123;
+    internal bool F124;
+    internal bool F125;
+    internal bool F126;
+    internal bool F127;
+    internal bool F128;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        System = false;
+        F01 = false;
+        F02 = false;
+        F03 = false;
+        F04 = false;
+        F05 = false;
+        F06 = false;
+        F07 = false;
+        F08 = false;
+        F09 = false;
+        F10 = false;
+        F11 = false;
+        F12 = false;
+        F13 = false;
+        F14 = false;
+        F15 = false;
+        F16 = false;
+        F17 = false;
+        F18 = false;
+        F19 = false;
+        F20 = false;
+        F21 = false;
+        F22 = false;
+        F23 = false;
+        F24 = false;
+        F25 = false;
+        F26 = false;
+        F27 = false;
+        F28 = false;
+        F29 = false;
+        F30 = false;
+        F31 = false;
+        F32 = false;
+        F33 = false;
+        F34 = false;
+        F35 = false;
+        F36 = false;
+        F37 = false;
+        F38 = false;
+        F39 = false;
+        F40 = false;
+        F41 = false;
+        F42 = false;
+        F43 = false;
+        F44 = false;
+        F45 = false;
+        F46 = false;
+        F47 = false;
+        F48 = false;
+        F49 = false;
+        F50 = false;
+        F51 = false;
+        F52 = false;
+        F53 = false;
+        F54 = false;
+        F55 = false;
+        F56 = false;
+        F57 = false;
+        F58 = false;
+        F59 = false;
+        F60 = false;
+        F61 = false;
+        F62 = false;
+        F63 = false;
+        F64 = false;
+        F65 = false;
+        F66 = false;
+        F67 = false;
+        F68 = false;
+        F69 = false;
+        F70 = false;
+        F71 = false;
+        F72 = false;
+        F73 = false;
+        F74 = false;
+        F75 = false;
+        F76 = false;
+        F77 = false;
+        F78 = false;
+        F79 = false;
+        F80 = false;
+        F81 = false;
+        F82 = false;
+        F83 = false;
+        F84 = false;
+        F85 = false;
+        F86 = false;
+        F87 = false;
+        F88 = false;
+        F89 = false;
+        F90 = false;
+        F91 = false;
+        F92 = false;
+        F93 = false;
+        F94 = false;
+        F95 = false;
+        F96 = false;
+        F97 = false;
+        F98 = false;
+        F99 = false;
+        F100 = false;
+        F101 = false;
+        F102 = false;
+        F103 = false;
+        F104 = false;
+        F105 = false;
+        F106 = false;
+        F107 = false;
+        F108 = false;
+        F109 = false;
+        F110 = false;
+        F111 = false;
+        F112 = false;
+        F113 = false;
+        F114 = false;
+        F115 = false;
+        F116 = false;
+        F117 = false;
+        F118 = false;
+        F119 = false;
+        F120 = false;
+        F121 = false;
+        F122 = false;
+        F123 = false;
+        F124 = false;
+        F125 = false;
+        F126 = false;
+        F127 = false;
+        F128 = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class CustomFieldDataSerializer : JsonConverter<CustomFieldData>
+{
+    public override CustomFieldData? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,CustomFieldData value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<CustomFieldDataPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.System)
+        {
+            writer.WritePropertyName("System");
+            JsonSerializer.Serialize(writer,value.System,options);
+        }
+        if (tracker.F01)
+        {
+            writer.WritePropertyName("F01");
+            JsonSerializer.Serialize(writer,value.F01,options);
+        }
+        if (tracker.F02)
+        {
+            writer.WritePropertyName("F02");
+            JsonSerializer.Serialize(writer,value.F02,options);
+        }
+        if (tracker.F03)
+        {
+            writer.WritePropertyName("F03");
+            JsonSerializer.Serialize(writer,value.F03,options);
+        }
+        if (tracker.F04)
+        {
+            writer.WritePropertyName("F04");
+            JsonSerializer.Serialize(writer,value.F04,options);
+        }
+        if (tracker.F05)
+        {
+            writer.WritePropertyName("F05");
+            JsonSerializer.Serialize(writer,value.F05,options);
+        }
+        if (tracker.F06)
+        {
+            writer.WritePropertyName("F06");
+            JsonSerializer.Serialize(writer,value.F06,options);
+        }
+        if (tracker.F07)
+        {
+            writer.WritePropertyName("F07");
+            JsonSerializer.Serialize(writer,value.F07,options);
+        }
+        if (tracker.F08)
+        {
+            writer.WritePropertyName("F08");
+            JsonSerializer.Serialize(writer,value.F08,options);
+        }
+        if (tracker.F09)
+        {
+            writer.WritePropertyName("F09");
+            JsonSerializer.Serialize(writer,value.F09,options);
+        }
+        if (tracker.F10)
+        {
+            writer.WritePropertyName("F10");
+            JsonSerializer.Serialize(writer,value.F10,options);
+        }
+        if (tracker.F11)
+        {
+            writer.WritePropertyName("F11");
+            JsonSerializer.Serialize(writer,value.F11,options);
+        }
+        if (tracker.F12)
+        {
+            writer.WritePropertyName("F12");
+            JsonSerializer.Serialize(writer,value.F12,options);
+        }
+        if (tracker.F13)
+        {
+            writer.WritePropertyName("F13");
+            JsonSerializer.Serialize(writer,value.F13,options);
+        }
+        if (tracker.F14)
+        {
+            writer.WritePropertyName("F14");
+            JsonSerializer.Serialize(writer,value.F14,options);
+        }
+        if (tracker.F15)
+        {
+            writer.WritePropertyName("F15");
+            JsonSerializer.Serialize(writer,value.F15,options);
+        }
+        if (tracker.F16)
+        {
+            writer.WritePropertyName("F16");
+            JsonSerializer.Serialize(writer,value.F16,options);
+        }
+        if (tracker.F17)
+        {
+            writer.WritePropertyName("F17");
+            JsonSerializer.Serialize(writer,value.F17,options);
+        }
+        if (tracker.F18)
+        {
+            writer.WritePropertyName("F18");
+            JsonSerializer.Serialize(writer,value.F18,options);
+        }
+        if (tracker.F19)
+        {
+            writer.WritePropertyName("F19");
+            JsonSerializer.Serialize(writer,value.F19,options);
+        }
+        if (tracker.F20)
+        {
+            writer.WritePropertyName("F20");
+            JsonSerializer.Serialize(writer,value.F20,options);
+        }
+        if (tracker.F21)
+        {
+            writer.WritePropertyName("F21");
+            JsonSerializer.Serialize(writer,value.F21,options);
+        }
+        if (tracker.F22)
+        {
+            writer.WritePropertyName("F22");
+            JsonSerializer.Serialize(writer,value.F22,options);
+        }
+        if (tracker.F23)
+        {
+            writer.WritePropertyName("F23");
+            JsonSerializer.Serialize(writer,value.F23,options);
+        }
+        if (tracker.F24)
+        {
+            writer.WritePropertyName("F24");
+            JsonSerializer.Serialize(writer,value.F24,options);
+        }
+        if (tracker.F25)
+        {
+            writer.WritePropertyName("F25");
+            JsonSerializer.Serialize(writer,value.F25,options);
+        }
+        if (tracker.F26)
+        {
+            writer.WritePropertyName("F26");
+            JsonSerializer.Serialize(writer,value.F26,options);
+        }
+        if (tracker.F27)
+        {
+            writer.WritePropertyName("F27");
+            JsonSerializer.Serialize(writer,value.F27,options);
+        }
+        if (tracker.F28)
+        {
+            writer.WritePropertyName("F28");
+            JsonSerializer.Serialize(writer,value.F28,options);
+        }
+        if (tracker.F29)
+        {
+            writer.WritePropertyName("F29");
+            JsonSerializer.Serialize(writer,value.F29,options);
+        }
+        if (tracker.F30)
+        {
+            writer.WritePropertyName("F30");
+            JsonSerializer.Serialize(writer,value.F30,options);
+        }
+        if (tracker.F31)
+        {
+            writer.WritePropertyName("F31");
+            JsonSerializer.Serialize(writer,value.F31,options);
+        }
+        if (tracker.F32)
+        {
+            writer.WritePropertyName("F32");
+            JsonSerializer.Serialize(writer,value.F32,options);
+        }
+        if (tracker.F33)
+        {
+            writer.WritePropertyName("F33");
+            JsonSerializer.Serialize(writer,value.F33,options);
+        }
+        if (tracker.F34)
+        {
+            writer.WritePropertyName("F34");
+            JsonSerializer.Serialize(writer,value.F34,options);
+        }
+        if (tracker.F35)
+        {
+            writer.WritePropertyName("F35");
+            JsonSerializer.Serialize(writer,value.F35,options);
+        }
+        if (tracker.F36)
+        {
+            writer.WritePropertyName("F36");
+            JsonSerializer.Serialize(writer,value.F36,options);
+        }
+        if (tracker.F37)
+        {
+            writer.WritePropertyName("F37");
+            JsonSerializer.Serialize(writer,value.F37,options);
+        }
+        if (tracker.F38)
+        {
+            writer.WritePropertyName("F38");
+            JsonSerializer.Serialize(writer,value.F38,options);
+        }
+        if (tracker.F39)
+        {
+            writer.WritePropertyName("F39");
+            JsonSerializer.Serialize(writer,value.F39,options);
+        }
+        if (tracker.F40)
+        {
+            writer.WritePropertyName("F40");
+            JsonSerializer.Serialize(writer,value.F40,options);
+        }
+        if (tracker.F41)
+        {
+            writer.WritePropertyName("F41");
+            JsonSerializer.Serialize(writer,value.F41,options);
+        }
+        if (tracker.F42)
+        {
+            writer.WritePropertyName("F42");
+            JsonSerializer.Serialize(writer,value.F42,options);
+        }
+        if (tracker.F43)
+        {
+            writer.WritePropertyName("F43");
+            JsonSerializer.Serialize(writer,value.F43,options);
+        }
+        if (tracker.F44)
+        {
+            writer.WritePropertyName("F44");
+            JsonSerializer.Serialize(writer,value.F44,options);
+        }
+        if (tracker.F45)
+        {
+            writer.WritePropertyName("F45");
+            JsonSerializer.Serialize(writer,value.F45,options);
+        }
+        if (tracker.F46)
+        {
+            writer.WritePropertyName("F46");
+            JsonSerializer.Serialize(writer,value.F46,options);
+        }
+        if (tracker.F47)
+        {
+            writer.WritePropertyName("F47");
+            JsonSerializer.Serialize(writer,value.F47,options);
+        }
+        if (tracker.F48)
+        {
+            writer.WritePropertyName("F48");
+            JsonSerializer.Serialize(writer,value.F48,options);
+        }
+        if (tracker.F49)
+        {
+            writer.WritePropertyName("F49");
+            JsonSerializer.Serialize(writer,value.F49,options);
+        }
+        if (tracker.F50)
+        {
+            writer.WritePropertyName("F50");
+            JsonSerializer.Serialize(writer,value.F50,options);
+        }
+        if (tracker.F51)
+        {
+            writer.WritePropertyName("F51");
+            JsonSerializer.Serialize(writer,value.F51,options);
+        }
+        if (tracker.F52)
+        {
+            writer.WritePropertyName("F52");
+            JsonSerializer.Serialize(writer,value.F52,options);
+        }
+        if (tracker.F53)
+        {
+            writer.WritePropertyName("F53");
+            JsonSerializer.Serialize(writer,value.F53,options);
+        }
+        if (tracker.F54)
+        {
+            writer.WritePropertyName("F54");
+            JsonSerializer.Serialize(writer,value.F54,options);
+        }
+        if (tracker.F55)
+        {
+            writer.WritePropertyName("F55");
+            JsonSerializer.Serialize(writer,value.F55,options);
+        }
+        if (tracker.F56)
+        {
+            writer.WritePropertyName("F56");
+            JsonSerializer.Serialize(writer,value.F56,options);
+        }
+        if (tracker.F57)
+        {
+            writer.WritePropertyName("F57");
+            JsonSerializer.Serialize(writer,value.F57,options);
+        }
+        if (tracker.F58)
+        {
+            writer.WritePropertyName("F58");
+            JsonSerializer.Serialize(writer,value.F58,options);
+        }
+        if (tracker.F59)
+        {
+            writer.WritePropertyName("F59");
+            JsonSerializer.Serialize(writer,value.F59,options);
+        }
+        if (tracker.F60)
+        {
+            writer.WritePropertyName("F60");
+            JsonSerializer.Serialize(writer,value.F60,options);
+        }
+        if (tracker.F61)
+        {
+            writer.WritePropertyName("F61");
+            JsonSerializer.Serialize(writer,value.F61,options);
+        }
+        if (tracker.F62)
+        {
+            writer.WritePropertyName("F62");
+            JsonSerializer.Serialize(writer,value.F62,options);
+        }
+        if (tracker.F63)
+        {
+            writer.WritePropertyName("F63");
+            JsonSerializer.Serialize(writer,value.F63,options);
+        }
+        if (tracker.F64)
+        {
+            writer.WritePropertyName("F64");
+            JsonSerializer.Serialize(writer,value.F64,options);
+        }
+        if (tracker.F65)
+        {
+            writer.WritePropertyName("F65");
+            JsonSerializer.Serialize(writer,value.F65,options);
+        }
+        if (tracker.F66)
+        {
+            writer.WritePropertyName("F66");
+            JsonSerializer.Serialize(writer,value.F66,options);
+        }
+        if (tracker.F67)
+        {
+            writer.WritePropertyName("F67");
+            JsonSerializer.Serialize(writer,value.F67,options);
+        }
+        if (tracker.F68)
+        {
+            writer.WritePropertyName("F68");
+            JsonSerializer.Serialize(writer,value.F68,options);
+        }
+        if (tracker.F69)
+        {
+            writer.WritePropertyName("F69");
+            JsonSerializer.Serialize(writer,value.F69,options);
+        }
+        if (tracker.F70)
+        {
+            writer.WritePropertyName("F70");
+            JsonSerializer.Serialize(writer,value.F70,options);
+        }
+        if (tracker.F71)
+        {
+            writer.WritePropertyName("F71");
+            JsonSerializer.Serialize(writer,value.F71,options);
+        }
+        if (tracker.F72)
+        {
+            writer.WritePropertyName("F72");
+            JsonSerializer.Serialize(writer,value.F72,options);
+        }
+        if (tracker.F73)
+        {
+            writer.WritePropertyName("F73");
+            JsonSerializer.Serialize(writer,value.F73,options);
+        }
+        if (tracker.F74)
+        {
+            writer.WritePropertyName("F74");
+            JsonSerializer.Serialize(writer,value.F74,options);
+        }
+        if (tracker.F75)
+        {
+            writer.WritePropertyName("F75");
+            JsonSerializer.Serialize(writer,value.F75,options);
+        }
+        if (tracker.F76)
+        {
+            writer.WritePropertyName("F76");
+            JsonSerializer.Serialize(writer,value.F76,options);
+        }
+        if (tracker.F77)
+        {
+            writer.WritePropertyName("F77");
+            JsonSerializer.Serialize(writer,value.F77,options);
+        }
+        if (tracker.F78)
+        {
+            writer.WritePropertyName("F78");
+            JsonSerializer.Serialize(writer,value.F78,options);
+        }
+        if (tracker.F79)
+        {
+            writer.WritePropertyName("F79");
+            JsonSerializer.Serialize(writer,value.F79,options);
+        }
+        if (tracker.F80)
+        {
+            writer.WritePropertyName("F80");
+            JsonSerializer.Serialize(writer,value.F80,options);
+        }
+        if (tracker.F81)
+        {
+            writer.WritePropertyName("F81");
+            JsonSerializer.Serialize(writer,value.F81,options);
+        }
+        if (tracker.F82)
+        {
+            writer.WritePropertyName("F82");
+            JsonSerializer.Serialize(writer,value.F82,options);
+        }
+        if (tracker.F83)
+        {
+            writer.WritePropertyName("F83");
+            JsonSerializer.Serialize(writer,value.F83,options);
+        }
+        if (tracker.F84)
+        {
+            writer.WritePropertyName("F84");
+            JsonSerializer.Serialize(writer,value.F84,options);
+        }
+        if (tracker.F85)
+        {
+            writer.WritePropertyName("F85");
+            JsonSerializer.Serialize(writer,value.F85,options);
+        }
+        if (tracker.F86)
+        {
+            writer.WritePropertyName("F86");
+            JsonSerializer.Serialize(writer,value.F86,options);
+        }
+        if (tracker.F87)
+        {
+            writer.WritePropertyName("F87");
+            JsonSerializer.Serialize(writer,value.F87,options);
+        }
+        if (tracker.F88)
+        {
+            writer.WritePropertyName("F88");
+            JsonSerializer.Serialize(writer,value.F88,options);
+        }
+        if (tracker.F89)
+        {
+            writer.WritePropertyName("F89");
+            JsonSerializer.Serialize(writer,value.F89,options);
+        }
+        if (tracker.F90)
+        {
+            writer.WritePropertyName("F90");
+            JsonSerializer.Serialize(writer,value.F90,options);
+        }
+        if (tracker.F91)
+        {
+            writer.WritePropertyName("F91");
+            JsonSerializer.Serialize(writer,value.F91,options);
+        }
+        if (tracker.F92)
+        {
+            writer.WritePropertyName("F92");
+            JsonSerializer.Serialize(writer,value.F92,options);
+        }
+        if (tracker.F93)
+        {
+            writer.WritePropertyName("F93");
+            JsonSerializer.Serialize(writer,value.F93,options);
+        }
+        if (tracker.F94)
+        {
+            writer.WritePropertyName("F94");
+            JsonSerializer.Serialize(writer,value.F94,options);
+        }
+        if (tracker.F95)
+        {
+            writer.WritePropertyName("F95");
+            JsonSerializer.Serialize(writer,value.F95,options);
+        }
+        if (tracker.F96)
+        {
+            writer.WritePropertyName("F96");
+            JsonSerializer.Serialize(writer,value.F96,options);
+        }
+        if (tracker.F97)
+        {
+            writer.WritePropertyName("F97");
+            JsonSerializer.Serialize(writer,value.F97,options);
+        }
+        if (tracker.F98)
+        {
+            writer.WritePropertyName("F98");
+            JsonSerializer.Serialize(writer,value.F98,options);
+        }
+        if (tracker.F99)
+        {
+            writer.WritePropertyName("F99");
+            JsonSerializer.Serialize(writer,value.F99,options);
+        }
+        if (tracker.F100)
+        {
+            writer.WritePropertyName("F100");
+            JsonSerializer.Serialize(writer,value.F100,options);
+        }
+        if (tracker.F101)
+        {
+            writer.WritePropertyName("F101");
+            JsonSerializer.Serialize(writer,value.F101,options);
+        }
+        if (tracker.F102)
+        {
+            writer.WritePropertyName("F102");
+            JsonSerializer.Serialize(writer,value.F102,options);
+        }
+        if (tracker.F103)
+        {
+            writer.WritePropertyName("F103");
+            JsonSerializer.Serialize(writer,value.F103,options);
+        }
+        if (tracker.F104)
+        {
+            writer.WritePropertyName("F104");
+            JsonSerializer.Serialize(writer,value.F104,options);
+        }
+        if (tracker.F105)
+        {
+            writer.WritePropertyName("F105");
+            JsonSerializer.Serialize(writer,value.F105,options);
+        }
+        if (tracker.F106)
+        {
+            writer.WritePropertyName("F106");
+            JsonSerializer.Serialize(writer,value.F106,options);
+        }
+        if (tracker.F107)
+        {
+            writer.WritePropertyName("F107");
+            JsonSerializer.Serialize(writer,value.F107,options);
+        }
+        if (tracker.F108)
+        {
+            writer.WritePropertyName("F108");
+            JsonSerializer.Serialize(writer,value.F108,options);
+        }
+        if (tracker.F109)
+        {
+            writer.WritePropertyName("F109");
+            JsonSerializer.Serialize(writer,value.F109,options);
+        }
+        if (tracker.F110)
+        {
+            writer.WritePropertyName("F110");
+            JsonSerializer.Serialize(writer,value.F110,options);
+        }
+        if (tracker.F111)
+        {
+            writer.WritePropertyName("F111");
+            JsonSerializer.Serialize(writer,value.F111,options);
+        }
+        if (tracker.F112)
+        {
+            writer.WritePropertyName("F112");
+            JsonSerializer.Serialize(writer,value.F112,options);
+        }
+        if (tracker.F113)
+        {
+            writer.WritePropertyName("F113");
+            JsonSerializer.Serialize(writer,value.F113,options);
+        }
+        if (tracker.F114)
+        {
+            writer.WritePropertyName("F114");
+            JsonSerializer.Serialize(writer,value.F114,options);
+        }
+        if (tracker.F115)
+        {
+            writer.WritePropertyName("F115");
+            JsonSerializer.Serialize(writer,value.F115,options);
+        }
+        if (tracker.F116)
+        {
+            writer.WritePropertyName("F116");
+            JsonSerializer.Serialize(writer,value.F116,options);
+        }
+        if (tracker.F117)
+        {
+            writer.WritePropertyName("F117");
+            JsonSerializer.Serialize(writer,value.F117,options);
+        }
+        if (tracker.F118)
+        {
+            writer.WritePropertyName("F118");
+            JsonSerializer.Serialize(writer,value.F118,options);
+        }
+        if (tracker.F119)
+        {
+            writer.WritePropertyName("F119");
+            JsonSerializer.Serialize(writer,value.F119,options);
+        }
+        if (tracker.F120)
+        {
+            writer.WritePropertyName("F120");
+            JsonSerializer.Serialize(writer,value.F120,options);
+        }
+        if (tracker.F121)
+        {
+            writer.WritePropertyName("F121");
+            JsonSerializer.Serialize(writer,value.F121,options);
+        }
+        if (tracker.F122)
+        {
+            writer.WritePropertyName("F122");
+            JsonSerializer.Serialize(writer,value.F122,options);
+        }
+        if (tracker.F123)
+        {
+            writer.WritePropertyName("F123");
+            JsonSerializer.Serialize(writer,value.F123,options);
+        }
+        if (tracker.F124)
+        {
+            writer.WritePropertyName("F124");
+            JsonSerializer.Serialize(writer,value.F124,options);
+        }
+        if (tracker.F125)
+        {
+            writer.WritePropertyName("F125");
+            JsonSerializer.Serialize(writer,value.F125,options);
+        }
+        if (tracker.F126)
+        {
+            writer.WritePropertyName("F126");
+            JsonSerializer.Serialize(writer,value.F126,options);
+        }
+        if (tracker.F127)
+        {
+            writer.WritePropertyName("F127");
+            JsonSerializer.Serialize(writer,value.F127,options);
+        }
+        if (tracker.F128)
+        {
+            writer.WritePropertyName("F128");
+            JsonSerializer.Serialize(writer,value.F128,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

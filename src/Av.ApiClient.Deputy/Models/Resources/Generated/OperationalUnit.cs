@@ -6,60 +6,229 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<OperationalUnit>))]
-public class OperationalUnit : IResource
+public class OperationalUnit : IResource, IHasPropertyTracker<OperationalUnitPropertyTracker>
 {
+    private long? _Id;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private long? _Company;
+    private string? _WorkType;
+    private long? _ParentOperationalUnit;
+    private string? _OperationalUnitName;
+    private bool? _Active;
+    private string? _PayrollExportName;
+    private long? _Address;
+    private long? _Contact;
+    private long? _RosterSortOrder;
+    private bool? _ShowOnRoster;
+    private string? _Colour;
+    private long? _RosterActiveHoursSchedule;
+    private double? _DailyRosterBudget;
+    private long? _OperationalUnitType;
+    private OperationalUnitPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonPropertyName("Company")]
-    public long? Company { get; set; }
+    public long? Company { get => _Company; set { _Company = value; _tracker.Company = true; }}
     [JsonPropertyName("WorkType")]
-    public string? WorkType { get; set; }
+    public string? WorkType { get => _WorkType; set { _WorkType = value; _tracker.WorkType = true; }}
     [JsonPropertyName("ParentOperationalUnit")]
-    public long? ParentOperationalUnit { get; set; }
+    public long? ParentOperationalUnit { get => _ParentOperationalUnit; set { _ParentOperationalUnit = value; _tracker.ParentOperationalUnit = true; }}
     [JsonPropertyName("OperationalUnitName")]
-    public string? OperationalUnitName { get; set; }
+    public string? OperationalUnitName { get => _OperationalUnitName; set { _OperationalUnitName = value; _tracker.OperationalUnitName = true; }}
     [JsonPropertyName("Active")]
-    public bool? Active { get; set; }
+    public bool? Active { get => _Active; set { _Active = value; _tracker.Active = true; }}
     [JsonPropertyName("PayrollExportName")]
-    public string? PayrollExportName { get; set; }
+    public string? PayrollExportName { get => _PayrollExportName; set { _PayrollExportName = value; _tracker.PayrollExportName = true; }}
     [JsonPropertyName("Address")]
-    public long? Address { get; set; }
+    public long? Address { get => _Address; set { _Address = value; _tracker.Address = true; }}
     [JsonPropertyName("Contact")]
-    public long? Contact { get; set; }
+    public long? Contact { get => _Contact; set { _Contact = value; _tracker.Contact = true; }}
     [JsonPropertyName("RosterSortOrder")]
-    public long? RosterSortOrder { get; set; }
+    public long? RosterSortOrder { get => _RosterSortOrder; set { _RosterSortOrder = value; _tracker.RosterSortOrder = true; }}
     [JsonPropertyName("ShowOnRoster")]
-    public bool? ShowOnRoster { get; set; }
+    public bool? ShowOnRoster { get => _ShowOnRoster; set { _ShowOnRoster = value; _tracker.ShowOnRoster = true; }}
     [JsonPropertyName("Colour")]
-    public string? Colour { get; set; }
+    public string? Colour { get => _Colour; set { _Colour = value; _tracker.Colour = true; }}
     [JsonPropertyName("RosterActiveHoursSchedule")]
-    public long? RosterActiveHoursSchedule { get; set; }
+    public long? RosterActiveHoursSchedule { get => _RosterActiveHoursSchedule; set { _RosterActiveHoursSchedule = value; _tracker.RosterActiveHoursSchedule = true; }}
     [JsonPropertyName("DailyRosterBudget")]
-    public double? DailyRosterBudget { get; set; }
+    public double? DailyRosterBudget { get => _DailyRosterBudget; set { _DailyRosterBudget = value; _tracker.DailyRosterBudget = true; }}
     [JsonPropertyName("OperationalUnitType")]
-    public long? OperationalUnitType { get; set; }
-
-
+    public long? OperationalUnitType { get => _OperationalUnitType; set { _OperationalUnitType = value; _tracker.OperationalUnitType = true; }}
     [JsonConverter(typeof(JoinConverter<Company>))]
     public Join<Company>? CompanyObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<OperationalUnit>))]
     public Join<OperationalUnit>? ParentOperationalUnitObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Address>))]
     public Join<Address>? AddressObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Contact>))]
     public Join<Contact>? ContactObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Schedule>))]
     public Join<Schedule>? RosterActiveHoursScheduleObject { get; set; }
+    OperationalUnitPropertyTracker IHasPropertyTracker<OperationalUnitPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<OperationalUnitPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<OperationalUnitPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class OperationalUnitPropertyTracker
+{
+    internal bool Id;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+    internal bool Company;
+    internal bool WorkType;
+    internal bool ParentOperationalUnit;
+    internal bool OperationalUnitName;
+    internal bool Active;
+    internal bool PayrollExportName;
+    internal bool Address;
+    internal bool Contact;
+    internal bool RosterSortOrder;
+    internal bool ShowOnRoster;
+    internal bool Colour;
+    internal bool RosterActiveHoursSchedule;
+    internal bool DailyRosterBudget;
+    internal bool OperationalUnitType;
+
+    internal void Clear()
+    {
+        Id = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+        Company = false;
+        WorkType = false;
+        ParentOperationalUnit = false;
+        OperationalUnitName = false;
+        Active = false;
+        PayrollExportName = false;
+        Address = false;
+        Contact = false;
+        RosterSortOrder = false;
+        ShowOnRoster = false;
+        Colour = false;
+        RosterActiveHoursSchedule = false;
+        DailyRosterBudget = false;
+        OperationalUnitType = false;
+    }
+
+}
+
+internal class OperationalUnitSerializer : JsonConverter<OperationalUnit>
+{
+    public override OperationalUnit? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,OperationalUnit value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<OperationalUnitPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        if (tracker.Company)
+        {
+            writer.WritePropertyName("Company");
+            JsonSerializer.Serialize(writer,value.Company,options);
+        }
+        if (tracker.WorkType)
+        {
+            writer.WritePropertyName("WorkType");
+            JsonSerializer.Serialize(writer,value.WorkType,options);
+        }
+        if (tracker.ParentOperationalUnit)
+        {
+            writer.WritePropertyName("ParentOperationalUnit");
+            JsonSerializer.Serialize(writer,value.ParentOperationalUnit,options);
+        }
+        if (tracker.OperationalUnitName)
+        {
+            writer.WritePropertyName("OperationalUnitName");
+            JsonSerializer.Serialize(writer,value.OperationalUnitName,options);
+        }
+        if (tracker.Active)
+        {
+            writer.WritePropertyName("Active");
+            JsonSerializer.Serialize(writer,value.Active,options);
+        }
+        if (tracker.PayrollExportName)
+        {
+            writer.WritePropertyName("PayrollExportName");
+            JsonSerializer.Serialize(writer,value.PayrollExportName,options);
+        }
+        if (tracker.Address)
+        {
+            writer.WritePropertyName("Address");
+            JsonSerializer.Serialize(writer,value.Address,options);
+        }
+        if (tracker.Contact)
+        {
+            writer.WritePropertyName("Contact");
+            JsonSerializer.Serialize(writer,value.Contact,options);
+        }
+        if (tracker.RosterSortOrder)
+        {
+            writer.WritePropertyName("RosterSortOrder");
+            JsonSerializer.Serialize(writer,value.RosterSortOrder,options);
+        }
+        if (tracker.ShowOnRoster)
+        {
+            writer.WritePropertyName("ShowOnRoster");
+            JsonSerializer.Serialize(writer,value.ShowOnRoster,options);
+        }
+        if (tracker.Colour)
+        {
+            writer.WritePropertyName("Colour");
+            JsonSerializer.Serialize(writer,value.Colour,options);
+        }
+        if (tracker.RosterActiveHoursSchedule)
+        {
+            writer.WritePropertyName("RosterActiveHoursSchedule");
+            JsonSerializer.Serialize(writer,value.RosterActiveHoursSchedule,options);
+        }
+        if (tracker.DailyRosterBudget)
+        {
+            writer.WritePropertyName("DailyRosterBudget");
+            JsonSerializer.Serialize(writer,value.DailyRosterBudget,options);
+        }
+        if (tracker.OperationalUnitType)
+        {
+            writer.WritePropertyName("OperationalUnitType");
+            JsonSerializer.Serialize(writer,value.OperationalUnitType,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

@@ -6,70 +6,305 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Task>))]
-public class Task : IResource
+public class Task : IResource, IHasPropertyTracker<TaskPropertyTracker>
 {
+    private long? _Id;
+    private long? _TaskSetupId;
+    private long? _OpUnitId;
+    private long? _GroupId;
+    private long? _DayTimestamp;
+    private DateTimeOffset? _Date;
+    private long? _OrigDayTimestamp;
+    private DateTimeOffset? _OrigDate;
+    private long? _AvailableAfterTimestamp;
+    private DateTimeOffset? _DueDate;
+    private long? _DueTimestamp;
+    private bool? _RepeatIfNotCompleted;
+    private long? _SortOrder;
+    private long? _Type;
+    private string? _Question;
+    private string? _Answer;
+    private string? _Comment;
+    private long? _UserEntry;
+    private long? _UserPerformTask;
+    private long? _UserResponsible;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private long? _TsCompleted;
+    private long? _Start;
+    private long? _End;
+    private long? _Duration;
+    private TaskPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("TaskSetupId")]
-    public long? TaskSetupId { get; set; }
+    public long? TaskSetupId { get => _TaskSetupId; set { _TaskSetupId = value; _tracker.TaskSetupId = true; }}
     [JsonPropertyName("OpUnitId")]
-    public long? OpUnitId { get; set; }
+    public long? OpUnitId { get => _OpUnitId; set { _OpUnitId = value; _tracker.OpUnitId = true; }}
     [JsonPropertyName("GroupId")]
-    public long? GroupId { get; set; }
+    public long? GroupId { get => _GroupId; set { _GroupId = value; _tracker.GroupId = true; }}
     [JsonPropertyName("DayTimestamp")]
-    public long? DayTimestamp { get; set; }
+    public long? DayTimestamp { get => _DayTimestamp; set { _DayTimestamp = value; _tracker.DayTimestamp = true; }}
     [JsonPropertyName("Date")]
-    public DateTimeOffset? Date { get; set; }
+    public DateTimeOffset? Date { get => _Date; set { _Date = value; _tracker.Date = true; }}
     [JsonPropertyName("OrigDayTimestamp")]
-    public long? OrigDayTimestamp { get; set; }
+    public long? OrigDayTimestamp { get => _OrigDayTimestamp; set { _OrigDayTimestamp = value; _tracker.OrigDayTimestamp = true; }}
     [JsonPropertyName("OrigDate")]
-    public DateTimeOffset? OrigDate { get; set; }
+    public DateTimeOffset? OrigDate { get => _OrigDate; set { _OrigDate = value; _tracker.OrigDate = true; }}
     [JsonPropertyName("AvailableAfterTimestamp")]
-    public long? AvailableAfterTimestamp { get; set; }
+    public long? AvailableAfterTimestamp { get => _AvailableAfterTimestamp; set { _AvailableAfterTimestamp = value; _tracker.AvailableAfterTimestamp = true; }}
     [JsonPropertyName("DueDate")]
-    public DateTimeOffset? DueDate { get; set; }
+    public DateTimeOffset? DueDate { get => _DueDate; set { _DueDate = value; _tracker.DueDate = true; }}
     [JsonPropertyName("DueTimestamp")]
-    public long? DueTimestamp { get; set; }
+    public long? DueTimestamp { get => _DueTimestamp; set { _DueTimestamp = value; _tracker.DueTimestamp = true; }}
     [JsonPropertyName("RepeatIfNotCompleted")]
-    public bool? RepeatIfNotCompleted { get; set; }
+    public bool? RepeatIfNotCompleted { get => _RepeatIfNotCompleted; set { _RepeatIfNotCompleted = value; _tracker.RepeatIfNotCompleted = true; }}
     [JsonPropertyName("SortOrder")]
-    public long? SortOrder { get; set; }
+    public long? SortOrder { get => _SortOrder; set { _SortOrder = value; _tracker.SortOrder = true; }}
     [JsonPropertyName("Type")]
-    public long? Type { get; set; }
+    public long? Type { get => _Type; set { _Type = value; _tracker.Type = true; }}
     [JsonPropertyName("Question")]
-    public string? Question { get; set; }
+    public string? Question { get => _Question; set { _Question = value; _tracker.Question = true; }}
     [JsonPropertyName("Answer")]
-    public string? Answer { get; set; }
+    public string? Answer { get => _Answer; set { _Answer = value; _tracker.Answer = true; }}
     [JsonPropertyName("Comment")]
-    public string? Comment { get; set; }
+    public string? Comment { get => _Comment; set { _Comment = value; _tracker.Comment = true; }}
     [JsonPropertyName("UserEntry")]
-    public long? UserEntry { get; set; }
+    public long? UserEntry { get => _UserEntry; set { _UserEntry = value; _tracker.UserEntry = true; }}
     [JsonPropertyName("UserPerformTask")]
-    public long? UserPerformTask { get; set; }
+    public long? UserPerformTask { get => _UserPerformTask; set { _UserPerformTask = value; _tracker.UserPerformTask = true; }}
     [JsonPropertyName("UserResponsible")]
-    public long? UserResponsible { get; set; }
+    public long? UserResponsible { get => _UserResponsible; set { _UserResponsible = value; _tracker.UserResponsible = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonPropertyName("TsCompleted")]
-    public long? TsCompleted { get; set; }
+    public long? TsCompleted { get => _TsCompleted; set { _TsCompleted = value; _tracker.TsCompleted = true; }}
     [JsonPropertyName("Start")]
-    public long? Start { get; set; }
+    public long? Start { get => _Start; set { _Start = value; _tracker.Start = true; }}
     [JsonPropertyName("End")]
-    public long? End { get; set; }
+    public long? End { get => _End; set { _End = value; _tracker.End = true; }}
     [JsonPropertyName("Duration")]
-    public long? Duration { get; set; }
-
-
+    public long? Duration { get => _Duration; set { _Duration = value; _tracker.Duration = true; }}
     [JsonConverter(typeof(JoinConverter<TaskSetup>))]
     public Join<TaskSetup>? TaskSetup { get; set; }
-
     [JsonConverter(typeof(JoinConverter<OperationalUnit>))]
     public Join<OperationalUnit>? OpUnit { get; set; }
-
     [JsonConverter(typeof(JoinConverter<TaskGroup>))]
     public Join<TaskGroup>? Group { get; set; }
+    TaskPropertyTracker IHasPropertyTracker<TaskPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<TaskPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<TaskPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class TaskPropertyTracker
+{
+    internal bool Id;
+    internal bool TaskSetupId;
+    internal bool OpUnitId;
+    internal bool GroupId;
+    internal bool DayTimestamp;
+    internal bool Date;
+    internal bool OrigDayTimestamp;
+    internal bool OrigDate;
+    internal bool AvailableAfterTimestamp;
+    internal bool DueDate;
+    internal bool DueTimestamp;
+    internal bool RepeatIfNotCompleted;
+    internal bool SortOrder;
+    internal bool Type;
+    internal bool Question;
+    internal bool Answer;
+    internal bool Comment;
+    internal bool UserEntry;
+    internal bool UserPerformTask;
+    internal bool UserResponsible;
+    internal bool Created;
+    internal bool Modified;
+    internal bool TsCompleted;
+    internal bool Start;
+    internal bool End;
+    internal bool Duration;
+
+    internal void Clear()
+    {
+        Id = false;
+        TaskSetupId = false;
+        OpUnitId = false;
+        GroupId = false;
+        DayTimestamp = false;
+        Date = false;
+        OrigDayTimestamp = false;
+        OrigDate = false;
+        AvailableAfterTimestamp = false;
+        DueDate = false;
+        DueTimestamp = false;
+        RepeatIfNotCompleted = false;
+        SortOrder = false;
+        Type = false;
+        Question = false;
+        Answer = false;
+        Comment = false;
+        UserEntry = false;
+        UserPerformTask = false;
+        UserResponsible = false;
+        Created = false;
+        Modified = false;
+        TsCompleted = false;
+        Start = false;
+        End = false;
+        Duration = false;
+    }
+
+}
+
+internal class TaskSerializer : JsonConverter<Task>
+{
+    public override Task? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Task value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<TaskPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.TaskSetupId)
+        {
+            writer.WritePropertyName("TaskSetupId");
+            JsonSerializer.Serialize(writer,value.TaskSetupId,options);
+        }
+        if (tracker.OpUnitId)
+        {
+            writer.WritePropertyName("OpUnitId");
+            JsonSerializer.Serialize(writer,value.OpUnitId,options);
+        }
+        if (tracker.GroupId)
+        {
+            writer.WritePropertyName("GroupId");
+            JsonSerializer.Serialize(writer,value.GroupId,options);
+        }
+        if (tracker.DayTimestamp)
+        {
+            writer.WritePropertyName("DayTimestamp");
+            JsonSerializer.Serialize(writer,value.DayTimestamp,options);
+        }
+        if (tracker.Date)
+        {
+            writer.WritePropertyName("Date");
+            JsonSerializer.Serialize(writer,value.Date,options);
+        }
+        if (tracker.OrigDayTimestamp)
+        {
+            writer.WritePropertyName("OrigDayTimestamp");
+            JsonSerializer.Serialize(writer,value.OrigDayTimestamp,options);
+        }
+        if (tracker.OrigDate)
+        {
+            writer.WritePropertyName("OrigDate");
+            JsonSerializer.Serialize(writer,value.OrigDate,options);
+        }
+        if (tracker.AvailableAfterTimestamp)
+        {
+            writer.WritePropertyName("AvailableAfterTimestamp");
+            JsonSerializer.Serialize(writer,value.AvailableAfterTimestamp,options);
+        }
+        if (tracker.DueDate)
+        {
+            writer.WritePropertyName("DueDate");
+            JsonSerializer.Serialize(writer,value.DueDate,options);
+        }
+        if (tracker.DueTimestamp)
+        {
+            writer.WritePropertyName("DueTimestamp");
+            JsonSerializer.Serialize(writer,value.DueTimestamp,options);
+        }
+        if (tracker.RepeatIfNotCompleted)
+        {
+            writer.WritePropertyName("RepeatIfNotCompleted");
+            JsonSerializer.Serialize(writer,value.RepeatIfNotCompleted,options);
+        }
+        if (tracker.SortOrder)
+        {
+            writer.WritePropertyName("SortOrder");
+            JsonSerializer.Serialize(writer,value.SortOrder,options);
+        }
+        if (tracker.Type)
+        {
+            writer.WritePropertyName("Type");
+            JsonSerializer.Serialize(writer,value.Type,options);
+        }
+        if (tracker.Question)
+        {
+            writer.WritePropertyName("Question");
+            JsonSerializer.Serialize(writer,value.Question,options);
+        }
+        if (tracker.Answer)
+        {
+            writer.WritePropertyName("Answer");
+            JsonSerializer.Serialize(writer,value.Answer,options);
+        }
+        if (tracker.Comment)
+        {
+            writer.WritePropertyName("Comment");
+            JsonSerializer.Serialize(writer,value.Comment,options);
+        }
+        if (tracker.UserEntry)
+        {
+            writer.WritePropertyName("UserEntry");
+            JsonSerializer.Serialize(writer,value.UserEntry,options);
+        }
+        if (tracker.UserPerformTask)
+        {
+            writer.WritePropertyName("UserPerformTask");
+            JsonSerializer.Serialize(writer,value.UserPerformTask,options);
+        }
+        if (tracker.UserResponsible)
+        {
+            writer.WritePropertyName("UserResponsible");
+            JsonSerializer.Serialize(writer,value.UserResponsible,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        if (tracker.TsCompleted)
+        {
+            writer.WritePropertyName("TsCompleted");
+            JsonSerializer.Serialize(writer,value.TsCompleted,options);
+        }
+        if (tracker.Start)
+        {
+            writer.WritePropertyName("Start");
+            JsonSerializer.Serialize(writer,value.Start,options);
+        }
+        if (tracker.End)
+        {
+            writer.WritePropertyName("End");
+            JsonSerializer.Serialize(writer,value.End,options);
+        }
+        if (tracker.Duration)
+        {
+            writer.WritePropertyName("Duration");
+            JsonSerializer.Serialize(writer,value.Duration,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

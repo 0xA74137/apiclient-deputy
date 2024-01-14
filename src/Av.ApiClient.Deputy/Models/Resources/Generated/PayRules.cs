@@ -6,83 +6,383 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<PayRules>))]
-public class PayRules : IResource
+public class PayRules : IResource, IHasPropertyTracker<PayRulesPropertyTracker>
 {
+    private long? _Id;
+    private string? _PayTitle;
+    private long? _RemunerationType;
+    private long? _RemunerationBy;
+    private double? _AnnualSalary;
+    private double? _HourlyRate;
+    private bool? _IsMultiplier;
+    private double? _MultiplierValue;
+    private long? _MultiplierBaseRate;
+    private long? _MinimumType;
+    private long? _MaximumType;
+    private double? _MinimumValue;
+    private double? _MaximumValue;
+    private string? _MinimumShiftLength;
+    private string? _MaximumShiftLength;
+    private string? _AdvancedCalculation;
+    private bool? _IsExported;
+    private double? _UnitValue;
+    private long? _Schedule;
+    private long? _RecommendWith;
+    private long? _DexmlScript;
+    private string? _DexmlScriptParam;
+    private long? _PeriodType;
+    private long? _PayPortionRule;
+    private string? _PayrollCategory;
+    private string? _Comment;
+    private long? _RateType;
+    private string? _RateTag;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private string? _CtId;
+    private string? _CrId;
+    private string? _Config;
+    private PayRulesPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("PayTitle")]
-    public string? PayTitle { get; set; }
+    public string? PayTitle { get => _PayTitle; set { _PayTitle = value; _tracker.PayTitle = true; }}
     [JsonPropertyName("RemunerationType")]
-    public long? RemunerationType { get; set; }
+    public long? RemunerationType { get => _RemunerationType; set { _RemunerationType = value; _tracker.RemunerationType = true; }}
     [JsonPropertyName("RemunerationBy")]
-    public long? RemunerationBy { get; set; }
+    public long? RemunerationBy { get => _RemunerationBy; set { _RemunerationBy = value; _tracker.RemunerationBy = true; }}
     [JsonPropertyName("AnnualSalary")]
-    public double? AnnualSalary { get; set; }
+    public double? AnnualSalary { get => _AnnualSalary; set { _AnnualSalary = value; _tracker.AnnualSalary = true; }}
     [JsonPropertyName("HourlyRate")]
-    public double? HourlyRate { get; set; }
+    public double? HourlyRate { get => _HourlyRate; set { _HourlyRate = value; _tracker.HourlyRate = true; }}
     [JsonPropertyName("IsMultiplier")]
-    public bool? IsMultiplier { get; set; }
+    public bool? IsMultiplier { get => _IsMultiplier; set { _IsMultiplier = value; _tracker.IsMultiplier = true; }}
     [JsonPropertyName("MultiplierValue")]
-    public double? MultiplierValue { get; set; }
+    public double? MultiplierValue { get => _MultiplierValue; set { _MultiplierValue = value; _tracker.MultiplierValue = true; }}
     [JsonPropertyName("MultiplierBaseRate")]
-    public long? MultiplierBaseRate { get; set; }
+    public long? MultiplierBaseRate { get => _MultiplierBaseRate; set { _MultiplierBaseRate = value; _tracker.MultiplierBaseRate = true; }}
     [JsonPropertyName("MinimumType")]
-    public long? MinimumType { get; set; }
+    public long? MinimumType { get => _MinimumType; set { _MinimumType = value; _tracker.MinimumType = true; }}
     [JsonPropertyName("MaximumType")]
-    public long? MaximumType { get; set; }
+    public long? MaximumType { get => _MaximumType; set { _MaximumType = value; _tracker.MaximumType = true; }}
     [JsonPropertyName("MinimumValue")]
-    public double? MinimumValue { get; set; }
+    public double? MinimumValue { get => _MinimumValue; set { _MinimumValue = value; _tracker.MinimumValue = true; }}
     [JsonPropertyName("MaximumValue")]
-    public double? MaximumValue { get; set; }
+    public double? MaximumValue { get => _MaximumValue; set { _MaximumValue = value; _tracker.MaximumValue = true; }}
     [JsonPropertyName("MinimumShiftLength")]
-    public string? MinimumShiftLength { get; set; }
+    public string? MinimumShiftLength { get => _MinimumShiftLength; set { _MinimumShiftLength = value; _tracker.MinimumShiftLength = true; }}
     [JsonPropertyName("MaximumShiftLength")]
-    public string? MaximumShiftLength { get; set; }
+    public string? MaximumShiftLength { get => _MaximumShiftLength; set { _MaximumShiftLength = value; _tracker.MaximumShiftLength = true; }}
     [JsonPropertyName("AdvancedCalculation")]
-    public string? AdvancedCalculation { get; set; }
+    public string? AdvancedCalculation { get => _AdvancedCalculation; set { _AdvancedCalculation = value; _tracker.AdvancedCalculation = true; }}
     [JsonPropertyName("IsExported")]
-    public bool? IsExported { get; set; }
+    public bool? IsExported { get => _IsExported; set { _IsExported = value; _tracker.IsExported = true; }}
     [JsonPropertyName("UnitValue")]
-    public double? UnitValue { get; set; }
+    public double? UnitValue { get => _UnitValue; set { _UnitValue = value; _tracker.UnitValue = true; }}
     [JsonPropertyName("Schedule")]
-    public long? Schedule { get; set; }
+    public long? Schedule { get => _Schedule; set { _Schedule = value; _tracker.Schedule = true; }}
     [JsonPropertyName("RecommendWith")]
-    public long? RecommendWith { get; set; }
+    public long? RecommendWith { get => _RecommendWith; set { _RecommendWith = value; _tracker.RecommendWith = true; }}
     [JsonPropertyName("DexmlScript")]
-    public long? DexmlScript { get; set; }
+    public long? DexmlScript { get => _DexmlScript; set { _DexmlScript = value; _tracker.DexmlScript = true; }}
     [JsonPropertyName("DexmlScriptParam")]
-    public string? DexmlScriptParam { get; set; }
+    public string? DexmlScriptParam { get => _DexmlScriptParam; set { _DexmlScriptParam = value; _tracker.DexmlScriptParam = true; }}
     [JsonPropertyName("PeriodType")]
-    public long? PeriodType { get; set; }
+    public long? PeriodType { get => _PeriodType; set { _PeriodType = value; _tracker.PeriodType = true; }}
     [JsonPropertyName("PayPortionRule")]
-    public long? PayPortionRule { get; set; }
+    public long? PayPortionRule { get => _PayPortionRule; set { _PayPortionRule = value; _tracker.PayPortionRule = true; }}
     [JsonPropertyName("PayrollCategory")]
-    public string? PayrollCategory { get; set; }
+    public string? PayrollCategory { get => _PayrollCategory; set { _PayrollCategory = value; _tracker.PayrollCategory = true; }}
     [JsonPropertyName("Comment")]
-    public string? Comment { get; set; }
+    public string? Comment { get => _Comment; set { _Comment = value; _tracker.Comment = true; }}
     [JsonPropertyName("RateType")]
-    public long? RateType { get; set; }
+    public long? RateType { get => _RateType; set { _RateType = value; _tracker.RateType = true; }}
     [JsonPropertyName("RateTag")]
-    public string? RateTag { get; set; }
+    public string? RateTag { get => _RateTag; set { _RateTag = value; _tracker.RateTag = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonPropertyName("CtId")]
-    public string? CtId { get; set; }
+    public string? CtId { get => _CtId; set { _CtId = value; _tracker.CtId = true; }}
     [JsonPropertyName("CrId")]
-    public string? CrId { get; set; }
+    public string? CrId { get => _CrId; set { _CrId = value; _tracker.CrId = true; }}
     [JsonPropertyName("Config")]
-    public string? Config { get; set; }
-
-
+    public string? Config { get => _Config; set { _Config = value; _tracker.Config = true; }}
     [JsonConverter(typeof(JoinConverter<PayRules>))]
     public Join<PayRules>? MultiplierBaseRateObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Schedule>))]
     public Join<Schedule>? ScheduleObject { get; set; }
+    PayRulesPropertyTracker IHasPropertyTracker<PayRulesPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<PayRulesPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<PayRulesPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class PayRulesPropertyTracker
+{
+    internal bool Id;
+    internal bool PayTitle;
+    internal bool RemunerationType;
+    internal bool RemunerationBy;
+    internal bool AnnualSalary;
+    internal bool HourlyRate;
+    internal bool IsMultiplier;
+    internal bool MultiplierValue;
+    internal bool MultiplierBaseRate;
+    internal bool MinimumType;
+    internal bool MaximumType;
+    internal bool MinimumValue;
+    internal bool MaximumValue;
+    internal bool MinimumShiftLength;
+    internal bool MaximumShiftLength;
+    internal bool AdvancedCalculation;
+    internal bool IsExported;
+    internal bool UnitValue;
+    internal bool Schedule;
+    internal bool RecommendWith;
+    internal bool DexmlScript;
+    internal bool DexmlScriptParam;
+    internal bool PeriodType;
+    internal bool PayPortionRule;
+    internal bool PayrollCategory;
+    internal bool Comment;
+    internal bool RateType;
+    internal bool RateTag;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+    internal bool CtId;
+    internal bool CrId;
+    internal bool Config;
+
+    internal void Clear()
+    {
+        Id = false;
+        PayTitle = false;
+        RemunerationType = false;
+        RemunerationBy = false;
+        AnnualSalary = false;
+        HourlyRate = false;
+        IsMultiplier = false;
+        MultiplierValue = false;
+        MultiplierBaseRate = false;
+        MinimumType = false;
+        MaximumType = false;
+        MinimumValue = false;
+        MaximumValue = false;
+        MinimumShiftLength = false;
+        MaximumShiftLength = false;
+        AdvancedCalculation = false;
+        IsExported = false;
+        UnitValue = false;
+        Schedule = false;
+        RecommendWith = false;
+        DexmlScript = false;
+        DexmlScriptParam = false;
+        PeriodType = false;
+        PayPortionRule = false;
+        PayrollCategory = false;
+        Comment = false;
+        RateType = false;
+        RateTag = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+        CtId = false;
+        CrId = false;
+        Config = false;
+    }
+
+}
+
+internal class PayRulesSerializer : JsonConverter<PayRules>
+{
+    public override PayRules? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,PayRules value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<PayRulesPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.PayTitle)
+        {
+            writer.WritePropertyName("PayTitle");
+            JsonSerializer.Serialize(writer,value.PayTitle,options);
+        }
+        if (tracker.RemunerationType)
+        {
+            writer.WritePropertyName("RemunerationType");
+            JsonSerializer.Serialize(writer,value.RemunerationType,options);
+        }
+        if (tracker.RemunerationBy)
+        {
+            writer.WritePropertyName("RemunerationBy");
+            JsonSerializer.Serialize(writer,value.RemunerationBy,options);
+        }
+        if (tracker.AnnualSalary)
+        {
+            writer.WritePropertyName("AnnualSalary");
+            JsonSerializer.Serialize(writer,value.AnnualSalary,options);
+        }
+        if (tracker.HourlyRate)
+        {
+            writer.WritePropertyName("HourlyRate");
+            JsonSerializer.Serialize(writer,value.HourlyRate,options);
+        }
+        if (tracker.IsMultiplier)
+        {
+            writer.WritePropertyName("IsMultiplier");
+            JsonSerializer.Serialize(writer,value.IsMultiplier,options);
+        }
+        if (tracker.MultiplierValue)
+        {
+            writer.WritePropertyName("MultiplierValue");
+            JsonSerializer.Serialize(writer,value.MultiplierValue,options);
+        }
+        if (tracker.MultiplierBaseRate)
+        {
+            writer.WritePropertyName("MultiplierBaseRate");
+            JsonSerializer.Serialize(writer,value.MultiplierBaseRate,options);
+        }
+        if (tracker.MinimumType)
+        {
+            writer.WritePropertyName("MinimumType");
+            JsonSerializer.Serialize(writer,value.MinimumType,options);
+        }
+        if (tracker.MaximumType)
+        {
+            writer.WritePropertyName("MaximumType");
+            JsonSerializer.Serialize(writer,value.MaximumType,options);
+        }
+        if (tracker.MinimumValue)
+        {
+            writer.WritePropertyName("MinimumValue");
+            JsonSerializer.Serialize(writer,value.MinimumValue,options);
+        }
+        if (tracker.MaximumValue)
+        {
+            writer.WritePropertyName("MaximumValue");
+            JsonSerializer.Serialize(writer,value.MaximumValue,options);
+        }
+        if (tracker.MinimumShiftLength)
+        {
+            writer.WritePropertyName("MinimumShiftLength");
+            JsonSerializer.Serialize(writer,value.MinimumShiftLength,options);
+        }
+        if (tracker.MaximumShiftLength)
+        {
+            writer.WritePropertyName("MaximumShiftLength");
+            JsonSerializer.Serialize(writer,value.MaximumShiftLength,options);
+        }
+        if (tracker.AdvancedCalculation)
+        {
+            writer.WritePropertyName("AdvancedCalculation");
+            JsonSerializer.Serialize(writer,value.AdvancedCalculation,options);
+        }
+        if (tracker.IsExported)
+        {
+            writer.WritePropertyName("IsExported");
+            JsonSerializer.Serialize(writer,value.IsExported,options);
+        }
+        if (tracker.UnitValue)
+        {
+            writer.WritePropertyName("UnitValue");
+            JsonSerializer.Serialize(writer,value.UnitValue,options);
+        }
+        if (tracker.Schedule)
+        {
+            writer.WritePropertyName("Schedule");
+            JsonSerializer.Serialize(writer,value.Schedule,options);
+        }
+        if (tracker.RecommendWith)
+        {
+            writer.WritePropertyName("RecommendWith");
+            JsonSerializer.Serialize(writer,value.RecommendWith,options);
+        }
+        if (tracker.DexmlScript)
+        {
+            writer.WritePropertyName("DexmlScript");
+            JsonSerializer.Serialize(writer,value.DexmlScript,options);
+        }
+        if (tracker.DexmlScriptParam)
+        {
+            writer.WritePropertyName("DexmlScriptParam");
+            JsonSerializer.Serialize(writer,value.DexmlScriptParam,options);
+        }
+        if (tracker.PeriodType)
+        {
+            writer.WritePropertyName("PeriodType");
+            JsonSerializer.Serialize(writer,value.PeriodType,options);
+        }
+        if (tracker.PayPortionRule)
+        {
+            writer.WritePropertyName("PayPortionRule");
+            JsonSerializer.Serialize(writer,value.PayPortionRule,options);
+        }
+        if (tracker.PayrollCategory)
+        {
+            writer.WritePropertyName("PayrollCategory");
+            JsonSerializer.Serialize(writer,value.PayrollCategory,options);
+        }
+        if (tracker.Comment)
+        {
+            writer.WritePropertyName("Comment");
+            JsonSerializer.Serialize(writer,value.Comment,options);
+        }
+        if (tracker.RateType)
+        {
+            writer.WritePropertyName("RateType");
+            JsonSerializer.Serialize(writer,value.RateType,options);
+        }
+        if (tracker.RateTag)
+        {
+            writer.WritePropertyName("RateTag");
+            JsonSerializer.Serialize(writer,value.RateTag,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        if (tracker.CtId)
+        {
+            writer.WritePropertyName("CtId");
+            JsonSerializer.Serialize(writer,value.CtId,options);
+        }
+        if (tracker.CrId)
+        {
+            writer.WritePropertyName("CrId");
+            JsonSerializer.Serialize(writer,value.CrId,options);
+        }
+        if (tracker.Config)
+        {
+            writer.WritePropertyName("Config");
+            JsonSerializer.Serialize(writer,value.Config,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

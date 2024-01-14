@@ -6,32 +6,159 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Country>))]
-public class Country : IResource
+public class Country : IResource, IHasPropertyTracker<CountryPropertyTracker>
 {
+    private long? _Id;
+    private string? _Code;
+    private string? _CodeA3;
+    private string? _Region;
+    private bool? _Active;
+    private long? _SortOrder;
+    private string? _Country;
+    private string? _ZipValidatePreg;
+    private string? _PhoneDisplayPreg;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private CountryPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Code")]
-    public string? Code { get; set; }
+    public string? Code { get => _Code; set { _Code = value; _tracker.Code = true; }}
     [JsonPropertyName("CodeA3")]
-    public string? CodeA3 { get; set; }
+    public string? CodeA3 { get => _CodeA3; set { _CodeA3 = value; _tracker.CodeA3 = true; }}
     [JsonPropertyName("Region")]
-    public string? Region { get; set; }
+    public string? Region { get => _Region; set { _Region = value; _tracker.Region = true; }}
     [JsonPropertyName("Active")]
-    public bool? Active { get; set; }
+    public bool? Active { get => _Active; set { _Active = value; _tracker.Active = true; }}
     [JsonPropertyName("SortOrder")]
-    public long? SortOrder { get; set; }
+    public long? SortOrder { get => _SortOrder; set { _SortOrder = value; _tracker.SortOrder = true; }}
     [JsonPropertyName("Country")]
-    public string? CountryValue { get; set; }
+    public string? CountryValue { get => _Country; set { _Country = value; _tracker.CountryValue = true; }}
     [JsonPropertyName("ZipValidatePreg")]
-    public string? ZipValidatePreg { get; set; }
+    public string? ZipValidatePreg { get => _ZipValidatePreg; set { _ZipValidatePreg = value; _tracker.ZipValidatePreg = true; }}
     [JsonPropertyName("PhoneDisplayPreg")]
-    public string? PhoneDisplayPreg { get; set; }
+    public string? PhoneDisplayPreg { get => _PhoneDisplayPreg; set { _PhoneDisplayPreg = value; _tracker.PhoneDisplayPreg = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    CountryPropertyTracker IHasPropertyTracker<CountryPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<CountryPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<CountryPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class CountryPropertyTracker
+{
+    internal bool Id;
+    internal bool Code;
+    internal bool CodeA3;
+    internal bool Region;
+    internal bool Active;
+    internal bool SortOrder;
+    internal bool CountryValue;
+    internal bool ZipValidatePreg;
+    internal bool PhoneDisplayPreg;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Code = false;
+        CodeA3 = false;
+        Region = false;
+        Active = false;
+        SortOrder = false;
+        CountryValue = false;
+        ZipValidatePreg = false;
+        PhoneDisplayPreg = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class CountrySerializer : JsonConverter<Country>
+{
+    public override Country? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Country value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<CountryPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Code)
+        {
+            writer.WritePropertyName("Code");
+            JsonSerializer.Serialize(writer,value.Code,options);
+        }
+        if (tracker.CodeA3)
+        {
+            writer.WritePropertyName("CodeA3");
+            JsonSerializer.Serialize(writer,value.CodeA3,options);
+        }
+        if (tracker.Region)
+        {
+            writer.WritePropertyName("Region");
+            JsonSerializer.Serialize(writer,value.Region,options);
+        }
+        if (tracker.Active)
+        {
+            writer.WritePropertyName("Active");
+            JsonSerializer.Serialize(writer,value.Active,options);
+        }
+        if (tracker.SortOrder)
+        {
+            writer.WritePropertyName("SortOrder");
+            JsonSerializer.Serialize(writer,value.SortOrder,options);
+        }
+        if (tracker.Country)
+        {
+            writer.WritePropertyName("Country");
+            JsonSerializer.Serialize(writer,value.CountryValue,options);
+        }
+        if (tracker.ZipValidatePreg)
+        {
+            writer.WritePropertyName("ZipValidatePreg");
+            JsonSerializer.Serialize(writer,value.ZipValidatePreg,options);
+        }
+        if (tracker.PhoneDisplayPreg)
+        {
+            writer.WritePropertyName("PhoneDisplayPreg");
+            JsonSerializer.Serialize(writer,value.PhoneDisplayPreg,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

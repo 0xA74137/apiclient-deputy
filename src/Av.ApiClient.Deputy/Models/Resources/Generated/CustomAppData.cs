@@ -6,34 +6,169 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<CustomAppData>))]
-public class CustomAppData : IResource
+public class CustomAppData : IResource, IHasPropertyTracker<CustomAppDataPropertyTracker>
 {
+    private long? _Id;
+    private string? _DocumentId;
+    private string? _Data;
+    private long? _KeyInt;
+    private string? _KeyString;
+    private string? _Label;
+    private long? _OperationalUnit;
+    private long? _Employee;
+    private string? _Permission;
+    private bool? _Deleted;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private CustomAppDataPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("DocumentId")]
-    public string? DocumentId { get; set; }
+    public string? DocumentId { get => _DocumentId; set { _DocumentId = value; _tracker.DocumentId = true; }}
     [JsonPropertyName("Data")]
-    public string? Data { get; set; }
+    public string? Data { get => _Data; set { _Data = value; _tracker.Data = true; }}
     [JsonPropertyName("KeyInt")]
-    public long? KeyInt { get; set; }
+    public long? KeyInt { get => _KeyInt; set { _KeyInt = value; _tracker.KeyInt = true; }}
     [JsonPropertyName("KeyString")]
-    public string? KeyString { get; set; }
+    public string? KeyString { get => _KeyString; set { _KeyString = value; _tracker.KeyString = true; }}
     [JsonPropertyName("Label")]
-    public string? Label { get; set; }
+    public string? Label { get => _Label; set { _Label = value; _tracker.Label = true; }}
     [JsonPropertyName("OperationalUnit")]
-    public long? OperationalUnit { get; set; }
+    public long? OperationalUnit { get => _OperationalUnit; set { _OperationalUnit = value; _tracker.OperationalUnit = true; }}
     [JsonPropertyName("Employee")]
-    public long? Employee { get; set; }
+    public long? Employee { get => _Employee; set { _Employee = value; _tracker.Employee = true; }}
     [JsonPropertyName("Permission")]
-    public string? Permission { get; set; }
+    public string? Permission { get => _Permission; set { _Permission = value; _tracker.Permission = true; }}
     [JsonPropertyName("Deleted")]
-    public bool? Deleted { get; set; }
+    public bool? Deleted { get => _Deleted; set { _Deleted = value; _tracker.Deleted = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    CustomAppDataPropertyTracker IHasPropertyTracker<CustomAppDataPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<CustomAppDataPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<CustomAppDataPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class CustomAppDataPropertyTracker
+{
+    internal bool Id;
+    internal bool DocumentId;
+    internal bool Data;
+    internal bool KeyInt;
+    internal bool KeyString;
+    internal bool Label;
+    internal bool OperationalUnit;
+    internal bool Employee;
+    internal bool Permission;
+    internal bool Deleted;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        DocumentId = false;
+        Data = false;
+        KeyInt = false;
+        KeyString = false;
+        Label = false;
+        OperationalUnit = false;
+        Employee = false;
+        Permission = false;
+        Deleted = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class CustomAppDataSerializer : JsonConverter<CustomAppData>
+{
+    public override CustomAppData? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,CustomAppData value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<CustomAppDataPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.DocumentId)
+        {
+            writer.WritePropertyName("DocumentId");
+            JsonSerializer.Serialize(writer,value.DocumentId,options);
+        }
+        if (tracker.Data)
+        {
+            writer.WritePropertyName("Data");
+            JsonSerializer.Serialize(writer,value.Data,options);
+        }
+        if (tracker.KeyInt)
+        {
+            writer.WritePropertyName("KeyInt");
+            JsonSerializer.Serialize(writer,value.KeyInt,options);
+        }
+        if (tracker.KeyString)
+        {
+            writer.WritePropertyName("KeyString");
+            JsonSerializer.Serialize(writer,value.KeyString,options);
+        }
+        if (tracker.Label)
+        {
+            writer.WritePropertyName("Label");
+            JsonSerializer.Serialize(writer,value.Label,options);
+        }
+        if (tracker.OperationalUnit)
+        {
+            writer.WritePropertyName("OperationalUnit");
+            JsonSerializer.Serialize(writer,value.OperationalUnit,options);
+        }
+        if (tracker.Employee)
+        {
+            writer.WritePropertyName("Employee");
+            JsonSerializer.Serialize(writer,value.Employee,options);
+        }
+        if (tracker.Permission)
+        {
+            writer.WritePropertyName("Permission");
+            JsonSerializer.Serialize(writer,value.Permission,options);
+        }
+        if (tracker.Deleted)
+        {
+            writer.WritePropertyName("Deleted");
+            JsonSerializer.Serialize(writer,value.Deleted,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

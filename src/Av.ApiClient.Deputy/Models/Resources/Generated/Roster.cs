@@ -6,90 +6,353 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Roster>))]
-public class Roster : IResource
+public class Roster : IResource, IHasPropertyTracker<RosterPropertyTracker>
 {
+    private long? _Id;
+    private DateTimeOffset? _Date;
+    private long? _StartTime;
+    private long? _EndTime;
+    private DateTimeOffset? _Mealbreak;
+    private string? _Slots;
+    private double? _TotalTime;
+    private double? _Cost;
+    private long? _OperationalUnit;
+    private long? _Employee;
+    private string? _Comment;
+    private string? _Warning;
+    private string? _WarningOverrideComment;
+    private bool? _Published;
+    private long? _MatchedByTimesheet;
+    private long? _CustomFieldData;
+    private bool? _Open;
+    private bool? _ApprovalRequired;
+    private long? _ConfirmStatus;
+    private string? _ConfirmComment;
+    private long? _ConfirmBy;
+    private long? _ConfirmTime;
+    private long? _SwapStatus;
+    private long? _SwapManageBy;
+    private long? _ShiftTemplate;
+    private long? _ConnectStatus;
+    private long? _ParentId;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private RosterPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Date")]
-    public DateTimeOffset? Date { get; set; }
+    public DateTimeOffset? Date { get => _Date; set { _Date = value; _tracker.Date = true; }}
     [JsonPropertyName("StartTime")]
-    public long? StartTime { get; set; }
+    public long? StartTime { get => _StartTime; set { _StartTime = value; _tracker.StartTime = true; }}
     [JsonPropertyName("EndTime")]
-    public long? EndTime { get; set; }
+    public long? EndTime { get => _EndTime; set { _EndTime = value; _tracker.EndTime = true; }}
     [JsonPropertyName("Mealbreak")]
-    public DateTimeOffset? Mealbreak { get; set; }
+    public DateTimeOffset? Mealbreak { get => _Mealbreak; set { _Mealbreak = value; _tracker.Mealbreak = true; }}
     [JsonPropertyName("Slots")]
-    public string? Slots { get; set; }
+    public string? Slots { get => _Slots; set { _Slots = value; _tracker.Slots = true; }}
     [JsonPropertyName("TotalTime")]
-    public double? TotalTime { get; set; }
+    public double? TotalTime { get => _TotalTime; set { _TotalTime = value; _tracker.TotalTime = true; }}
     [JsonPropertyName("Cost")]
-    public double? Cost { get; set; }
+    public double? Cost { get => _Cost; set { _Cost = value; _tracker.Cost = true; }}
     [JsonPropertyName("OperationalUnit")]
-    public long? OperationalUnit { get; set; }
+    public long? OperationalUnit { get => _OperationalUnit; set { _OperationalUnit = value; _tracker.OperationalUnit = true; }}
     [JsonPropertyName("Employee")]
-    public long? Employee { get; set; }
+    public long? Employee { get => _Employee; set { _Employee = value; _tracker.Employee = true; }}
     [JsonPropertyName("Comment")]
-    public string? Comment { get; set; }
+    public string? Comment { get => _Comment; set { _Comment = value; _tracker.Comment = true; }}
     [JsonPropertyName("Warning")]
-    public string? Warning { get; set; }
+    public string? Warning { get => _Warning; set { _Warning = value; _tracker.Warning = true; }}
     [JsonPropertyName("WarningOverrideComment")]
-    public string? WarningOverrideComment { get; set; }
+    public string? WarningOverrideComment { get => _WarningOverrideComment; set { _WarningOverrideComment = value; _tracker.WarningOverrideComment = true; }}
     [JsonPropertyName("Published")]
-    public bool? Published { get; set; }
+    public bool? Published { get => _Published; set { _Published = value; _tracker.Published = true; }}
     [JsonPropertyName("MatchedByTimesheet")]
-    public long? MatchedByTimesheet { get; set; }
+    public long? MatchedByTimesheet { get => _MatchedByTimesheet; set { _MatchedByTimesheet = value; _tracker.MatchedByTimesheet = true; }}
     [JsonPropertyName("CustomFieldData")]
-    public long? CustomFieldData { get; set; }
+    public long? CustomFieldData { get => _CustomFieldData; set { _CustomFieldData = value; _tracker.CustomFieldData = true; }}
     [JsonPropertyName("Open")]
-    public bool? Open { get; set; }
+    public bool? Open { get => _Open; set { _Open = value; _tracker.Open = true; }}
     [JsonPropertyName("ApprovalRequired")]
-    public bool? ApprovalRequired { get; set; }
+    public bool? ApprovalRequired { get => _ApprovalRequired; set { _ApprovalRequired = value; _tracker.ApprovalRequired = true; }}
     [JsonPropertyName("ConfirmStatus")]
-    public long? ConfirmStatus { get; set; }
+    public long? ConfirmStatus { get => _ConfirmStatus; set { _ConfirmStatus = value; _tracker.ConfirmStatus = true; }}
     [JsonPropertyName("ConfirmComment")]
-    public string? ConfirmComment { get; set; }
+    public string? ConfirmComment { get => _ConfirmComment; set { _ConfirmComment = value; _tracker.ConfirmComment = true; }}
     [JsonPropertyName("ConfirmBy")]
-    public long? ConfirmBy { get; set; }
+    public long? ConfirmBy { get => _ConfirmBy; set { _ConfirmBy = value; _tracker.ConfirmBy = true; }}
     [JsonPropertyName("ConfirmTime")]
-    public long? ConfirmTime { get; set; }
+    public long? ConfirmTime { get => _ConfirmTime; set { _ConfirmTime = value; _tracker.ConfirmTime = true; }}
     [JsonPropertyName("SwapStatus")]
-    public long? SwapStatus { get; set; }
+    public long? SwapStatus { get => _SwapStatus; set { _SwapStatus = value; _tracker.SwapStatus = true; }}
     [JsonPropertyName("SwapManageBy")]
-    public long? SwapManageBy { get; set; }
+    public long? SwapManageBy { get => _SwapManageBy; set { _SwapManageBy = value; _tracker.SwapManageBy = true; }}
     [JsonPropertyName("ShiftTemplate")]
-    public long? ShiftTemplate { get; set; }
+    public long? ShiftTemplate { get => _ShiftTemplate; set { _ShiftTemplate = value; _tracker.ShiftTemplate = true; }}
     [JsonPropertyName("ConnectStatus")]
-    public long? ConnectStatus { get; set; }
+    public long? ConnectStatus { get => _ConnectStatus; set { _ConnectStatus = value; _tracker.ConnectStatus = true; }}
     [JsonPropertyName("ParentId")]
-    public long? ParentId { get; set; }
+    public long? ParentId { get => _ParentId; set { _ParentId = value; _tracker.ParentId = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<OperationalUnit>))]
     public Join<OperationalUnit>? OperationalUnitObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Employee>))]
     public Join<Employee>? EmployeeObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Timesheet>))]
     public Join<Timesheet>? MatchedByTimesheetObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<CustomFieldData>))]
     public Join<CustomFieldData>? CustomFieldDataObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Employee>))]
     public Join<Employee>? ConfirmByObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<ShiftTemplate>))]
     public Join<ShiftTemplate>? ShiftTemplateObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Roster>))]
     public Join<Roster>? Parent { get; set; }
+    RosterPropertyTracker IHasPropertyTracker<RosterPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<RosterPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<RosterPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class RosterPropertyTracker
+{
+    internal bool Id;
+    internal bool Date;
+    internal bool StartTime;
+    internal bool EndTime;
+    internal bool Mealbreak;
+    internal bool Slots;
+    internal bool TotalTime;
+    internal bool Cost;
+    internal bool OperationalUnit;
+    internal bool Employee;
+    internal bool Comment;
+    internal bool Warning;
+    internal bool WarningOverrideComment;
+    internal bool Published;
+    internal bool MatchedByTimesheet;
+    internal bool CustomFieldData;
+    internal bool Open;
+    internal bool ApprovalRequired;
+    internal bool ConfirmStatus;
+    internal bool ConfirmComment;
+    internal bool ConfirmBy;
+    internal bool ConfirmTime;
+    internal bool SwapStatus;
+    internal bool SwapManageBy;
+    internal bool ShiftTemplate;
+    internal bool ConnectStatus;
+    internal bool ParentId;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Date = false;
+        StartTime = false;
+        EndTime = false;
+        Mealbreak = false;
+        Slots = false;
+        TotalTime = false;
+        Cost = false;
+        OperationalUnit = false;
+        Employee = false;
+        Comment = false;
+        Warning = false;
+        WarningOverrideComment = false;
+        Published = false;
+        MatchedByTimesheet = false;
+        CustomFieldData = false;
+        Open = false;
+        ApprovalRequired = false;
+        ConfirmStatus = false;
+        ConfirmComment = false;
+        ConfirmBy = false;
+        ConfirmTime = false;
+        SwapStatus = false;
+        SwapManageBy = false;
+        ShiftTemplate = false;
+        ConnectStatus = false;
+        ParentId = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class RosterSerializer : JsonConverter<Roster>
+{
+    public override Roster? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Roster value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<RosterPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Date)
+        {
+            writer.WritePropertyName("Date");
+            JsonSerializer.Serialize(writer,value.Date,options);
+        }
+        if (tracker.StartTime)
+        {
+            writer.WritePropertyName("StartTime");
+            JsonSerializer.Serialize(writer,value.StartTime,options);
+        }
+        if (tracker.EndTime)
+        {
+            writer.WritePropertyName("EndTime");
+            JsonSerializer.Serialize(writer,value.EndTime,options);
+        }
+        if (tracker.Mealbreak)
+        {
+            writer.WritePropertyName("Mealbreak");
+            JsonSerializer.Serialize(writer,value.Mealbreak,options);
+        }
+        if (tracker.Slots)
+        {
+            writer.WritePropertyName("Slots");
+            JsonSerializer.Serialize(writer,value.Slots,options);
+        }
+        if (tracker.TotalTime)
+        {
+            writer.WritePropertyName("TotalTime");
+            JsonSerializer.Serialize(writer,value.TotalTime,options);
+        }
+        if (tracker.Cost)
+        {
+            writer.WritePropertyName("Cost");
+            JsonSerializer.Serialize(writer,value.Cost,options);
+        }
+        if (tracker.OperationalUnit)
+        {
+            writer.WritePropertyName("OperationalUnit");
+            JsonSerializer.Serialize(writer,value.OperationalUnit,options);
+        }
+        if (tracker.Employee)
+        {
+            writer.WritePropertyName("Employee");
+            JsonSerializer.Serialize(writer,value.Employee,options);
+        }
+        if (tracker.Comment)
+        {
+            writer.WritePropertyName("Comment");
+            JsonSerializer.Serialize(writer,value.Comment,options);
+        }
+        if (tracker.Warning)
+        {
+            writer.WritePropertyName("Warning");
+            JsonSerializer.Serialize(writer,value.Warning,options);
+        }
+        if (tracker.WarningOverrideComment)
+        {
+            writer.WritePropertyName("WarningOverrideComment");
+            JsonSerializer.Serialize(writer,value.WarningOverrideComment,options);
+        }
+        if (tracker.Published)
+        {
+            writer.WritePropertyName("Published");
+            JsonSerializer.Serialize(writer,value.Published,options);
+        }
+        if (tracker.MatchedByTimesheet)
+        {
+            writer.WritePropertyName("MatchedByTimesheet");
+            JsonSerializer.Serialize(writer,value.MatchedByTimesheet,options);
+        }
+        if (tracker.CustomFieldData)
+        {
+            writer.WritePropertyName("CustomFieldData");
+            JsonSerializer.Serialize(writer,value.CustomFieldData,options);
+        }
+        if (tracker.Open)
+        {
+            writer.WritePropertyName("Open");
+            JsonSerializer.Serialize(writer,value.Open,options);
+        }
+        if (tracker.ApprovalRequired)
+        {
+            writer.WritePropertyName("ApprovalRequired");
+            JsonSerializer.Serialize(writer,value.ApprovalRequired,options);
+        }
+        if (tracker.ConfirmStatus)
+        {
+            writer.WritePropertyName("ConfirmStatus");
+            JsonSerializer.Serialize(writer,value.ConfirmStatus,options);
+        }
+        if (tracker.ConfirmComment)
+        {
+            writer.WritePropertyName("ConfirmComment");
+            JsonSerializer.Serialize(writer,value.ConfirmComment,options);
+        }
+        if (tracker.ConfirmBy)
+        {
+            writer.WritePropertyName("ConfirmBy");
+            JsonSerializer.Serialize(writer,value.ConfirmBy,options);
+        }
+        if (tracker.ConfirmTime)
+        {
+            writer.WritePropertyName("ConfirmTime");
+            JsonSerializer.Serialize(writer,value.ConfirmTime,options);
+        }
+        if (tracker.SwapStatus)
+        {
+            writer.WritePropertyName("SwapStatus");
+            JsonSerializer.Serialize(writer,value.SwapStatus,options);
+        }
+        if (tracker.SwapManageBy)
+        {
+            writer.WritePropertyName("SwapManageBy");
+            JsonSerializer.Serialize(writer,value.SwapManageBy,options);
+        }
+        if (tracker.ShiftTemplate)
+        {
+            writer.WritePropertyName("ShiftTemplate");
+            JsonSerializer.Serialize(writer,value.ShiftTemplate,options);
+        }
+        if (tracker.ConnectStatus)
+        {
+            writer.WritePropertyName("ConnectStatus");
+            JsonSerializer.Serialize(writer,value.ConnectStatus,options);
+        }
+        if (tracker.ParentId)
+        {
+            writer.WritePropertyName("ParentId");
+            JsonSerializer.Serialize(writer,value.ParentId,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

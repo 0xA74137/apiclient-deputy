@@ -6,26 +6,129 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Category>))]
-public class Category : IResource
+public class Category : IResource, IHasPropertyTracker<CategoryPropertyTracker>
 {
+    private long? _Id;
+    private string? _Category;
+    private string? _Group;
+    private long? _SortOrder;
+    private bool? _Stafflog;
+    private bool? _System;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private CategoryPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Category")]
-    public string? CategoryValue { get; set; }
+    public string? CategoryValue { get => _Category; set { _Category = value; _tracker.CategoryValue = true; }}
     [JsonPropertyName("Group")]
-    public string? Group { get; set; }
+    public string? Group { get => _Group; set { _Group = value; _tracker.Group = true; }}
     [JsonPropertyName("SortOrder")]
-    public long? SortOrder { get; set; }
+    public long? SortOrder { get => _SortOrder; set { _SortOrder = value; _tracker.SortOrder = true; }}
     [JsonPropertyName("Stafflog")]
-    public bool? Stafflog { get; set; }
+    public bool? Stafflog { get => _Stafflog; set { _Stafflog = value; _tracker.Stafflog = true; }}
     [JsonPropertyName("System")]
-    public bool? System { get; set; }
+    public bool? System { get => _System; set { _System = value; _tracker.System = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    CategoryPropertyTracker IHasPropertyTracker<CategoryPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<CategoryPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<CategoryPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class CategoryPropertyTracker
+{
+    internal bool Id;
+    internal bool CategoryValue;
+    internal bool Group;
+    internal bool SortOrder;
+    internal bool Stafflog;
+    internal bool System;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        CategoryValue = false;
+        Group = false;
+        SortOrder = false;
+        Stafflog = false;
+        System = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class CategorySerializer : JsonConverter<Category>
+{
+    public override Category? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Category value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<CategoryPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Category)
+        {
+            writer.WritePropertyName("Category");
+            JsonSerializer.Serialize(writer,value.CategoryValue,options);
+        }
+        if (tracker.Group)
+        {
+            writer.WritePropertyName("Group");
+            JsonSerializer.Serialize(writer,value.Group,options);
+        }
+        if (tracker.SortOrder)
+        {
+            writer.WritePropertyName("SortOrder");
+            JsonSerializer.Serialize(writer,value.SortOrder,options);
+        }
+        if (tracker.Stafflog)
+        {
+            writer.WritePropertyName("Stafflog");
+            JsonSerializer.Serialize(writer,value.Stafflog,options);
+        }
+        if (tracker.System)
+        {
+            writer.WritePropertyName("System");
+            JsonSerializer.Serialize(writer,value.System,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

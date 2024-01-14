@@ -6,47 +6,151 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<EmploymentContractLeaveRules>))]
-public class EmploymentContractLeaveRules : IResource
+public class EmploymentContractLeaveRules : IResource, IHasPropertyTracker<EmploymentContractLeaveRulesPropertyTracker>
 {
+    private long? _Id;
+    private long? _ContractId;
+    private long? _LeaveRuleId;
+    private long? _BasePayRule;
+    private long? _LoadingPayRule1;
+    private long? _LoadingPayRule2;
+    private long? _LoadingPayRule3;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private EmploymentContractLeaveRulesPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("ContractId")]
-    public long? ContractId { get; set; }
+    public long? ContractId { get => _ContractId; set { _ContractId = value; _tracker.ContractId = true; }}
     [JsonPropertyName("LeaveRuleId")]
-    public long? LeaveRuleId { get; set; }
+    public long? LeaveRuleId { get => _LeaveRuleId; set { _LeaveRuleId = value; _tracker.LeaveRuleId = true; }}
     [JsonPropertyName("BasePayRule")]
-    public long? BasePayRule { get; set; }
+    public long? BasePayRule { get => _BasePayRule; set { _BasePayRule = value; _tracker.BasePayRule = true; }}
     [JsonPropertyName("LoadingPayRule1")]
-    public long? LoadingPayRule1 { get; set; }
+    public long? LoadingPayRule1 { get => _LoadingPayRule1; set { _LoadingPayRule1 = value; _tracker.LoadingPayRule1 = true; }}
     [JsonPropertyName("LoadingPayRule2")]
-    public long? LoadingPayRule2 { get; set; }
+    public long? LoadingPayRule2 { get => _LoadingPayRule2; set { _LoadingPayRule2 = value; _tracker.LoadingPayRule2 = true; }}
     [JsonPropertyName("LoadingPayRule3")]
-    public long? LoadingPayRule3 { get; set; }
+    public long? LoadingPayRule3 { get => _LoadingPayRule3; set { _LoadingPayRule3 = value; _tracker.LoadingPayRule3 = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<EmploymentContract>))]
     public Join<EmploymentContract>? Contract { get; set; }
-
     [JsonConverter(typeof(JoinConverter<LeaveRules>))]
     public Join<LeaveRules>? LeaveRule { get; set; }
-
     [JsonConverter(typeof(JoinConverter<PayRules>))]
     public Join<PayRules>? BasePayRuleObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<PayRules>))]
     public Join<PayRules>? LoadingPayRule1Object { get; set; }
-
     [JsonConverter(typeof(JoinConverter<PayRules>))]
     public Join<PayRules>? LoadingPayRule2Object { get; set; }
-
     [JsonConverter(typeof(JoinConverter<PayRules>))]
     public Join<PayRules>? LoadingPayRule3Object { get; set; }
+    EmploymentContractLeaveRulesPropertyTracker IHasPropertyTracker<EmploymentContractLeaveRulesPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<EmploymentContractLeaveRulesPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<EmploymentContractLeaveRulesPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class EmploymentContractLeaveRulesPropertyTracker
+{
+    internal bool Id;
+    internal bool ContractId;
+    internal bool LeaveRuleId;
+    internal bool BasePayRule;
+    internal bool LoadingPayRule1;
+    internal bool LoadingPayRule2;
+    internal bool LoadingPayRule3;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        ContractId = false;
+        LeaveRuleId = false;
+        BasePayRule = false;
+        LoadingPayRule1 = false;
+        LoadingPayRule2 = false;
+        LoadingPayRule3 = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class EmploymentContractLeaveRulesSerializer : JsonConverter<EmploymentContractLeaveRules>
+{
+    public override EmploymentContractLeaveRules? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,EmploymentContractLeaveRules value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<EmploymentContractLeaveRulesPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.ContractId)
+        {
+            writer.WritePropertyName("ContractId");
+            JsonSerializer.Serialize(writer,value.ContractId,options);
+        }
+        if (tracker.LeaveRuleId)
+        {
+            writer.WritePropertyName("LeaveRuleId");
+            JsonSerializer.Serialize(writer,value.LeaveRuleId,options);
+        }
+        if (tracker.BasePayRule)
+        {
+            writer.WritePropertyName("BasePayRule");
+            JsonSerializer.Serialize(writer,value.BasePayRule,options);
+        }
+        if (tracker.LoadingPayRule1)
+        {
+            writer.WritePropertyName("LoadingPayRule1");
+            JsonSerializer.Serialize(writer,value.LoadingPayRule1,options);
+        }
+        if (tracker.LoadingPayRule2)
+        {
+            writer.WritePropertyName("LoadingPayRule2");
+            JsonSerializer.Serialize(writer,value.LoadingPayRule2,options);
+        }
+        if (tracker.LoadingPayRule3)
+        {
+            writer.WritePropertyName("LoadingPayRule3");
+            JsonSerializer.Serialize(writer,value.LoadingPayRule3,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

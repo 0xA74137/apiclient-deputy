@@ -6,30 +6,149 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<TrainingModule>))]
-public class TrainingModule : IResource
+public class TrainingModule : IResource, IHasPropertyTracker<TrainingModulePropertyTracker>
 {
+    private long? _Id;
+    private string? _Title;
+    private string? _Provider;
+    private long? _ProviderAddress;
+    private double? _Cost;
+    private long? _TimeRequiredDays;
+    private long? _RenewalPeriodMonths;
+    private string? _Comment;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private TrainingModulePropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Title")]
-    public string? Title { get; set; }
+    public string? Title { get => _Title; set { _Title = value; _tracker.Title = true; }}
     [JsonPropertyName("Provider")]
-    public string? Provider { get; set; }
+    public string? Provider { get => _Provider; set { _Provider = value; _tracker.Provider = true; }}
     [JsonPropertyName("ProviderAddress")]
-    public long? ProviderAddress { get; set; }
+    public long? ProviderAddress { get => _ProviderAddress; set { _ProviderAddress = value; _tracker.ProviderAddress = true; }}
     [JsonPropertyName("Cost")]
-    public double? Cost { get; set; }
+    public double? Cost { get => _Cost; set { _Cost = value; _tracker.Cost = true; }}
     [JsonPropertyName("TimeRequiredDays")]
-    public long? TimeRequiredDays { get; set; }
+    public long? TimeRequiredDays { get => _TimeRequiredDays; set { _TimeRequiredDays = value; _tracker.TimeRequiredDays = true; }}
     [JsonPropertyName("RenewalPeriodMonths")]
-    public long? RenewalPeriodMonths { get; set; }
+    public long? RenewalPeriodMonths { get => _RenewalPeriodMonths; set { _RenewalPeriodMonths = value; _tracker.RenewalPeriodMonths = true; }}
     [JsonPropertyName("Comment")]
-    public string? Comment { get; set; }
+    public string? Comment { get => _Comment; set { _Comment = value; _tracker.Comment = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    TrainingModulePropertyTracker IHasPropertyTracker<TrainingModulePropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<TrainingModulePropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<TrainingModulePropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class TrainingModulePropertyTracker
+{
+    internal bool Id;
+    internal bool Title;
+    internal bool Provider;
+    internal bool ProviderAddress;
+    internal bool Cost;
+    internal bool TimeRequiredDays;
+    internal bool RenewalPeriodMonths;
+    internal bool Comment;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Title = false;
+        Provider = false;
+        ProviderAddress = false;
+        Cost = false;
+        TimeRequiredDays = false;
+        RenewalPeriodMonths = false;
+        Comment = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class TrainingModuleSerializer : JsonConverter<TrainingModule>
+{
+    public override TrainingModule? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,TrainingModule value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<TrainingModulePropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Title)
+        {
+            writer.WritePropertyName("Title");
+            JsonSerializer.Serialize(writer,value.Title,options);
+        }
+        if (tracker.Provider)
+        {
+            writer.WritePropertyName("Provider");
+            JsonSerializer.Serialize(writer,value.Provider,options);
+        }
+        if (tracker.ProviderAddress)
+        {
+            writer.WritePropertyName("ProviderAddress");
+            JsonSerializer.Serialize(writer,value.ProviderAddress,options);
+        }
+        if (tracker.Cost)
+        {
+            writer.WritePropertyName("Cost");
+            JsonSerializer.Serialize(writer,value.Cost,options);
+        }
+        if (tracker.TimeRequiredDays)
+        {
+            writer.WritePropertyName("TimeRequiredDays");
+            JsonSerializer.Serialize(writer,value.TimeRequiredDays,options);
+        }
+        if (tracker.RenewalPeriodMonths)
+        {
+            writer.WritePropertyName("RenewalPeriodMonths");
+            JsonSerializer.Serialize(writer,value.RenewalPeriodMonths,options);
+        }
+        if (tracker.Comment)
+        {
+            writer.WritePropertyName("Comment");
+            JsonSerializer.Serialize(writer,value.Comment,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

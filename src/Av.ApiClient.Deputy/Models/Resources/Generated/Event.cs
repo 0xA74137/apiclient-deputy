@@ -6,32 +6,141 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Event>))]
-public class Event : IResource
+public class Event : IResource, IHasPropertyTracker<EventPropertyTracker>
 {
+    private long? _Id;
+    private string? _Title;
+    private long? _Schedule;
+    private string? _Colour;
+    private bool? _ShowOnRoster;
+    private double? _AddToBudget;
+    private bool? _BlockTimeOff;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private EventPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Title")]
-    public string? Title { get; set; }
+    public string? Title { get => _Title; set { _Title = value; _tracker.Title = true; }}
     [JsonPropertyName("Schedule")]
-    public long? Schedule { get; set; }
+    public long? Schedule { get => _Schedule; set { _Schedule = value; _tracker.Schedule = true; }}
     [JsonPropertyName("Colour")]
-    public string? Colour { get; set; }
+    public string? Colour { get => _Colour; set { _Colour = value; _tracker.Colour = true; }}
     [JsonPropertyName("ShowOnRoster")]
-    public bool? ShowOnRoster { get; set; }
+    public bool? ShowOnRoster { get => _ShowOnRoster; set { _ShowOnRoster = value; _tracker.ShowOnRoster = true; }}
     [JsonPropertyName("AddToBudget")]
-    public double? AddToBudget { get; set; }
+    public double? AddToBudget { get => _AddToBudget; set { _AddToBudget = value; _tracker.AddToBudget = true; }}
     [JsonPropertyName("BlockTimeOff")]
-    public bool? BlockTimeOff { get; set; }
+    public bool? BlockTimeOff { get => _BlockTimeOff; set { _BlockTimeOff = value; _tracker.BlockTimeOff = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<Schedule>))]
     public Join<Schedule>? ScheduleObject { get; set; }
+    EventPropertyTracker IHasPropertyTracker<EventPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<EventPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<EventPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class EventPropertyTracker
+{
+    internal bool Id;
+    internal bool Title;
+    internal bool Schedule;
+    internal bool Colour;
+    internal bool ShowOnRoster;
+    internal bool AddToBudget;
+    internal bool BlockTimeOff;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Title = false;
+        Schedule = false;
+        Colour = false;
+        ShowOnRoster = false;
+        AddToBudget = false;
+        BlockTimeOff = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class EventSerializer : JsonConverter<Event>
+{
+    public override Event? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Event value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<EventPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Title)
+        {
+            writer.WritePropertyName("Title");
+            JsonSerializer.Serialize(writer,value.Title,options);
+        }
+        if (tracker.Schedule)
+        {
+            writer.WritePropertyName("Schedule");
+            JsonSerializer.Serialize(writer,value.Schedule,options);
+        }
+        if (tracker.Colour)
+        {
+            writer.WritePropertyName("Colour");
+            JsonSerializer.Serialize(writer,value.Colour,options);
+        }
+        if (tracker.ShowOnRoster)
+        {
+            writer.WritePropertyName("ShowOnRoster");
+            JsonSerializer.Serialize(writer,value.ShowOnRoster,options);
+        }
+        if (tracker.AddToBudget)
+        {
+            writer.WritePropertyName("AddToBudget");
+            JsonSerializer.Serialize(writer,value.AddToBudget,options);
+        }
+        if (tracker.BlockTimeOff)
+        {
+            writer.WritePropertyName("BlockTimeOff");
+            JsonSerializer.Serialize(writer,value.BlockTimeOff,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

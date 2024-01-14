@@ -6,24 +6,101 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<PublicHoliday>))]
-public class PublicHoliday : IResource
+public class PublicHoliday : IResource, IHasPropertyTracker<PublicHolidayPropertyTracker>
 {
+    private long? _Id;
+    private string? _Title;
+    private long? _Schedule;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private PublicHolidayPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Title")]
-    public string? Title { get; set; }
+    public string? Title { get => _Title; set { _Title = value; _tracker.Title = true; }}
     [JsonPropertyName("Schedule")]
-    public long? Schedule { get; set; }
+    public long? Schedule { get => _Schedule; set { _Schedule = value; _tracker.Schedule = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<Schedule>))]
     public Join<Schedule>? ScheduleObject { get; set; }
+    PublicHolidayPropertyTracker IHasPropertyTracker<PublicHolidayPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<PublicHolidayPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<PublicHolidayPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class PublicHolidayPropertyTracker
+{
+    internal bool Id;
+    internal bool Title;
+    internal bool Schedule;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Title = false;
+        Schedule = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class PublicHolidaySerializer : JsonConverter<PublicHoliday>
+{
+    public override PublicHoliday? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,PublicHoliday value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<PublicHolidayPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Title)
+        {
+            writer.WritePropertyName("Title");
+            JsonSerializer.Serialize(writer,value.Title,options);
+        }
+        if (tracker.Schedule)
+        {
+            writer.WritePropertyName("Schedule");
+            JsonSerializer.Serialize(writer,value.Schedule,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

@@ -6,63 +6,257 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Leave>))]
-public class Leave : IResource
+public class Leave : IResource, IHasPropertyTracker<LeavePropertyTracker>
 {
+    private long? _Id;
+    private long? _Employee;
+    private long? _EmployeeHistory;
+    private long? _Company;
+    private long? _LeaveRule;
+    private long? _Start;
+    private DateTimeOffset? _DateStart;
+    private long? _End;
+    private DateTimeOffset? _DateEnd;
+    private double? _Days;
+    private long? _ApproverTime;
+    private long? _ApproverPay;
+    private string? _Comment;
+    private long? _Status;
+    private string? _ApprovalComment;
+    private double? _TotalHours;
+    private string? _ExternalId;
+    private bool? _AllDay;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private LeavePropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Employee")]
-    public long? Employee { get; set; }
+    public long? Employee { get => _Employee; set { _Employee = value; _tracker.Employee = true; }}
     [JsonPropertyName("EmployeeHistory")]
-    public long? EmployeeHistory { get; set; }
+    public long? EmployeeHistory { get => _EmployeeHistory; set { _EmployeeHistory = value; _tracker.EmployeeHistory = true; }}
     [JsonPropertyName("Company")]
-    public long? Company { get; set; }
+    public long? Company { get => _Company; set { _Company = value; _tracker.Company = true; }}
     [JsonPropertyName("LeaveRule")]
-    public long? LeaveRule { get; set; }
+    public long? LeaveRule { get => _LeaveRule; set { _LeaveRule = value; _tracker.LeaveRule = true; }}
     [JsonPropertyName("Start")]
-    public long? Start { get; set; }
+    public long? Start { get => _Start; set { _Start = value; _tracker.Start = true; }}
     [JsonPropertyName("DateStart")]
-    public DateTimeOffset? DateStart { get; set; }
+    public DateTimeOffset? DateStart { get => _DateStart; set { _DateStart = value; _tracker.DateStart = true; }}
     [JsonPropertyName("End")]
-    public long? End { get; set; }
+    public long? End { get => _End; set { _End = value; _tracker.End = true; }}
     [JsonPropertyName("DateEnd")]
-    public DateTimeOffset? DateEnd { get; set; }
+    public DateTimeOffset? DateEnd { get => _DateEnd; set { _DateEnd = value; _tracker.DateEnd = true; }}
     [JsonPropertyName("Days")]
-    public double? Days { get; set; }
+    public double? Days { get => _Days; set { _Days = value; _tracker.Days = true; }}
     [JsonPropertyName("ApproverTime")]
-    public long? ApproverTime { get; set; }
+    public long? ApproverTime { get => _ApproverTime; set { _ApproverTime = value; _tracker.ApproverTime = true; }}
     [JsonPropertyName("ApproverPay")]
-    public long? ApproverPay { get; set; }
+    public long? ApproverPay { get => _ApproverPay; set { _ApproverPay = value; _tracker.ApproverPay = true; }}
     [JsonPropertyName("Comment")]
-    public string? Comment { get; set; }
+    public string? Comment { get => _Comment; set { _Comment = value; _tracker.Comment = true; }}
     [JsonPropertyName("Status")]
-    public long? Status { get; set; }
+    public long? Status { get => _Status; set { _Status = value; _tracker.Status = true; }}
     [JsonPropertyName("ApprovalComment")]
-    public string? ApprovalComment { get; set; }
+    public string? ApprovalComment { get => _ApprovalComment; set { _ApprovalComment = value; _tracker.ApprovalComment = true; }}
     [JsonPropertyName("TotalHours")]
-    public double? TotalHours { get; set; }
+    public double? TotalHours { get => _TotalHours; set { _TotalHours = value; _tracker.TotalHours = true; }}
     [JsonPropertyName("ExternalId")]
-    public string? ExternalId { get; set; }
+    public string? ExternalId { get => _ExternalId; set { _ExternalId = value; _tracker.ExternalId = true; }}
     [JsonPropertyName("AllDay")]
-    public bool? AllDay { get; set; }
+    public bool? AllDay { get => _AllDay; set { _AllDay = value; _tracker.AllDay = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<Employee>))]
     public Join<Employee>? EmployeeObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<EmployeeHistory>))]
     public Join<EmployeeHistory>? EmployeeHistoryObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Company>))]
     public Join<Company>? CompanyObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<LeaveRules>))]
     public Join<LeaveRules>? LeaveRuleObject { get; set; }
+    LeavePropertyTracker IHasPropertyTracker<LeavePropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<LeavePropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<LeavePropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class LeavePropertyTracker
+{
+    internal bool Id;
+    internal bool Employee;
+    internal bool EmployeeHistory;
+    internal bool Company;
+    internal bool LeaveRule;
+    internal bool Start;
+    internal bool DateStart;
+    internal bool End;
+    internal bool DateEnd;
+    internal bool Days;
+    internal bool ApproverTime;
+    internal bool ApproverPay;
+    internal bool Comment;
+    internal bool Status;
+    internal bool ApprovalComment;
+    internal bool TotalHours;
+    internal bool ExternalId;
+    internal bool AllDay;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Employee = false;
+        EmployeeHistory = false;
+        Company = false;
+        LeaveRule = false;
+        Start = false;
+        DateStart = false;
+        End = false;
+        DateEnd = false;
+        Days = false;
+        ApproverTime = false;
+        ApproverPay = false;
+        Comment = false;
+        Status = false;
+        ApprovalComment = false;
+        TotalHours = false;
+        ExternalId = false;
+        AllDay = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class LeaveSerializer : JsonConverter<Leave>
+{
+    public override Leave? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Leave value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<LeavePropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Employee)
+        {
+            writer.WritePropertyName("Employee");
+            JsonSerializer.Serialize(writer,value.Employee,options);
+        }
+        if (tracker.EmployeeHistory)
+        {
+            writer.WritePropertyName("EmployeeHistory");
+            JsonSerializer.Serialize(writer,value.EmployeeHistory,options);
+        }
+        if (tracker.Company)
+        {
+            writer.WritePropertyName("Company");
+            JsonSerializer.Serialize(writer,value.Company,options);
+        }
+        if (tracker.LeaveRule)
+        {
+            writer.WritePropertyName("LeaveRule");
+            JsonSerializer.Serialize(writer,value.LeaveRule,options);
+        }
+        if (tracker.Start)
+        {
+            writer.WritePropertyName("Start");
+            JsonSerializer.Serialize(writer,value.Start,options);
+        }
+        if (tracker.DateStart)
+        {
+            writer.WritePropertyName("DateStart");
+            JsonSerializer.Serialize(writer,value.DateStart,options);
+        }
+        if (tracker.End)
+        {
+            writer.WritePropertyName("End");
+            JsonSerializer.Serialize(writer,value.End,options);
+        }
+        if (tracker.DateEnd)
+        {
+            writer.WritePropertyName("DateEnd");
+            JsonSerializer.Serialize(writer,value.DateEnd,options);
+        }
+        if (tracker.Days)
+        {
+            writer.WritePropertyName("Days");
+            JsonSerializer.Serialize(writer,value.Days,options);
+        }
+        if (tracker.ApproverTime)
+        {
+            writer.WritePropertyName("ApproverTime");
+            JsonSerializer.Serialize(writer,value.ApproverTime,options);
+        }
+        if (tracker.ApproverPay)
+        {
+            writer.WritePropertyName("ApproverPay");
+            JsonSerializer.Serialize(writer,value.ApproverPay,options);
+        }
+        if (tracker.Comment)
+        {
+            writer.WritePropertyName("Comment");
+            JsonSerializer.Serialize(writer,value.Comment,options);
+        }
+        if (tracker.Status)
+        {
+            writer.WritePropertyName("Status");
+            JsonSerializer.Serialize(writer,value.Status,options);
+        }
+        if (tracker.ApprovalComment)
+        {
+            writer.WritePropertyName("ApprovalComment");
+            JsonSerializer.Serialize(writer,value.ApprovalComment,options);
+        }
+        if (tracker.TotalHours)
+        {
+            writer.WritePropertyName("TotalHours");
+            JsonSerializer.Serialize(writer,value.TotalHours,options);
+        }
+        if (tracker.ExternalId)
+        {
+            writer.WritePropertyName("ExternalId");
+            JsonSerializer.Serialize(writer,value.ExternalId,options);
+        }
+        if (tracker.AllDay)
+        {
+            writer.WritePropertyName("AllDay");
+            JsonSerializer.Serialize(writer,value.AllDay,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

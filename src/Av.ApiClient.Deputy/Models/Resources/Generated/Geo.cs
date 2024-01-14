@@ -6,40 +6,199 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Geo>))]
-public class Geo : IResource
+public class Geo : IResource, IHasPropertyTracker<GeoPropertyTracker>
 {
+    private long? _Id;
+    private string? _Orm;
+    private long? _RecId;
+    private double? _Longitude;
+    private double? _Latitude;
+    private double? _Accuracy;
+    private string? _No;
+    private string? _Street;
+    private string? _Suburb;
+    private string? _State;
+    private string? _Postcode;
+    private long? _Country;
+    private string? _Action;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private GeoPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Orm")]
-    public string? Orm { get; set; }
+    public string? Orm { get => _Orm; set { _Orm = value; _tracker.Orm = true; }}
     [JsonPropertyName("RecId")]
-    public long? RecId { get; set; }
+    public long? RecId { get => _RecId; set { _RecId = value; _tracker.RecId = true; }}
     [JsonPropertyName("Longitude")]
-    public double? Longitude { get; set; }
+    public double? Longitude { get => _Longitude; set { _Longitude = value; _tracker.Longitude = true; }}
     [JsonPropertyName("Latitude")]
-    public double? Latitude { get; set; }
+    public double? Latitude { get => _Latitude; set { _Latitude = value; _tracker.Latitude = true; }}
     [JsonPropertyName("Accuracy")]
-    public double? Accuracy { get; set; }
+    public double? Accuracy { get => _Accuracy; set { _Accuracy = value; _tracker.Accuracy = true; }}
     [JsonPropertyName("No")]
-    public string? No { get; set; }
+    public string? No { get => _No; set { _No = value; _tracker.No = true; }}
     [JsonPropertyName("Street")]
-    public string? Street { get; set; }
+    public string? Street { get => _Street; set { _Street = value; _tracker.Street = true; }}
     [JsonPropertyName("Suburb")]
-    public string? Suburb { get; set; }
+    public string? Suburb { get => _Suburb; set { _Suburb = value; _tracker.Suburb = true; }}
     [JsonPropertyName("State")]
-    public string? State { get; set; }
+    public string? State { get => _State; set { _State = value; _tracker.State = true; }}
     [JsonPropertyName("Postcode")]
-    public string? Postcode { get; set; }
+    public string? Postcode { get => _Postcode; set { _Postcode = value; _tracker.Postcode = true; }}
     [JsonPropertyName("Country")]
-    public long? Country { get; set; }
+    public long? Country { get => _Country; set { _Country = value; _tracker.Country = true; }}
     [JsonPropertyName("Action")]
-    public string? Action { get; set; }
+    public string? Action { get => _Action; set { _Action = value; _tracker.Action = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    GeoPropertyTracker IHasPropertyTracker<GeoPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<GeoPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<GeoPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class GeoPropertyTracker
+{
+    internal bool Id;
+    internal bool Orm;
+    internal bool RecId;
+    internal bool Longitude;
+    internal bool Latitude;
+    internal bool Accuracy;
+    internal bool No;
+    internal bool Street;
+    internal bool Suburb;
+    internal bool State;
+    internal bool Postcode;
+    internal bool Country;
+    internal bool Action;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Orm = false;
+        RecId = false;
+        Longitude = false;
+        Latitude = false;
+        Accuracy = false;
+        No = false;
+        Street = false;
+        Suburb = false;
+        State = false;
+        Postcode = false;
+        Country = false;
+        Action = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class GeoSerializer : JsonConverter<Geo>
+{
+    public override Geo? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Geo value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<GeoPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Orm)
+        {
+            writer.WritePropertyName("Orm");
+            JsonSerializer.Serialize(writer,value.Orm,options);
+        }
+        if (tracker.RecId)
+        {
+            writer.WritePropertyName("RecId");
+            JsonSerializer.Serialize(writer,value.RecId,options);
+        }
+        if (tracker.Longitude)
+        {
+            writer.WritePropertyName("Longitude");
+            JsonSerializer.Serialize(writer,value.Longitude,options);
+        }
+        if (tracker.Latitude)
+        {
+            writer.WritePropertyName("Latitude");
+            JsonSerializer.Serialize(writer,value.Latitude,options);
+        }
+        if (tracker.Accuracy)
+        {
+            writer.WritePropertyName("Accuracy");
+            JsonSerializer.Serialize(writer,value.Accuracy,options);
+        }
+        if (tracker.No)
+        {
+            writer.WritePropertyName("No");
+            JsonSerializer.Serialize(writer,value.No,options);
+        }
+        if (tracker.Street)
+        {
+            writer.WritePropertyName("Street");
+            JsonSerializer.Serialize(writer,value.Street,options);
+        }
+        if (tracker.Suburb)
+        {
+            writer.WritePropertyName("Suburb");
+            JsonSerializer.Serialize(writer,value.Suburb,options);
+        }
+        if (tracker.State)
+        {
+            writer.WritePropertyName("State");
+            JsonSerializer.Serialize(writer,value.State,options);
+        }
+        if (tracker.Postcode)
+        {
+            writer.WritePropertyName("Postcode");
+            JsonSerializer.Serialize(writer,value.Postcode,options);
+        }
+        if (tracker.Country)
+        {
+            writer.WritePropertyName("Country");
+            JsonSerializer.Serialize(writer,value.Country,options);
+        }
+        if (tracker.Action)
+        {
+            writer.WritePropertyName("Action");
+            JsonSerializer.Serialize(writer,value.Action,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

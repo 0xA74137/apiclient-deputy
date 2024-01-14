@@ -6,28 +6,139 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Comment>))]
-public class Comment : IResource
+public class Comment : IResource, IHasPropertyTracker<CommentPropertyTracker>
 {
+    private long? _Id;
+    private string? _Orm;
+    private long? _RecId;
+    private bool? _InFeed;
+    private bool? _IgnorePermission;
+    private string? _Comment;
+    private long? _File;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private CommentPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Orm")]
-    public string? Orm { get; set; }
+    public string? Orm { get => _Orm; set { _Orm = value; _tracker.Orm = true; }}
     [JsonPropertyName("RecId")]
-    public long? RecId { get; set; }
+    public long? RecId { get => _RecId; set { _RecId = value; _tracker.RecId = true; }}
     [JsonPropertyName("InFeed")]
-    public bool? InFeed { get; set; }
+    public bool? InFeed { get => _InFeed; set { _InFeed = value; _tracker.InFeed = true; }}
     [JsonPropertyName("IgnorePermission")]
-    public bool? IgnorePermission { get; set; }
+    public bool? IgnorePermission { get => _IgnorePermission; set { _IgnorePermission = value; _tracker.IgnorePermission = true; }}
     [JsonPropertyName("Comment")]
-    public string? CommentValue { get; set; }
+    public string? CommentValue { get => _Comment; set { _Comment = value; _tracker.CommentValue = true; }}
     [JsonPropertyName("File")]
-    public long? File { get; set; }
+    public long? File { get => _File; set { _File = value; _tracker.File = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    CommentPropertyTracker IHasPropertyTracker<CommentPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<CommentPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<CommentPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class CommentPropertyTracker
+{
+    internal bool Id;
+    internal bool Orm;
+    internal bool RecId;
+    internal bool InFeed;
+    internal bool IgnorePermission;
+    internal bool CommentValue;
+    internal bool File;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Orm = false;
+        RecId = false;
+        InFeed = false;
+        IgnorePermission = false;
+        CommentValue = false;
+        File = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class CommentSerializer : JsonConverter<Comment>
+{
+    public override Comment? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Comment value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<CommentPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Orm)
+        {
+            writer.WritePropertyName("Orm");
+            JsonSerializer.Serialize(writer,value.Orm,options);
+        }
+        if (tracker.RecId)
+        {
+            writer.WritePropertyName("RecId");
+            JsonSerializer.Serialize(writer,value.RecId,options);
+        }
+        if (tracker.InFeed)
+        {
+            writer.WritePropertyName("InFeed");
+            JsonSerializer.Serialize(writer,value.InFeed,options);
+        }
+        if (tracker.IgnorePermission)
+        {
+            writer.WritePropertyName("IgnorePermission");
+            JsonSerializer.Serialize(writer,value.IgnorePermission,options);
+        }
+        if (tracker.Comment)
+        {
+            writer.WritePropertyName("Comment");
+            JsonSerializer.Serialize(writer,value.CommentValue,options);
+        }
+        if (tracker.File)
+        {
+            writer.WritePropertyName("File");
+            JsonSerializer.Serialize(writer,value.File,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

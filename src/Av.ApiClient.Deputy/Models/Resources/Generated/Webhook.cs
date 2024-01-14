@@ -6,28 +6,139 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Webhook>))]
-public class Webhook : IResource
+public class Webhook : IResource, IHasPropertyTracker<WebhookPropertyTracker>
 {
+    private long? _Id;
+    private string? _Topic;
+    private string? _Filters;
+    private string? _Address;
+    private string? _Type;
+    private string? _Headers;
+    private bool? _Enabled;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private WebhookPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Topic")]
-    public string? Topic { get; set; }
+    public string? Topic { get => _Topic; set { _Topic = value; _tracker.Topic = true; }}
     [JsonPropertyName("Filters")]
-    public string? Filters { get; set; }
+    public string? Filters { get => _Filters; set { _Filters = value; _tracker.Filters = true; }}
     [JsonPropertyName("Address")]
-    public string? Address { get; set; }
+    public string? Address { get => _Address; set { _Address = value; _tracker.Address = true; }}
     [JsonPropertyName("Type")]
-    public string? Type { get; set; }
+    public string? Type { get => _Type; set { _Type = value; _tracker.Type = true; }}
     [JsonPropertyName("Headers")]
-    public string? Headers { get; set; }
+    public string? Headers { get => _Headers; set { _Headers = value; _tracker.Headers = true; }}
     [JsonPropertyName("Enabled")]
-    public bool? Enabled { get; set; }
+    public bool? Enabled { get => _Enabled; set { _Enabled = value; _tracker.Enabled = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    WebhookPropertyTracker IHasPropertyTracker<WebhookPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<WebhookPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<WebhookPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class WebhookPropertyTracker
+{
+    internal bool Id;
+    internal bool Topic;
+    internal bool Filters;
+    internal bool Address;
+    internal bool Type;
+    internal bool Headers;
+    internal bool Enabled;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Topic = false;
+        Filters = false;
+        Address = false;
+        Type = false;
+        Headers = false;
+        Enabled = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class WebhookSerializer : JsonConverter<Webhook>
+{
+    public override Webhook? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Webhook value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<WebhookPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Topic)
+        {
+            writer.WritePropertyName("Topic");
+            JsonSerializer.Serialize(writer,value.Topic,options);
+        }
+        if (tracker.Filters)
+        {
+            writer.WritePropertyName("Filters");
+            JsonSerializer.Serialize(writer,value.Filters,options);
+        }
+        if (tracker.Address)
+        {
+            writer.WritePropertyName("Address");
+            JsonSerializer.Serialize(writer,value.Address,options);
+        }
+        if (tracker.Type)
+        {
+            writer.WritePropertyName("Type");
+            JsonSerializer.Serialize(writer,value.Type,options);
+        }
+        if (tracker.Headers)
+        {
+            writer.WritePropertyName("Headers");
+            JsonSerializer.Serialize(writer,value.Headers,options);
+        }
+        if (tracker.Enabled)
+        {
+            writer.WritePropertyName("Enabled");
+            JsonSerializer.Serialize(writer,value.Enabled,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

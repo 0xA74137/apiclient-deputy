@@ -6,64 +6,275 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<EmploymentContract>))]
-public class EmploymentContract : IResource
+public class EmploymentContract : IResource, IHasPropertyTracker<EmploymentContractPropertyTracker>
 {
+    private long? _Id;
+    private string? _Code;
+    private string? _Name;
+    private string? _Description;
+    private long? _EmploymentBasis;
+    private long? _EmploymentCategory;
+    private long? _EmploymentStatus;
+    private long? _EmploymentCondition;
+    private long? _BasePayRule;
+    private long? _StressProfile;
+    private DateTimeOffset? _StartDate;
+    private DateTimeOffset? _EndDate;
+    private long? _PeriodType;
+    private long? _File;
+    private bool? _StrictLeaveApproval;
+    private string? _Award;
+    private string? _EmploymentSubType;
+    private DateTimeOffset? _AwardStartDate;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private string? _PpId;
+    private long? _CountryId;
+    private EmploymentContractPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Code")]
-    public string? Code { get; set; }
+    public string? Code { get => _Code; set { _Code = value; _tracker.Code = true; }}
     [JsonPropertyName("Name")]
-    public string? Name { get; set; }
+    public string? Name { get => _Name; set { _Name = value; _tracker.Name = true; }}
     [JsonPropertyName("Description")]
-    public string? Description { get; set; }
+    public string? Description { get => _Description; set { _Description = value; _tracker.Description = true; }}
     [JsonPropertyName("EmploymentBasis")]
-    public long? EmploymentBasis { get; set; }
+    public long? EmploymentBasis { get => _EmploymentBasis; set { _EmploymentBasis = value; _tracker.EmploymentBasis = true; }}
     [JsonPropertyName("EmploymentCategory")]
-    public long? EmploymentCategory { get; set; }
+    public long? EmploymentCategory { get => _EmploymentCategory; set { _EmploymentCategory = value; _tracker.EmploymentCategory = true; }}
     [JsonPropertyName("EmploymentStatus")]
-    public long? EmploymentStatus { get; set; }
+    public long? EmploymentStatus { get => _EmploymentStatus; set { _EmploymentStatus = value; _tracker.EmploymentStatus = true; }}
     [JsonPropertyName("EmploymentCondition")]
-    public long? EmploymentCondition { get; set; }
+    public long? EmploymentCondition { get => _EmploymentCondition; set { _EmploymentCondition = value; _tracker.EmploymentCondition = true; }}
     [JsonPropertyName("BasePayRule")]
-    public long? BasePayRule { get; set; }
+    public long? BasePayRule { get => _BasePayRule; set { _BasePayRule = value; _tracker.BasePayRule = true; }}
     [JsonPropertyName("StressProfile")]
-    public long? StressProfile { get; set; }
+    public long? StressProfile { get => _StressProfile; set { _StressProfile = value; _tracker.StressProfile = true; }}
     [JsonPropertyName("StartDate")]
-    public DateTimeOffset? StartDate { get; set; }
+    public DateTimeOffset? StartDate { get => _StartDate; set { _StartDate = value; _tracker.StartDate = true; }}
     [JsonPropertyName("EndDate")]
-    public DateTimeOffset? EndDate { get; set; }
+    public DateTimeOffset? EndDate { get => _EndDate; set { _EndDate = value; _tracker.EndDate = true; }}
     [JsonPropertyName("PeriodType")]
-    public long? PeriodType { get; set; }
+    public long? PeriodType { get => _PeriodType; set { _PeriodType = value; _tracker.PeriodType = true; }}
     [JsonPropertyName("File")]
-    public long? File { get; set; }
+    public long? File { get => _File; set { _File = value; _tracker.File = true; }}
     [JsonPropertyName("StrictLeaveApproval")]
-    public bool? StrictLeaveApproval { get; set; }
+    public bool? StrictLeaveApproval { get => _StrictLeaveApproval; set { _StrictLeaveApproval = value; _tracker.StrictLeaveApproval = true; }}
     [JsonPropertyName("Award")]
-    public string? Award { get; set; }
+    public string? Award { get => _Award; set { _Award = value; _tracker.Award = true; }}
     [JsonPropertyName("EmploymentSubType")]
-    public string? EmploymentSubType { get; set; }
+    public string? EmploymentSubType { get => _EmploymentSubType; set { _EmploymentSubType = value; _tracker.EmploymentSubType = true; }}
     [JsonPropertyName("AwardStartDate")]
-    public DateTimeOffset? AwardStartDate { get; set; }
+    public DateTimeOffset? AwardStartDate { get => _AwardStartDate; set { _AwardStartDate = value; _tracker.AwardStartDate = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonPropertyName("PpId")]
-    public string? PpId { get; set; }
+    public string? PpId { get => _PpId; set { _PpId = value; _tracker.PpId = true; }}
     [JsonPropertyName("CountryId")]
-    public long? CountryId { get; set; }
-
-
+    public long? CountryId { get => _CountryId; set { _CountryId = value; _tracker.CountryId = true; }}
     [JsonConverter(typeof(JoinConverter<EmploymentCondition>))]
     public Join<EmploymentCondition>? EmploymentConditionObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<PayRules>))]
     public Join<PayRules>? BasePayRuleObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Country>))]
     public Join<Country>? Country { get; set; }
+    EmploymentContractPropertyTracker IHasPropertyTracker<EmploymentContractPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<EmploymentContractPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<EmploymentContractPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class EmploymentContractPropertyTracker
+{
+    internal bool Id;
+    internal bool Code;
+    internal bool Name;
+    internal bool Description;
+    internal bool EmploymentBasis;
+    internal bool EmploymentCategory;
+    internal bool EmploymentStatus;
+    internal bool EmploymentCondition;
+    internal bool BasePayRule;
+    internal bool StressProfile;
+    internal bool StartDate;
+    internal bool EndDate;
+    internal bool PeriodType;
+    internal bool File;
+    internal bool StrictLeaveApproval;
+    internal bool Award;
+    internal bool EmploymentSubType;
+    internal bool AwardStartDate;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+    internal bool PpId;
+    internal bool CountryId;
+
+    internal void Clear()
+    {
+        Id = false;
+        Code = false;
+        Name = false;
+        Description = false;
+        EmploymentBasis = false;
+        EmploymentCategory = false;
+        EmploymentStatus = false;
+        EmploymentCondition = false;
+        BasePayRule = false;
+        StressProfile = false;
+        StartDate = false;
+        EndDate = false;
+        PeriodType = false;
+        File = false;
+        StrictLeaveApproval = false;
+        Award = false;
+        EmploymentSubType = false;
+        AwardStartDate = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+        PpId = false;
+        CountryId = false;
+    }
+
+}
+
+internal class EmploymentContractSerializer : JsonConverter<EmploymentContract>
+{
+    public override EmploymentContract? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,EmploymentContract value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<EmploymentContractPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Code)
+        {
+            writer.WritePropertyName("Code");
+            JsonSerializer.Serialize(writer,value.Code,options);
+        }
+        if (tracker.Name)
+        {
+            writer.WritePropertyName("Name");
+            JsonSerializer.Serialize(writer,value.Name,options);
+        }
+        if (tracker.Description)
+        {
+            writer.WritePropertyName("Description");
+            JsonSerializer.Serialize(writer,value.Description,options);
+        }
+        if (tracker.EmploymentBasis)
+        {
+            writer.WritePropertyName("EmploymentBasis");
+            JsonSerializer.Serialize(writer,value.EmploymentBasis,options);
+        }
+        if (tracker.EmploymentCategory)
+        {
+            writer.WritePropertyName("EmploymentCategory");
+            JsonSerializer.Serialize(writer,value.EmploymentCategory,options);
+        }
+        if (tracker.EmploymentStatus)
+        {
+            writer.WritePropertyName("EmploymentStatus");
+            JsonSerializer.Serialize(writer,value.EmploymentStatus,options);
+        }
+        if (tracker.EmploymentCondition)
+        {
+            writer.WritePropertyName("EmploymentCondition");
+            JsonSerializer.Serialize(writer,value.EmploymentCondition,options);
+        }
+        if (tracker.BasePayRule)
+        {
+            writer.WritePropertyName("BasePayRule");
+            JsonSerializer.Serialize(writer,value.BasePayRule,options);
+        }
+        if (tracker.StressProfile)
+        {
+            writer.WritePropertyName("StressProfile");
+            JsonSerializer.Serialize(writer,value.StressProfile,options);
+        }
+        if (tracker.StartDate)
+        {
+            writer.WritePropertyName("StartDate");
+            JsonSerializer.Serialize(writer,value.StartDate,options);
+        }
+        if (tracker.EndDate)
+        {
+            writer.WritePropertyName("EndDate");
+            JsonSerializer.Serialize(writer,value.EndDate,options);
+        }
+        if (tracker.PeriodType)
+        {
+            writer.WritePropertyName("PeriodType");
+            JsonSerializer.Serialize(writer,value.PeriodType,options);
+        }
+        if (tracker.File)
+        {
+            writer.WritePropertyName("File");
+            JsonSerializer.Serialize(writer,value.File,options);
+        }
+        if (tracker.StrictLeaveApproval)
+        {
+            writer.WritePropertyName("StrictLeaveApproval");
+            JsonSerializer.Serialize(writer,value.StrictLeaveApproval,options);
+        }
+        if (tracker.Award)
+        {
+            writer.WritePropertyName("Award");
+            JsonSerializer.Serialize(writer,value.Award,options);
+        }
+        if (tracker.EmploymentSubType)
+        {
+            writer.WritePropertyName("EmploymentSubType");
+            JsonSerializer.Serialize(writer,value.EmploymentSubType,options);
+        }
+        if (tracker.AwardStartDate)
+        {
+            writer.WritePropertyName("AwardStartDate");
+            JsonSerializer.Serialize(writer,value.AwardStartDate,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        if (tracker.PpId)
+        {
+            writer.WritePropertyName("PpId");
+            JsonSerializer.Serialize(writer,value.PpId,options);
+        }
+        if (tracker.CountryId)
+        {
+            writer.WritePropertyName("CountryId");
+            JsonSerializer.Serialize(writer,value.CountryId,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

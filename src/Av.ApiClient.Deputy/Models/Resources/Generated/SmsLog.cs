@@ -6,26 +6,129 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<SmsLog>))]
-public class SmsLog : IResource
+public class SmsLog : IResource, IHasPropertyTracker<SmsLogPropertyTracker>
 {
+    private long? _Id;
+    private string? _Destination;
+    private string? _Message;
+    private long? _Count;
+    private string? _SmsId;
+    private string? _DeliveryReport;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private SmsLogPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Destination")]
-    public string? Destination { get; set; }
+    public string? Destination { get => _Destination; set { _Destination = value; _tracker.Destination = true; }}
     [JsonPropertyName("Message")]
-    public string? Message { get; set; }
+    public string? Message { get => _Message; set { _Message = value; _tracker.Message = true; }}
     [JsonPropertyName("Count")]
-    public long? Count { get; set; }
+    public long? Count { get => _Count; set { _Count = value; _tracker.Count = true; }}
     [JsonPropertyName("SmsId")]
-    public string? SmsId { get; set; }
+    public string? SmsId { get => _SmsId; set { _SmsId = value; _tracker.SmsId = true; }}
     [JsonPropertyName("DeliveryReport")]
-    public string? DeliveryReport { get; set; }
+    public string? DeliveryReport { get => _DeliveryReport; set { _DeliveryReport = value; _tracker.DeliveryReport = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    SmsLogPropertyTracker IHasPropertyTracker<SmsLogPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<SmsLogPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<SmsLogPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class SmsLogPropertyTracker
+{
+    internal bool Id;
+    internal bool Destination;
+    internal bool Message;
+    internal bool Count;
+    internal bool SmsId;
+    internal bool DeliveryReport;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Destination = false;
+        Message = false;
+        Count = false;
+        SmsId = false;
+        DeliveryReport = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class SmsLogSerializer : JsonConverter<SmsLog>
+{
+    public override SmsLog? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,SmsLog value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<SmsLogPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Destination)
+        {
+            writer.WritePropertyName("Destination");
+            JsonSerializer.Serialize(writer,value.Destination,options);
+        }
+        if (tracker.Message)
+        {
+            writer.WritePropertyName("Message");
+            JsonSerializer.Serialize(writer,value.Message,options);
+        }
+        if (tracker.Count)
+        {
+            writer.WritePropertyName("Count");
+            JsonSerializer.Serialize(writer,value.Count,options);
+        }
+        if (tracker.SmsId)
+        {
+            writer.WritePropertyName("SmsId");
+            JsonSerializer.Serialize(writer,value.SmsId,options);
+        }
+        if (tracker.DeliveryReport)
+        {
+            writer.WritePropertyName("DeliveryReport");
+            JsonSerializer.Serialize(writer,value.DeliveryReport,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

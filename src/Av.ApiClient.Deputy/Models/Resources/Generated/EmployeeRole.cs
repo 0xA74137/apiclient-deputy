@@ -6,30 +6,131 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<EmployeeRole>))]
-public class EmployeeRole : IResource
+public class EmployeeRole : IResource, IHasPropertyTracker<EmployeeRolePropertyTracker>
 {
+    private long? _Id;
+    private string? _Role;
+    private long? _Ranking;
+    private long? _ReportTo;
+    private string? _Permissions;
+    private bool? _Require2fa;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private EmployeeRolePropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Role")]
-    public string? Role { get; set; }
+    public string? Role { get => _Role; set { _Role = value; _tracker.Role = true; }}
     [JsonPropertyName("Ranking")]
-    public long? Ranking { get; set; }
+    public long? Ranking { get => _Ranking; set { _Ranking = value; _tracker.Ranking = true; }}
     [JsonPropertyName("ReportTo")]
-    public long? ReportTo { get; set; }
+    public long? ReportTo { get => _ReportTo; set { _ReportTo = value; _tracker.ReportTo = true; }}
     [JsonPropertyName("Permissions")]
-    public string? Permissions { get; set; }
+    public string? Permissions { get => _Permissions; set { _Permissions = value; _tracker.Permissions = true; }}
     [JsonPropertyName("Require2fa")]
-    public bool? Require2fa { get; set; }
+    public bool? Require2fa { get => _Require2fa; set { _Require2fa = value; _tracker.Require2fa = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<EmployeeRole>))]
     public Join<EmployeeRole>? ReportToObject { get; set; }
+    EmployeeRolePropertyTracker IHasPropertyTracker<EmployeeRolePropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<EmployeeRolePropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<EmployeeRolePropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class EmployeeRolePropertyTracker
+{
+    internal bool Id;
+    internal bool Role;
+    internal bool Ranking;
+    internal bool ReportTo;
+    internal bool Permissions;
+    internal bool Require2fa;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Role = false;
+        Ranking = false;
+        ReportTo = false;
+        Permissions = false;
+        Require2fa = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class EmployeeRoleSerializer : JsonConverter<EmployeeRole>
+{
+    public override EmployeeRole? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,EmployeeRole value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<EmployeeRolePropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Role)
+        {
+            writer.WritePropertyName("Role");
+            JsonSerializer.Serialize(writer,value.Role,options);
+        }
+        if (tracker.Ranking)
+        {
+            writer.WritePropertyName("Ranking");
+            JsonSerializer.Serialize(writer,value.Ranking,options);
+        }
+        if (tracker.ReportTo)
+        {
+            writer.WritePropertyName("ReportTo");
+            JsonSerializer.Serialize(writer,value.ReportTo,options);
+        }
+        if (tracker.Permissions)
+        {
+            writer.WritePropertyName("Permissions");
+            JsonSerializer.Serialize(writer,value.Permissions,options);
+        }
+        if (tracker.Require2fa)
+        {
+            writer.WritePropertyName("Require2fa");
+            JsonSerializer.Serialize(writer,value.Require2fa,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

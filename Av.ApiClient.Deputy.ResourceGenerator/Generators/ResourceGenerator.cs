@@ -4,20 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Av.ApiClients.Deputy.Models;
+using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.ResourceGenerator.Generators
 {
-    internal class ResourceGenerator(string resourceName, ResourceInfo resourceInfo, bool assocsEnabled = false)
+    internal class ResourceGenerator(string resourceName, ResourceInfo resourceInfo, bool enableAssocs = false)
     {
         public string Generate()
         {
-            var sb = new IndentableStringBuilder(new string(' ', 4));
-            AddPreamble(sb);
-            sb.AppendLine();
-            AddImplementation(sb);
-            sb.AppendLine();
+            var builder = new FileBuilder();
+            builder.AddPreamble(AddPreamble);
 
-            return sb.ToString();
+            builder.AddObject(new ResourceBuilder(resourceName, resourceInfo, enableAssocs));
+            builder.AddObject(new PropertyTrackerBuilder(resourceName, resourceInfo));
+            builder.AddObject(new ResourceSerializerBuilder(resourceName, resourceInfo));
+
+            return builder.Build();
         }
 
         private void AddPreamble(IndentableStringBuilder sb)
@@ -29,88 +31,183 @@ namespace Av.ApiClients.Deputy.ResourceGenerator.Generators
             sb.AppendLine("using Av.ApiClients.Deputy.Models.Resources;");
             sb.AppendLine();
             sb.AppendLine("namespace Av.ApiClients.Deputy.Models.Resources;");
+            sb.AppendLine();
         }
 
-        private void AddImplementation(IndentableStringBuilder sb)
+
+        private class ResourceBuilder(string resourceName, ResourceInfo resourceInfo, bool enableAssocs)
+            : ObjectBuilder("public", "class", resourceName)
         {
-            sb.AppendLine($"[JsonConverterType(typeof(ResourceConverter<{resourceName}>))]");
-            sb.AppendLine($"public class {resourceName} : IResource");
-            sb.AppendLine($"{{");
-            sb.Indent();
-
-            AddProperties(sb, ImplOrInterface.Implementation);
-
-            sb.Dedent();
-            sb.AppendLine($"}}");
-        }
-
-        private void AddProperties(IndentableStringBuilder sb, ImplOrInterface implOrInterface)
-        {
-            foreach (var (name, type) in resourceInfo.Fields)
-                AddProperty(sb, name, type);
-
-            if (resourceInfo.Joins.Count > 0)
-                sb.AppendLine();
-
-            foreach (var (joinName, resource) in resourceInfo.Joins)
+            public override string Build(FileBuilder fileBuilder)
             {
-                sb.AppendLine();
-                AddJoin(sb, joinName, resource);
+                AddPreamble($"[JsonConverter(typeof(ResourceConverter<{resourceName}>))]");
+                AddInterface($"IResource");
+                AddProperties();
+                AddJoins();
+                AddAssocs();
+                AddPropertyTracker();
+
+                return base.Build(fileBuilder);
             }
 
-            if (!assocsEnabled)
-                return;
-
-            if (resourceInfo.Associations.Count > 0)
-                sb.AppendLine();
-
-            foreach (var (assocName, resource) in resourceInfo.Associations)
+            private void AddPropertyTracker()
             {
-                sb.AppendLine();
-                AddAssoc(sb, assocName, resource);
+                AddInterface($"IHasPropertyTracker<{resourceName}PropertyTracker>");
+                AddField($"private {resourceName}PropertyTracker _tracker = new();");
+                AddProperty(sb =>
+                {
+                    sb.AppendLine($"{resourceName}PropertyTracker IHasPropertyTracker<{resourceName}PropertyTracker>.Tracker" +
+                        $" => _tracker;");
+                });
+
+                AddMethod(sb =>
+                {
+                    sb.AppendLine($"void IHasPropertyTracker<{resourceName}PropertyTracker>.ClearTrackedProperties()" +
+                        $" => ((IHasPropertyTracker<{resourceName}PropertyTracker>)this).Tracker.Clear();");
+                });
+            }
+
+            private void AddProperties()
+            {
+                foreach (var (name, type) in resourceInfo.Fields)
+                {
+                    AddField($"private {MapType(type)} _{name};");
+                    AddProperty(sb =>
+                    {
+                        sb.AppendLine($@"[JsonPropertyName(""{name}"")]");
+                        sb.AppendLine(
+                            $@"public {MapType(type)} {FixPropName(name, resourceName)} {{" +
+                            $@" get => _{name};" +
+                            $@" set {{ _{name} = value; _tracker.{FixPropName(name, resourceName)} = true; }}" +
+                            $@"}}");
+                    });
+                }
+            }
+
+            private void AddJoins()
+            {
+                foreach (var (joinName, resource) in resourceInfo.Joins)
+                {
+                    AddProperty(sb =>
+                    {
+                        sb.AppendLine($"[JsonConverter(typeof(JoinConverter<{resource}>))]");
+                        sb.AppendLine($@"public Join<{resource}>? {FixPropName(joinName, resourceName)} {{ get; set; }}");
+                    });
+                }
+            }
+
+            private void AddAssocs()
+            {
+                if (!enableAssocs)
+                    return;
+
+                foreach (var (assocName, resource) in resourceInfo.Associations)
+                {
+                    AddProperty(sb =>
+                    {
+                        sb.AppendLine($"[JsonConverter(typeof(AssocConverter<{resource}>))]");
+                        sb.AppendLine($@"public Assoc<{resource}>? {FixPropName(assocName, resourceName)} {{ get; set; }}");
+                    });
+                }
+            }
+
+            private string MapType(FieldType type) => type switch
+            {
+                FieldType.Integer => "long?",
+                FieldType.Date => "DateTimeOffset?",
+                FieldType.DateTime => "DateTimeOffset?",
+                FieldType.Time => "DateTimeOffset?",
+                FieldType.VarChar => "string?",
+                FieldType.Bit => "bool?",
+                FieldType.Float => "double?",
+                FieldType.Blob => "string?",
+                FieldType.Json => "string?",
+                _ => "object?",
+            };
+
+            internal static string FixPropName(string name, string resourceName)
+            {
+                string output = name;
+
+                if (name == resourceName)
+                    output = $"{name}Value";
+
+                return output;
             }
         }
 
-        private void AddProperty(IndentableStringBuilder sb, string name, FieldType type)
+        private class PropertyTrackerBuilder(string resourceName, ResourceInfo resourceInfo)
+            : ObjectBuilder("internal", "class", $"{resourceName}PropertyTracker")
         {
-            sb.AppendLine($@"[JsonPropertyName(""{name}"")]");
-            sb.AppendLine($@"public {MapType(type)} {XName(name)} {{ get; set; }}");
+            public override string Build(FileBuilder fileBuilder)
+            {
+                foreach (var (name, _) in resourceInfo.Fields)
+                    AddField($"internal bool {ResourceBuilder.FixPropName(name, resourceName)};");
+
+                AddMethod(sb =>
+                {
+                    sb.AppendLine("internal void Clear()");
+                    using (sb.Block())
+                    {
+                        foreach (var (name, _) in resourceInfo.Fields)
+                            sb.AppendLine($"{ResourceBuilder.FixPropName(name, resourceName)} = false;");
+                    }
+                });
+
+                return base.Build(fileBuilder);
+            }
         }
 
-        private void AddJoin(IndentableStringBuilder sb, string joinName, string resource)
+        private class ResourceSerializerBuilder(string resourceName, ResourceInfo resourceInfo)
+            : ObjectBuilder("internal", "class", $"{resourceName}Serializer")
         {
-            sb.AppendLine($"[JsonConverter(typeof(JoinConverter<{resource}>))]");
-            sb.AppendLine($@"public Join<{resource}>? {XName(joinName)} {{ get; set; }}");
-        }
+            public override string Build(FileBuilder fileBuilder)
+            {
+                fileBuilder.AddUsing("using System.Text.Json;");
 
-        private void AddAssoc(IndentableStringBuilder sb, string assocName, string resource)
-        {
-            sb.AppendLine($"[JsonConverter(typeof(AssocConverter<{resource}>))]");
-            sb.AppendLine($@"public Assoc<{resource}>? {XName(assocName)} {{ get; set; }}");
-        }
+                SetParentClass($"JsonConverter<{resourceName}>");
 
-        private string MapType(FieldType type) => type switch
-        {
-            FieldType.Integer => "long?",
-            FieldType.Date => "DateTimeOffset?",
-            FieldType.DateTime => "DateTimeOffset?",
-            FieldType.Time => "DateTimeOffset?",
-            FieldType.VarChar => "string?",
-            FieldType.Bit => "bool?",
-            FieldType.Float => "double?",
-            FieldType.Blob => "string?",
-            FieldType.Json => "string?",
-            _ => "object?",
-        };
+                AddMethod(sb =>
+                {
+                    sb.AppendLine($"public override {resourceName}? Read(" +
+                        $"ref Utf8JsonReader reader," +
+                        $"Type typeToConvert, " +
+                        $"JsonSerializerOptions options)");
+                    using (sb.Block())
+                    {
+                        sb.AppendLine("throw new NotImplementedException();");
+                    }
+                });
 
-        private string XName(string name)
-        {
-            string output = name;
+                AddMethod(sb =>
+                {
+                    sb.AppendLine($"public override void Write(" +
+                        $"Utf8JsonWriter writer," +
+                        $"{resourceName} value, " +
+                        $"JsonSerializerOptions options)");
+                    using (sb.Block())
+                    {
+                        sb.AppendLine("writer.WriteStartObject();");
+                        sb.AppendLine($"var tracker = ((IHasPropertyTracker<{resourceName}PropertyTracker>)value).Tracker;");
+                        foreach (var (name, _) in resourceInfo.Fields)
+                        {
+                            sb.AppendLine($"if (tracker.{name})");
+                            using (sb.Block())
+                            {
+                                sb.AppendLine($@"writer.WritePropertyName(""{name}"");");
+                                sb.AppendLine($"JsonSerializer.Serialize(" +
+                                    $"writer," +
+                                    $"value.{ResourceBuilder.FixPropName(name, resourceName)}," +
+                                    $"options);");
+                            }
 
-            if (name == resourceName)
-                output = $"{name}Value";
+                        }
+                        sb.AppendLine("writer.WriteEndObject();");
+                    }
+                });
 
-            return output;
+                return base.Build(fileBuilder);
+            }
         }
     }
 }

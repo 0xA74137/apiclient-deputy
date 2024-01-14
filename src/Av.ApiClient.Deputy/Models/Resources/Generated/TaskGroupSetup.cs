@@ -6,38 +6,189 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<TaskGroupSetup>))]
-public class TaskGroupSetup : IResource
+public class TaskGroupSetup : IResource, IHasPropertyTracker<TaskGroupSetupPropertyTracker>
 {
+    private long? _Id;
+    private string? _Key;
+    private string? _Name;
+    private bool? _Active;
+    private bool? _Compulsory;
+    private string? _Notification;
+    private double? _Deadline;
+    private string? _Plugins;
+    private string? _Oncreate;
+    private string? _Onsubmit;
+    private string? _Comment;
+    private bool? _LaborModel;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private TaskGroupSetupPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Key")]
-    public string? Key { get; set; }
+    public string? Key { get => _Key; set { _Key = value; _tracker.Key = true; }}
     [JsonPropertyName("Name")]
-    public string? Name { get; set; }
+    public string? Name { get => _Name; set { _Name = value; _tracker.Name = true; }}
     [JsonPropertyName("Active")]
-    public bool? Active { get; set; }
+    public bool? Active { get => _Active; set { _Active = value; _tracker.Active = true; }}
     [JsonPropertyName("Compulsory")]
-    public bool? Compulsory { get; set; }
+    public bool? Compulsory { get => _Compulsory; set { _Compulsory = value; _tracker.Compulsory = true; }}
     [JsonPropertyName("Notification")]
-    public string? Notification { get; set; }
+    public string? Notification { get => _Notification; set { _Notification = value; _tracker.Notification = true; }}
     [JsonPropertyName("Deadline")]
-    public double? Deadline { get; set; }
+    public double? Deadline { get => _Deadline; set { _Deadline = value; _tracker.Deadline = true; }}
     [JsonPropertyName("Plugins")]
-    public string? Plugins { get; set; }
+    public string? Plugins { get => _Plugins; set { _Plugins = value; _tracker.Plugins = true; }}
     [JsonPropertyName("Oncreate")]
-    public string? Oncreate { get; set; }
+    public string? Oncreate { get => _Oncreate; set { _Oncreate = value; _tracker.Oncreate = true; }}
     [JsonPropertyName("Onsubmit")]
-    public string? Onsubmit { get; set; }
+    public string? Onsubmit { get => _Onsubmit; set { _Onsubmit = value; _tracker.Onsubmit = true; }}
     [JsonPropertyName("Comment")]
-    public string? Comment { get; set; }
+    public string? Comment { get => _Comment; set { _Comment = value; _tracker.Comment = true; }}
     [JsonPropertyName("LaborModel")]
-    public bool? LaborModel { get; set; }
+    public bool? LaborModel { get => _LaborModel; set { _LaborModel = value; _tracker.LaborModel = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    TaskGroupSetupPropertyTracker IHasPropertyTracker<TaskGroupSetupPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<TaskGroupSetupPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<TaskGroupSetupPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class TaskGroupSetupPropertyTracker
+{
+    internal bool Id;
+    internal bool Key;
+    internal bool Name;
+    internal bool Active;
+    internal bool Compulsory;
+    internal bool Notification;
+    internal bool Deadline;
+    internal bool Plugins;
+    internal bool Oncreate;
+    internal bool Onsubmit;
+    internal bool Comment;
+    internal bool LaborModel;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Key = false;
+        Name = false;
+        Active = false;
+        Compulsory = false;
+        Notification = false;
+        Deadline = false;
+        Plugins = false;
+        Oncreate = false;
+        Onsubmit = false;
+        Comment = false;
+        LaborModel = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class TaskGroupSetupSerializer : JsonConverter<TaskGroupSetup>
+{
+    public override TaskGroupSetup? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,TaskGroupSetup value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<TaskGroupSetupPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Key)
+        {
+            writer.WritePropertyName("Key");
+            JsonSerializer.Serialize(writer,value.Key,options);
+        }
+        if (tracker.Name)
+        {
+            writer.WritePropertyName("Name");
+            JsonSerializer.Serialize(writer,value.Name,options);
+        }
+        if (tracker.Active)
+        {
+            writer.WritePropertyName("Active");
+            JsonSerializer.Serialize(writer,value.Active,options);
+        }
+        if (tracker.Compulsory)
+        {
+            writer.WritePropertyName("Compulsory");
+            JsonSerializer.Serialize(writer,value.Compulsory,options);
+        }
+        if (tracker.Notification)
+        {
+            writer.WritePropertyName("Notification");
+            JsonSerializer.Serialize(writer,value.Notification,options);
+        }
+        if (tracker.Deadline)
+        {
+            writer.WritePropertyName("Deadline");
+            JsonSerializer.Serialize(writer,value.Deadline,options);
+        }
+        if (tracker.Plugins)
+        {
+            writer.WritePropertyName("Plugins");
+            JsonSerializer.Serialize(writer,value.Plugins,options);
+        }
+        if (tracker.Oncreate)
+        {
+            writer.WritePropertyName("Oncreate");
+            JsonSerializer.Serialize(writer,value.Oncreate,options);
+        }
+        if (tracker.Onsubmit)
+        {
+            writer.WritePropertyName("Onsubmit");
+            JsonSerializer.Serialize(writer,value.Onsubmit,options);
+        }
+        if (tracker.Comment)
+        {
+            writer.WritePropertyName("Comment");
+            JsonSerializer.Serialize(writer,value.Comment,options);
+        }
+        if (tracker.LaborModel)
+        {
+            writer.WritePropertyName("LaborModel");
+            JsonSerializer.Serialize(writer,value.LaborModel,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

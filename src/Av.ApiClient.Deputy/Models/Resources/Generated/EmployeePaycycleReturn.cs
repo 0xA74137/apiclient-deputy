@@ -6,37 +6,153 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<EmployeePaycycleReturn>))]
-public class EmployeePaycycleReturn : IResource
+public class EmployeePaycycleReturn : IResource, IHasPropertyTracker<EmployeePaycycleReturnPropertyTracker>
 {
+    private long? _Id;
+    private long? _PaycycleId;
+    private long? _PayRule;
+    private bool? _Approved;
+    private bool? _Overridden;
+    private double? _Value;
+    private double? _Cost;
+    private string? _OverrideComment;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private EmployeePaycycleReturnPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("PaycycleId")]
-    public long? PaycycleId { get; set; }
+    public long? PaycycleId { get => _PaycycleId; set { _PaycycleId = value; _tracker.PaycycleId = true; }}
     [JsonPropertyName("PayRule")]
-    public long? PayRule { get; set; }
+    public long? PayRule { get => _PayRule; set { _PayRule = value; _tracker.PayRule = true; }}
     [JsonPropertyName("Approved")]
-    public bool? Approved { get; set; }
+    public bool? Approved { get => _Approved; set { _Approved = value; _tracker.Approved = true; }}
     [JsonPropertyName("Overridden")]
-    public bool? Overridden { get; set; }
+    public bool? Overridden { get => _Overridden; set { _Overridden = value; _tracker.Overridden = true; }}
     [JsonPropertyName("Value")]
-    public double? Value { get; set; }
+    public double? Value { get => _Value; set { _Value = value; _tracker.Value = true; }}
     [JsonPropertyName("Cost")]
-    public double? Cost { get; set; }
+    public double? Cost { get => _Cost; set { _Cost = value; _tracker.Cost = true; }}
     [JsonPropertyName("OverrideComment")]
-    public string? OverrideComment { get; set; }
+    public string? OverrideComment { get => _OverrideComment; set { _OverrideComment = value; _tracker.OverrideComment = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<EmployeePaycycle>))]
     public Join<EmployeePaycycle>? Paycycle { get; set; }
-
     [JsonConverter(typeof(JoinConverter<PayRules>))]
     public Join<PayRules>? PayRuleObject { get; set; }
+    EmployeePaycycleReturnPropertyTracker IHasPropertyTracker<EmployeePaycycleReturnPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<EmployeePaycycleReturnPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<EmployeePaycycleReturnPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class EmployeePaycycleReturnPropertyTracker
+{
+    internal bool Id;
+    internal bool PaycycleId;
+    internal bool PayRule;
+    internal bool Approved;
+    internal bool Overridden;
+    internal bool Value;
+    internal bool Cost;
+    internal bool OverrideComment;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        PaycycleId = false;
+        PayRule = false;
+        Approved = false;
+        Overridden = false;
+        Value = false;
+        Cost = false;
+        OverrideComment = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class EmployeePaycycleReturnSerializer : JsonConverter<EmployeePaycycleReturn>
+{
+    public override EmployeePaycycleReturn? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,EmployeePaycycleReturn value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<EmployeePaycycleReturnPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.PaycycleId)
+        {
+            writer.WritePropertyName("PaycycleId");
+            JsonSerializer.Serialize(writer,value.PaycycleId,options);
+        }
+        if (tracker.PayRule)
+        {
+            writer.WritePropertyName("PayRule");
+            JsonSerializer.Serialize(writer,value.PayRule,options);
+        }
+        if (tracker.Approved)
+        {
+            writer.WritePropertyName("Approved");
+            JsonSerializer.Serialize(writer,value.Approved,options);
+        }
+        if (tracker.Overridden)
+        {
+            writer.WritePropertyName("Overridden");
+            JsonSerializer.Serialize(writer,value.Overridden,options);
+        }
+        if (tracker.Value)
+        {
+            writer.WritePropertyName("Value");
+            JsonSerializer.Serialize(writer,value.Value,options);
+        }
+        if (tracker.Cost)
+        {
+            writer.WritePropertyName("Cost");
+            JsonSerializer.Serialize(writer,value.Cost,options);
+        }
+        if (tracker.OverrideComment)
+        {
+            writer.WritePropertyName("OverrideComment");
+            JsonSerializer.Serialize(writer,value.OverrideComment,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

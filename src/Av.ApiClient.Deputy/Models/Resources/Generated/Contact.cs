@@ -6,56 +6,279 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Contact>))]
-public class Contact : IResource
+public class Contact : IResource, IHasPropertyTracker<ContactPropertyTracker>
 {
+    private long? _Id;
+    private string? _Phone1;
+    private string? _Phone2;
+    private string? _Phone3;
+    private string? _Fax;
+    private string? _Phone1Type;
+    private string? _Phone2Type;
+    private string? _Phone3Type;
+    private long? _PrimaryPhone;
+    private string? _Email1;
+    private string? _Email1Type;
+    private string? _Email2Type;
+    private string? _Email2;
+    private long? _PrimaryEmail;
+    private string? _Im1;
+    private string? _Im2;
+    private string? _Im1Type;
+    private string? _Im2Type;
+    private string? _Web;
+    private string? _Notes;
+    private bool? _Saved;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private ContactPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Phone1")]
-    public string? Phone1 { get; set; }
+    public string? Phone1 { get => _Phone1; set { _Phone1 = value; _tracker.Phone1 = true; }}
     [JsonPropertyName("Phone2")]
-    public string? Phone2 { get; set; }
+    public string? Phone2 { get => _Phone2; set { _Phone2 = value; _tracker.Phone2 = true; }}
     [JsonPropertyName("Phone3")]
-    public string? Phone3 { get; set; }
+    public string? Phone3 { get => _Phone3; set { _Phone3 = value; _tracker.Phone3 = true; }}
     [JsonPropertyName("Fax")]
-    public string? Fax { get; set; }
+    public string? Fax { get => _Fax; set { _Fax = value; _tracker.Fax = true; }}
     [JsonPropertyName("Phone1Type")]
-    public string? Phone1Type { get; set; }
+    public string? Phone1Type { get => _Phone1Type; set { _Phone1Type = value; _tracker.Phone1Type = true; }}
     [JsonPropertyName("Phone2Type")]
-    public string? Phone2Type { get; set; }
+    public string? Phone2Type { get => _Phone2Type; set { _Phone2Type = value; _tracker.Phone2Type = true; }}
     [JsonPropertyName("Phone3Type")]
-    public string? Phone3Type { get; set; }
+    public string? Phone3Type { get => _Phone3Type; set { _Phone3Type = value; _tracker.Phone3Type = true; }}
     [JsonPropertyName("PrimaryPhone")]
-    public long? PrimaryPhone { get; set; }
+    public long? PrimaryPhone { get => _PrimaryPhone; set { _PrimaryPhone = value; _tracker.PrimaryPhone = true; }}
     [JsonPropertyName("Email1")]
-    public string? Email1 { get; set; }
+    public string? Email1 { get => _Email1; set { _Email1 = value; _tracker.Email1 = true; }}
     [JsonPropertyName("Email1Type")]
-    public string? Email1Type { get; set; }
+    public string? Email1Type { get => _Email1Type; set { _Email1Type = value; _tracker.Email1Type = true; }}
     [JsonPropertyName("Email2Type")]
-    public string? Email2Type { get; set; }
+    public string? Email2Type { get => _Email2Type; set { _Email2Type = value; _tracker.Email2Type = true; }}
     [JsonPropertyName("Email2")]
-    public string? Email2 { get; set; }
+    public string? Email2 { get => _Email2; set { _Email2 = value; _tracker.Email2 = true; }}
     [JsonPropertyName("PrimaryEmail")]
-    public long? PrimaryEmail { get; set; }
+    public long? PrimaryEmail { get => _PrimaryEmail; set { _PrimaryEmail = value; _tracker.PrimaryEmail = true; }}
     [JsonPropertyName("Im1")]
-    public string? Im1 { get; set; }
+    public string? Im1 { get => _Im1; set { _Im1 = value; _tracker.Im1 = true; }}
     [JsonPropertyName("Im2")]
-    public string? Im2 { get; set; }
+    public string? Im2 { get => _Im2; set { _Im2 = value; _tracker.Im2 = true; }}
     [JsonPropertyName("Im1Type")]
-    public string? Im1Type { get; set; }
+    public string? Im1Type { get => _Im1Type; set { _Im1Type = value; _tracker.Im1Type = true; }}
     [JsonPropertyName("Im2Type")]
-    public string? Im2Type { get; set; }
+    public string? Im2Type { get => _Im2Type; set { _Im2Type = value; _tracker.Im2Type = true; }}
     [JsonPropertyName("Web")]
-    public string? Web { get; set; }
+    public string? Web { get => _Web; set { _Web = value; _tracker.Web = true; }}
     [JsonPropertyName("Notes")]
-    public string? Notes { get; set; }
+    public string? Notes { get => _Notes; set { _Notes = value; _tracker.Notes = true; }}
     [JsonPropertyName("Saved")]
-    public bool? Saved { get; set; }
+    public bool? Saved { get => _Saved; set { _Saved = value; _tracker.Saved = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    ContactPropertyTracker IHasPropertyTracker<ContactPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<ContactPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<ContactPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class ContactPropertyTracker
+{
+    internal bool Id;
+    internal bool Phone1;
+    internal bool Phone2;
+    internal bool Phone3;
+    internal bool Fax;
+    internal bool Phone1Type;
+    internal bool Phone2Type;
+    internal bool Phone3Type;
+    internal bool PrimaryPhone;
+    internal bool Email1;
+    internal bool Email1Type;
+    internal bool Email2Type;
+    internal bool Email2;
+    internal bool PrimaryEmail;
+    internal bool Im1;
+    internal bool Im2;
+    internal bool Im1Type;
+    internal bool Im2Type;
+    internal bool Web;
+    internal bool Notes;
+    internal bool Saved;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Phone1 = false;
+        Phone2 = false;
+        Phone3 = false;
+        Fax = false;
+        Phone1Type = false;
+        Phone2Type = false;
+        Phone3Type = false;
+        PrimaryPhone = false;
+        Email1 = false;
+        Email1Type = false;
+        Email2Type = false;
+        Email2 = false;
+        PrimaryEmail = false;
+        Im1 = false;
+        Im2 = false;
+        Im1Type = false;
+        Im2Type = false;
+        Web = false;
+        Notes = false;
+        Saved = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class ContactSerializer : JsonConverter<Contact>
+{
+    public override Contact? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Contact value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<ContactPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Phone1)
+        {
+            writer.WritePropertyName("Phone1");
+            JsonSerializer.Serialize(writer,value.Phone1,options);
+        }
+        if (tracker.Phone2)
+        {
+            writer.WritePropertyName("Phone2");
+            JsonSerializer.Serialize(writer,value.Phone2,options);
+        }
+        if (tracker.Phone3)
+        {
+            writer.WritePropertyName("Phone3");
+            JsonSerializer.Serialize(writer,value.Phone3,options);
+        }
+        if (tracker.Fax)
+        {
+            writer.WritePropertyName("Fax");
+            JsonSerializer.Serialize(writer,value.Fax,options);
+        }
+        if (tracker.Phone1Type)
+        {
+            writer.WritePropertyName("Phone1Type");
+            JsonSerializer.Serialize(writer,value.Phone1Type,options);
+        }
+        if (tracker.Phone2Type)
+        {
+            writer.WritePropertyName("Phone2Type");
+            JsonSerializer.Serialize(writer,value.Phone2Type,options);
+        }
+        if (tracker.Phone3Type)
+        {
+            writer.WritePropertyName("Phone3Type");
+            JsonSerializer.Serialize(writer,value.Phone3Type,options);
+        }
+        if (tracker.PrimaryPhone)
+        {
+            writer.WritePropertyName("PrimaryPhone");
+            JsonSerializer.Serialize(writer,value.PrimaryPhone,options);
+        }
+        if (tracker.Email1)
+        {
+            writer.WritePropertyName("Email1");
+            JsonSerializer.Serialize(writer,value.Email1,options);
+        }
+        if (tracker.Email1Type)
+        {
+            writer.WritePropertyName("Email1Type");
+            JsonSerializer.Serialize(writer,value.Email1Type,options);
+        }
+        if (tracker.Email2Type)
+        {
+            writer.WritePropertyName("Email2Type");
+            JsonSerializer.Serialize(writer,value.Email2Type,options);
+        }
+        if (tracker.Email2)
+        {
+            writer.WritePropertyName("Email2");
+            JsonSerializer.Serialize(writer,value.Email2,options);
+        }
+        if (tracker.PrimaryEmail)
+        {
+            writer.WritePropertyName("PrimaryEmail");
+            JsonSerializer.Serialize(writer,value.PrimaryEmail,options);
+        }
+        if (tracker.Im1)
+        {
+            writer.WritePropertyName("Im1");
+            JsonSerializer.Serialize(writer,value.Im1,options);
+        }
+        if (tracker.Im2)
+        {
+            writer.WritePropertyName("Im2");
+            JsonSerializer.Serialize(writer,value.Im2,options);
+        }
+        if (tracker.Im1Type)
+        {
+            writer.WritePropertyName("Im1Type");
+            JsonSerializer.Serialize(writer,value.Im1Type,options);
+        }
+        if (tracker.Im2Type)
+        {
+            writer.WritePropertyName("Im2Type");
+            JsonSerializer.Serialize(writer,value.Im2Type,options);
+        }
+        if (tracker.Web)
+        {
+            writer.WritePropertyName("Web");
+            JsonSerializer.Serialize(writer,value.Web,options);
+        }
+        if (tracker.Notes)
+        {
+            writer.WritePropertyName("Notes");
+            JsonSerializer.Serialize(writer,value.Notes,options);
+        }
+        if (tracker.Saved)
+        {
+            writer.WritePropertyName("Saved");
+            JsonSerializer.Serialize(writer,value.Saved,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

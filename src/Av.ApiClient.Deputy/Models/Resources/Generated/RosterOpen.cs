@@ -6,37 +6,153 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<RosterOpen>))]
-public class RosterOpen : IResource
+public class RosterOpen : IResource, IHasPropertyTracker<RosterOpenPropertyTracker>
 {
+    private long? _Id;
+    private long? _Roster;
+    private long? _Employee;
+    private bool? _Accepted;
+    private bool? _Seen;
+    private bool? _Declined;
+    private string? _Link;
+    private string? _Message;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private RosterOpenPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Roster")]
-    public long? Roster { get; set; }
+    public long? Roster { get => _Roster; set { _Roster = value; _tracker.Roster = true; }}
     [JsonPropertyName("Employee")]
-    public long? Employee { get; set; }
+    public long? Employee { get => _Employee; set { _Employee = value; _tracker.Employee = true; }}
     [JsonPropertyName("Accepted")]
-    public bool? Accepted { get; set; }
+    public bool? Accepted { get => _Accepted; set { _Accepted = value; _tracker.Accepted = true; }}
     [JsonPropertyName("Seen")]
-    public bool? Seen { get; set; }
+    public bool? Seen { get => _Seen; set { _Seen = value; _tracker.Seen = true; }}
     [JsonPropertyName("Declined")]
-    public bool? Declined { get; set; }
+    public bool? Declined { get => _Declined; set { _Declined = value; _tracker.Declined = true; }}
     [JsonPropertyName("Link")]
-    public string? Link { get; set; }
+    public string? Link { get => _Link; set { _Link = value; _tracker.Link = true; }}
     [JsonPropertyName("Message")]
-    public string? Message { get; set; }
+    public string? Message { get => _Message; set { _Message = value; _tracker.Message = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<Roster>))]
     public Join<Roster>? RosterObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Employee>))]
     public Join<Employee>? EmployeeObject { get; set; }
+    RosterOpenPropertyTracker IHasPropertyTracker<RosterOpenPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<RosterOpenPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<RosterOpenPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class RosterOpenPropertyTracker
+{
+    internal bool Id;
+    internal bool Roster;
+    internal bool Employee;
+    internal bool Accepted;
+    internal bool Seen;
+    internal bool Declined;
+    internal bool Link;
+    internal bool Message;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Roster = false;
+        Employee = false;
+        Accepted = false;
+        Seen = false;
+        Declined = false;
+        Link = false;
+        Message = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class RosterOpenSerializer : JsonConverter<RosterOpen>
+{
+    public override RosterOpen? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,RosterOpen value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<RosterOpenPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Roster)
+        {
+            writer.WritePropertyName("Roster");
+            JsonSerializer.Serialize(writer,value.Roster,options);
+        }
+        if (tracker.Employee)
+        {
+            writer.WritePropertyName("Employee");
+            JsonSerializer.Serialize(writer,value.Employee,options);
+        }
+        if (tracker.Accepted)
+        {
+            writer.WritePropertyName("Accepted");
+            JsonSerializer.Serialize(writer,value.Accepted,options);
+        }
+        if (tracker.Seen)
+        {
+            writer.WritePropertyName("Seen");
+            JsonSerializer.Serialize(writer,value.Seen,options);
+        }
+        if (tracker.Declined)
+        {
+            writer.WritePropertyName("Declined");
+            JsonSerializer.Serialize(writer,value.Declined,options);
+        }
+        if (tracker.Link)
+        {
+            writer.WritePropertyName("Link");
+            JsonSerializer.Serialize(writer,value.Link,options);
+        }
+        if (tracker.Message)
+        {
+            writer.WritePropertyName("Message");
+            JsonSerializer.Serialize(writer,value.Message,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

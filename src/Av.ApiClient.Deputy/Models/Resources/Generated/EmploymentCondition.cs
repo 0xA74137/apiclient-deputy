@@ -6,46 +6,229 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<EmploymentCondition>))]
-public class EmploymentCondition : IResource
+public class EmploymentCondition : IResource, IHasPropertyTracker<EmploymentConditionPropertyTracker>
 {
+    private long? _Id;
+    private string? _Name;
+    private string? _Description;
+    private string? _AwardLevel;
+    private long? _EmploymentBasis;
+    private long? _EmploymentCategory;
+    private long? _EmploymentPeriod;
+    private long? _EmploymentStatus;
+    private long? _ProbationaryPeriod;
+    private double? _WorkingDaysPerPeriod;
+    private DateTimeOffset? _UsualStartTime;
+    private DateTimeOffset? _UsualFinishTime;
+    private DateTimeOffset? _UsualMealbreak;
+    private double? _AvgHoursPerDay;
+    private double? _MinHoursPerDay;
+    private double? _MinHoursForLeave;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private EmploymentConditionPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Name")]
-    public string? Name { get; set; }
+    public string? Name { get => _Name; set { _Name = value; _tracker.Name = true; }}
     [JsonPropertyName("Description")]
-    public string? Description { get; set; }
+    public string? Description { get => _Description; set { _Description = value; _tracker.Description = true; }}
     [JsonPropertyName("AwardLevel")]
-    public string? AwardLevel { get; set; }
+    public string? AwardLevel { get => _AwardLevel; set { _AwardLevel = value; _tracker.AwardLevel = true; }}
     [JsonPropertyName("EmploymentBasis")]
-    public long? EmploymentBasis { get; set; }
+    public long? EmploymentBasis { get => _EmploymentBasis; set { _EmploymentBasis = value; _tracker.EmploymentBasis = true; }}
     [JsonPropertyName("EmploymentCategory")]
-    public long? EmploymentCategory { get; set; }
+    public long? EmploymentCategory { get => _EmploymentCategory; set { _EmploymentCategory = value; _tracker.EmploymentCategory = true; }}
     [JsonPropertyName("EmploymentPeriod")]
-    public long? EmploymentPeriod { get; set; }
+    public long? EmploymentPeriod { get => _EmploymentPeriod; set { _EmploymentPeriod = value; _tracker.EmploymentPeriod = true; }}
     [JsonPropertyName("EmploymentStatus")]
-    public long? EmploymentStatus { get; set; }
+    public long? EmploymentStatus { get => _EmploymentStatus; set { _EmploymentStatus = value; _tracker.EmploymentStatus = true; }}
     [JsonPropertyName("ProbationaryPeriod")]
-    public long? ProbationaryPeriod { get; set; }
+    public long? ProbationaryPeriod { get => _ProbationaryPeriod; set { _ProbationaryPeriod = value; _tracker.ProbationaryPeriod = true; }}
     [JsonPropertyName("WorkingDaysPerPeriod")]
-    public double? WorkingDaysPerPeriod { get; set; }
+    public double? WorkingDaysPerPeriod { get => _WorkingDaysPerPeriod; set { _WorkingDaysPerPeriod = value; _tracker.WorkingDaysPerPeriod = true; }}
     [JsonPropertyName("UsualStartTime")]
-    public DateTimeOffset? UsualStartTime { get; set; }
+    public DateTimeOffset? UsualStartTime { get => _UsualStartTime; set { _UsualStartTime = value; _tracker.UsualStartTime = true; }}
     [JsonPropertyName("UsualFinishTime")]
-    public DateTimeOffset? UsualFinishTime { get; set; }
+    public DateTimeOffset? UsualFinishTime { get => _UsualFinishTime; set { _UsualFinishTime = value; _tracker.UsualFinishTime = true; }}
     [JsonPropertyName("UsualMealbreak")]
-    public DateTimeOffset? UsualMealbreak { get; set; }
+    public DateTimeOffset? UsualMealbreak { get => _UsualMealbreak; set { _UsualMealbreak = value; _tracker.UsualMealbreak = true; }}
     [JsonPropertyName("AvgHoursPerDay")]
-    public double? AvgHoursPerDay { get; set; }
+    public double? AvgHoursPerDay { get => _AvgHoursPerDay; set { _AvgHoursPerDay = value; _tracker.AvgHoursPerDay = true; }}
     [JsonPropertyName("MinHoursPerDay")]
-    public double? MinHoursPerDay { get; set; }
+    public double? MinHoursPerDay { get => _MinHoursPerDay; set { _MinHoursPerDay = value; _tracker.MinHoursPerDay = true; }}
     [JsonPropertyName("MinHoursForLeave")]
-    public double? MinHoursForLeave { get; set; }
+    public double? MinHoursForLeave { get => _MinHoursForLeave; set { _MinHoursForLeave = value; _tracker.MinHoursForLeave = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    EmploymentConditionPropertyTracker IHasPropertyTracker<EmploymentConditionPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<EmploymentConditionPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<EmploymentConditionPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class EmploymentConditionPropertyTracker
+{
+    internal bool Id;
+    internal bool Name;
+    internal bool Description;
+    internal bool AwardLevel;
+    internal bool EmploymentBasis;
+    internal bool EmploymentCategory;
+    internal bool EmploymentPeriod;
+    internal bool EmploymentStatus;
+    internal bool ProbationaryPeriod;
+    internal bool WorkingDaysPerPeriod;
+    internal bool UsualStartTime;
+    internal bool UsualFinishTime;
+    internal bool UsualMealbreak;
+    internal bool AvgHoursPerDay;
+    internal bool MinHoursPerDay;
+    internal bool MinHoursForLeave;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Name = false;
+        Description = false;
+        AwardLevel = false;
+        EmploymentBasis = false;
+        EmploymentCategory = false;
+        EmploymentPeriod = false;
+        EmploymentStatus = false;
+        ProbationaryPeriod = false;
+        WorkingDaysPerPeriod = false;
+        UsualStartTime = false;
+        UsualFinishTime = false;
+        UsualMealbreak = false;
+        AvgHoursPerDay = false;
+        MinHoursPerDay = false;
+        MinHoursForLeave = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class EmploymentConditionSerializer : JsonConverter<EmploymentCondition>
+{
+    public override EmploymentCondition? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,EmploymentCondition value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<EmploymentConditionPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Name)
+        {
+            writer.WritePropertyName("Name");
+            JsonSerializer.Serialize(writer,value.Name,options);
+        }
+        if (tracker.Description)
+        {
+            writer.WritePropertyName("Description");
+            JsonSerializer.Serialize(writer,value.Description,options);
+        }
+        if (tracker.AwardLevel)
+        {
+            writer.WritePropertyName("AwardLevel");
+            JsonSerializer.Serialize(writer,value.AwardLevel,options);
+        }
+        if (tracker.EmploymentBasis)
+        {
+            writer.WritePropertyName("EmploymentBasis");
+            JsonSerializer.Serialize(writer,value.EmploymentBasis,options);
+        }
+        if (tracker.EmploymentCategory)
+        {
+            writer.WritePropertyName("EmploymentCategory");
+            JsonSerializer.Serialize(writer,value.EmploymentCategory,options);
+        }
+        if (tracker.EmploymentPeriod)
+        {
+            writer.WritePropertyName("EmploymentPeriod");
+            JsonSerializer.Serialize(writer,value.EmploymentPeriod,options);
+        }
+        if (tracker.EmploymentStatus)
+        {
+            writer.WritePropertyName("EmploymentStatus");
+            JsonSerializer.Serialize(writer,value.EmploymentStatus,options);
+        }
+        if (tracker.ProbationaryPeriod)
+        {
+            writer.WritePropertyName("ProbationaryPeriod");
+            JsonSerializer.Serialize(writer,value.ProbationaryPeriod,options);
+        }
+        if (tracker.WorkingDaysPerPeriod)
+        {
+            writer.WritePropertyName("WorkingDaysPerPeriod");
+            JsonSerializer.Serialize(writer,value.WorkingDaysPerPeriod,options);
+        }
+        if (tracker.UsualStartTime)
+        {
+            writer.WritePropertyName("UsualStartTime");
+            JsonSerializer.Serialize(writer,value.UsualStartTime,options);
+        }
+        if (tracker.UsualFinishTime)
+        {
+            writer.WritePropertyName("UsualFinishTime");
+            JsonSerializer.Serialize(writer,value.UsualFinishTime,options);
+        }
+        if (tracker.UsualMealbreak)
+        {
+            writer.WritePropertyName("UsualMealbreak");
+            JsonSerializer.Serialize(writer,value.UsualMealbreak,options);
+        }
+        if (tracker.AvgHoursPerDay)
+        {
+            writer.WritePropertyName("AvgHoursPerDay");
+            JsonSerializer.Serialize(writer,value.AvgHoursPerDay,options);
+        }
+        if (tracker.MinHoursPerDay)
+        {
+            writer.WritePropertyName("MinHoursPerDay");
+            JsonSerializer.Serialize(writer,value.MinHoursPerDay,options);
+        }
+        if (tracker.MinHoursForLeave)
+        {
+            writer.WritePropertyName("MinHoursForLeave");
+            JsonSerializer.Serialize(writer,value.MinHoursForLeave,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

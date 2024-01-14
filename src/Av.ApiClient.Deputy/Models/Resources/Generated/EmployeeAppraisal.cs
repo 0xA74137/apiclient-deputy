@@ -6,36 +6,161 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<EmployeeAppraisal>))]
-public class EmployeeAppraisal : IResource
+public class EmployeeAppraisal : IResource, IHasPropertyTracker<EmployeeAppraisalPropertyTracker>
 {
+    private long? _Id;
+    private long? _Employee;
+    private long? _DayTimestamp;
+    private DateTimeOffset? _Date;
+    private double? _Mark01;
+    private double? _Mark02;
+    private double? _Mark03;
+    private double? _Mark04;
+    private double? _Mark05;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private EmployeeAppraisalPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Employee")]
-    public long? Employee { get; set; }
+    public long? Employee { get => _Employee; set { _Employee = value; _tracker.Employee = true; }}
     [JsonPropertyName("DayTimestamp")]
-    public long? DayTimestamp { get; set; }
+    public long? DayTimestamp { get => _DayTimestamp; set { _DayTimestamp = value; _tracker.DayTimestamp = true; }}
     [JsonPropertyName("Date")]
-    public DateTimeOffset? Date { get; set; }
+    public DateTimeOffset? Date { get => _Date; set { _Date = value; _tracker.Date = true; }}
     [JsonPropertyName("Mark01")]
-    public double? Mark01 { get; set; }
+    public double? Mark01 { get => _Mark01; set { _Mark01 = value; _tracker.Mark01 = true; }}
     [JsonPropertyName("Mark02")]
-    public double? Mark02 { get; set; }
+    public double? Mark02 { get => _Mark02; set { _Mark02 = value; _tracker.Mark02 = true; }}
     [JsonPropertyName("Mark03")]
-    public double? Mark03 { get; set; }
+    public double? Mark03 { get => _Mark03; set { _Mark03 = value; _tracker.Mark03 = true; }}
     [JsonPropertyName("Mark04")]
-    public double? Mark04 { get; set; }
+    public double? Mark04 { get => _Mark04; set { _Mark04 = value; _tracker.Mark04 = true; }}
     [JsonPropertyName("Mark05")]
-    public double? Mark05 { get; set; }
+    public double? Mark05 { get => _Mark05; set { _Mark05 = value; _tracker.Mark05 = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<Employee>))]
     public Join<Employee>? EmployeeObject { get; set; }
+    EmployeeAppraisalPropertyTracker IHasPropertyTracker<EmployeeAppraisalPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<EmployeeAppraisalPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<EmployeeAppraisalPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class EmployeeAppraisalPropertyTracker
+{
+    internal bool Id;
+    internal bool Employee;
+    internal bool DayTimestamp;
+    internal bool Date;
+    internal bool Mark01;
+    internal bool Mark02;
+    internal bool Mark03;
+    internal bool Mark04;
+    internal bool Mark05;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Employee = false;
+        DayTimestamp = false;
+        Date = false;
+        Mark01 = false;
+        Mark02 = false;
+        Mark03 = false;
+        Mark04 = false;
+        Mark05 = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class EmployeeAppraisalSerializer : JsonConverter<EmployeeAppraisal>
+{
+    public override EmployeeAppraisal? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,EmployeeAppraisal value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<EmployeeAppraisalPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Employee)
+        {
+            writer.WritePropertyName("Employee");
+            JsonSerializer.Serialize(writer,value.Employee,options);
+        }
+        if (tracker.DayTimestamp)
+        {
+            writer.WritePropertyName("DayTimestamp");
+            JsonSerializer.Serialize(writer,value.DayTimestamp,options);
+        }
+        if (tracker.Date)
+        {
+            writer.WritePropertyName("Date");
+            JsonSerializer.Serialize(writer,value.Date,options);
+        }
+        if (tracker.Mark01)
+        {
+            writer.WritePropertyName("Mark01");
+            JsonSerializer.Serialize(writer,value.Mark01,options);
+        }
+        if (tracker.Mark02)
+        {
+            writer.WritePropertyName("Mark02");
+            JsonSerializer.Serialize(writer,value.Mark02,options);
+        }
+        if (tracker.Mark03)
+        {
+            writer.WritePropertyName("Mark03");
+            JsonSerializer.Serialize(writer,value.Mark03,options);
+        }
+        if (tracker.Mark04)
+        {
+            writer.WritePropertyName("Mark04");
+            JsonSerializer.Serialize(writer,value.Mark04,options);
+        }
+        if (tracker.Mark05)
+        {
+            writer.WritePropertyName("Mark05");
+            JsonSerializer.Serialize(writer,value.Mark05,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

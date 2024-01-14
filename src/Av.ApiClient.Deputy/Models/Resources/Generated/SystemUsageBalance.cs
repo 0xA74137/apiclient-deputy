@@ -6,24 +6,119 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<SystemUsageBalance>))]
-public class SystemUsageBalance : IResource
+public class SystemUsageBalance : IResource, IHasPropertyTracker<SystemUsageBalancePropertyTracker>
 {
+    private long? _Id;
+    private long? _Type;
+    private DateTimeOffset? _Date;
+    private double? _Credit;
+    private string? _Description;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private SystemUsageBalancePropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Type")]
-    public long? Type { get; set; }
+    public long? Type { get => _Type; set { _Type = value; _tracker.Type = true; }}
     [JsonPropertyName("Date")]
-    public DateTimeOffset? Date { get; set; }
+    public DateTimeOffset? Date { get => _Date; set { _Date = value; _tracker.Date = true; }}
     [JsonPropertyName("Credit")]
-    public double? Credit { get; set; }
+    public double? Credit { get => _Credit; set { _Credit = value; _tracker.Credit = true; }}
     [JsonPropertyName("Description")]
-    public string? Description { get; set; }
+    public string? Description { get => _Description; set { _Description = value; _tracker.Description = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    SystemUsageBalancePropertyTracker IHasPropertyTracker<SystemUsageBalancePropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<SystemUsageBalancePropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<SystemUsageBalancePropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class SystemUsageBalancePropertyTracker
+{
+    internal bool Id;
+    internal bool Type;
+    internal bool Date;
+    internal bool Credit;
+    internal bool Description;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Type = false;
+        Date = false;
+        Credit = false;
+        Description = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class SystemUsageBalanceSerializer : JsonConverter<SystemUsageBalance>
+{
+    public override SystemUsageBalance? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,SystemUsageBalance value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<SystemUsageBalancePropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Type)
+        {
+            writer.WritePropertyName("Type");
+            JsonSerializer.Serialize(writer,value.Type,options);
+        }
+        if (tracker.Date)
+        {
+            writer.WritePropertyName("Date");
+            JsonSerializer.Serialize(writer,value.Date,options);
+        }
+        if (tracker.Credit)
+        {
+            writer.WritePropertyName("Credit");
+            JsonSerializer.Serialize(writer,value.Credit,options);
+        }
+        if (tracker.Description)
+        {
+            writer.WritePropertyName("Description");
+            JsonSerializer.Serialize(writer,value.Description,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

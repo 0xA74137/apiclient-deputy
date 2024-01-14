@@ -6,45 +6,193 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<TaskGroup>))]
-public class TaskGroup : IResource
+public class TaskGroup : IResource, IHasPropertyTracker<TaskGroupPropertyTracker>
 {
+    private long? _Id;
+    private long? _GroupSetupId;
+    private string? _Key;
+    private string? _Name;
+    private long? _DayTimestamp;
+    private DateTimeOffset? _Date;
+    private long? _OrigDayTimestamp;
+    private DateTimeOffset? _OrigDate;
+    private long? _OpUnitId;
+    private long? _SortOrder;
+    private string? _Comment;
+    private bool? _LaborModel;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private TaskGroupPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("GroupSetupId")]
-    public long? GroupSetupId { get; set; }
+    public long? GroupSetupId { get => _GroupSetupId; set { _GroupSetupId = value; _tracker.GroupSetupId = true; }}
     [JsonPropertyName("Key")]
-    public string? Key { get; set; }
+    public string? Key { get => _Key; set { _Key = value; _tracker.Key = true; }}
     [JsonPropertyName("Name")]
-    public string? Name { get; set; }
+    public string? Name { get => _Name; set { _Name = value; _tracker.Name = true; }}
     [JsonPropertyName("DayTimestamp")]
-    public long? DayTimestamp { get; set; }
+    public long? DayTimestamp { get => _DayTimestamp; set { _DayTimestamp = value; _tracker.DayTimestamp = true; }}
     [JsonPropertyName("Date")]
-    public DateTimeOffset? Date { get; set; }
+    public DateTimeOffset? Date { get => _Date; set { _Date = value; _tracker.Date = true; }}
     [JsonPropertyName("OrigDayTimestamp")]
-    public long? OrigDayTimestamp { get; set; }
+    public long? OrigDayTimestamp { get => _OrigDayTimestamp; set { _OrigDayTimestamp = value; _tracker.OrigDayTimestamp = true; }}
     [JsonPropertyName("OrigDate")]
-    public DateTimeOffset? OrigDate { get; set; }
+    public DateTimeOffset? OrigDate { get => _OrigDate; set { _OrigDate = value; _tracker.OrigDate = true; }}
     [JsonPropertyName("OpUnitId")]
-    public long? OpUnitId { get; set; }
+    public long? OpUnitId { get => _OpUnitId; set { _OpUnitId = value; _tracker.OpUnitId = true; }}
     [JsonPropertyName("SortOrder")]
-    public long? SortOrder { get; set; }
+    public long? SortOrder { get => _SortOrder; set { _SortOrder = value; _tracker.SortOrder = true; }}
     [JsonPropertyName("Comment")]
-    public string? Comment { get; set; }
+    public string? Comment { get => _Comment; set { _Comment = value; _tracker.Comment = true; }}
     [JsonPropertyName("LaborModel")]
-    public bool? LaborModel { get; set; }
+    public bool? LaborModel { get => _LaborModel; set { _LaborModel = value; _tracker.LaborModel = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<TaskGroupSetup>))]
     public Join<TaskGroupSetup>? GroupSetup { get; set; }
-
     [JsonConverter(typeof(JoinConverter<OperationalUnit>))]
     public Join<OperationalUnit>? OpUnit { get; set; }
+    TaskGroupPropertyTracker IHasPropertyTracker<TaskGroupPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<TaskGroupPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<TaskGroupPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class TaskGroupPropertyTracker
+{
+    internal bool Id;
+    internal bool GroupSetupId;
+    internal bool Key;
+    internal bool Name;
+    internal bool DayTimestamp;
+    internal bool Date;
+    internal bool OrigDayTimestamp;
+    internal bool OrigDate;
+    internal bool OpUnitId;
+    internal bool SortOrder;
+    internal bool Comment;
+    internal bool LaborModel;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        GroupSetupId = false;
+        Key = false;
+        Name = false;
+        DayTimestamp = false;
+        Date = false;
+        OrigDayTimestamp = false;
+        OrigDate = false;
+        OpUnitId = false;
+        SortOrder = false;
+        Comment = false;
+        LaborModel = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class TaskGroupSerializer : JsonConverter<TaskGroup>
+{
+    public override TaskGroup? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,TaskGroup value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<TaskGroupPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.GroupSetupId)
+        {
+            writer.WritePropertyName("GroupSetupId");
+            JsonSerializer.Serialize(writer,value.GroupSetupId,options);
+        }
+        if (tracker.Key)
+        {
+            writer.WritePropertyName("Key");
+            JsonSerializer.Serialize(writer,value.Key,options);
+        }
+        if (tracker.Name)
+        {
+            writer.WritePropertyName("Name");
+            JsonSerializer.Serialize(writer,value.Name,options);
+        }
+        if (tracker.DayTimestamp)
+        {
+            writer.WritePropertyName("DayTimestamp");
+            JsonSerializer.Serialize(writer,value.DayTimestamp,options);
+        }
+        if (tracker.Date)
+        {
+            writer.WritePropertyName("Date");
+            JsonSerializer.Serialize(writer,value.Date,options);
+        }
+        if (tracker.OrigDayTimestamp)
+        {
+            writer.WritePropertyName("OrigDayTimestamp");
+            JsonSerializer.Serialize(writer,value.OrigDayTimestamp,options);
+        }
+        if (tracker.OrigDate)
+        {
+            writer.WritePropertyName("OrigDate");
+            JsonSerializer.Serialize(writer,value.OrigDate,options);
+        }
+        if (tracker.OpUnitId)
+        {
+            writer.WritePropertyName("OpUnitId");
+            JsonSerializer.Serialize(writer,value.OpUnitId,options);
+        }
+        if (tracker.SortOrder)
+        {
+            writer.WritePropertyName("SortOrder");
+            JsonSerializer.Serialize(writer,value.SortOrder,options);
+        }
+        if (tracker.Comment)
+        {
+            writer.WritePropertyName("Comment");
+            JsonSerializer.Serialize(writer,value.Comment,options);
+        }
+        if (tracker.LaborModel)
+        {
+            writer.WritePropertyName("LaborModel");
+            JsonSerializer.Serialize(writer,value.LaborModel,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

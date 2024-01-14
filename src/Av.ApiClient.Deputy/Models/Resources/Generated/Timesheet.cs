@@ -6,136 +6,557 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Timesheet>))]
-public class Timesheet : IResource
+public class Timesheet : IResource, IHasPropertyTracker<TimesheetPropertyTracker>
 {
+    private long? _Id;
+    private long? _Employee;
+    private long? _EmployeeHistory;
+    private long? _EmployeeAgreement;
+    private DateTimeOffset? _Date;
+    private long? _StartTime;
+    private long? _EndTime;
+    private DateTimeOffset? _Mealbreak;
+    private string? _MealbreakSlots;
+    private string? _Slots;
+    private double? _TotalTime;
+    private double? _TotalTimeInv;
+    private double? _Cost;
+    private long? _Roster;
+    private string? _EmployeeComment;
+    private string? _SupervisorComment;
+    private long? _Supervisor;
+    private bool? _Disputed;
+    private bool? _TimeApproved;
+    private long? _TimeApprover;
+    private bool? _Discarded;
+    private long? _ValidationFlag;
+    private long? _OperationalUnit;
+    private bool? _IsInProgress;
+    private bool? _IsLeave;
+    private long? _LeaveId;
+    private long? _LeaveRule;
+    private bool? _Invoiced;
+    private string? _InvoiceComment;
+    private bool? _PayRuleApproved;
+    private bool? _Exported;
+    private long? _StagingId;
+    private bool? _PayStaged;
+    private long? _PaycycleId;
+    private DateTimeOffset? _MarkedPaidUnpaidAt;
+    private long? _AccrualState;
+    private DateTimeOffset? _AccrualStateChangedAt;
+    private long? _AccrualAttempts;
+    private long? _File;
+    private long? _CustomFieldData;
+    private bool? _RealTime;
+    private bool? _AutoProcessed;
+    private bool? _AutoRounded;
+    private bool? _AutoTimeApproved;
+    private bool? _AutoPayRuleApproved;
+    private string? _Metadata;
+    private long? _ParentId;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private TimesheetPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Employee")]
-    public long? Employee { get; set; }
+    public long? Employee { get => _Employee; set { _Employee = value; _tracker.Employee = true; }}
     [JsonPropertyName("EmployeeHistory")]
-    public long? EmployeeHistory { get; set; }
+    public long? EmployeeHistory { get => _EmployeeHistory; set { _EmployeeHistory = value; _tracker.EmployeeHistory = true; }}
     [JsonPropertyName("EmployeeAgreement")]
-    public long? EmployeeAgreement { get; set; }
+    public long? EmployeeAgreement { get => _EmployeeAgreement; set { _EmployeeAgreement = value; _tracker.EmployeeAgreement = true; }}
     [JsonPropertyName("Date")]
-    public DateTimeOffset? Date { get; set; }
+    public DateTimeOffset? Date { get => _Date; set { _Date = value; _tracker.Date = true; }}
     [JsonPropertyName("StartTime")]
-    public long? StartTime { get; set; }
+    public long? StartTime { get => _StartTime; set { _StartTime = value; _tracker.StartTime = true; }}
     [JsonPropertyName("EndTime")]
-    public long? EndTime { get; set; }
+    public long? EndTime { get => _EndTime; set { _EndTime = value; _tracker.EndTime = true; }}
     [JsonPropertyName("Mealbreak")]
-    public DateTimeOffset? Mealbreak { get; set; }
+    public DateTimeOffset? Mealbreak { get => _Mealbreak; set { _Mealbreak = value; _tracker.Mealbreak = true; }}
     [JsonPropertyName("MealbreakSlots")]
-    public string? MealbreakSlots { get; set; }
+    public string? MealbreakSlots { get => _MealbreakSlots; set { _MealbreakSlots = value; _tracker.MealbreakSlots = true; }}
     [JsonPropertyName("Slots")]
-    public string? Slots { get; set; }
+    public string? Slots { get => _Slots; set { _Slots = value; _tracker.Slots = true; }}
     [JsonPropertyName("TotalTime")]
-    public double? TotalTime { get; set; }
+    public double? TotalTime { get => _TotalTime; set { _TotalTime = value; _tracker.TotalTime = true; }}
     [JsonPropertyName("TotalTimeInv")]
-    public double? TotalTimeInv { get; set; }
+    public double? TotalTimeInv { get => _TotalTimeInv; set { _TotalTimeInv = value; _tracker.TotalTimeInv = true; }}
     [JsonPropertyName("Cost")]
-    public double? Cost { get; set; }
+    public double? Cost { get => _Cost; set { _Cost = value; _tracker.Cost = true; }}
     [JsonPropertyName("Roster")]
-    public long? Roster { get; set; }
+    public long? Roster { get => _Roster; set { _Roster = value; _tracker.Roster = true; }}
     [JsonPropertyName("EmployeeComment")]
-    public string? EmployeeComment { get; set; }
+    public string? EmployeeComment { get => _EmployeeComment; set { _EmployeeComment = value; _tracker.EmployeeComment = true; }}
     [JsonPropertyName("SupervisorComment")]
-    public string? SupervisorComment { get; set; }
+    public string? SupervisorComment { get => _SupervisorComment; set { _SupervisorComment = value; _tracker.SupervisorComment = true; }}
     [JsonPropertyName("Supervisor")]
-    public long? Supervisor { get; set; }
+    public long? Supervisor { get => _Supervisor; set { _Supervisor = value; _tracker.Supervisor = true; }}
     [JsonPropertyName("Disputed")]
-    public bool? Disputed { get; set; }
+    public bool? Disputed { get => _Disputed; set { _Disputed = value; _tracker.Disputed = true; }}
     [JsonPropertyName("TimeApproved")]
-    public bool? TimeApproved { get; set; }
+    public bool? TimeApproved { get => _TimeApproved; set { _TimeApproved = value; _tracker.TimeApproved = true; }}
     [JsonPropertyName("TimeApprover")]
-    public long? TimeApprover { get; set; }
+    public long? TimeApprover { get => _TimeApprover; set { _TimeApprover = value; _tracker.TimeApprover = true; }}
     [JsonPropertyName("Discarded")]
-    public bool? Discarded { get; set; }
+    public bool? Discarded { get => _Discarded; set { _Discarded = value; _tracker.Discarded = true; }}
     [JsonPropertyName("ValidationFlag")]
-    public long? ValidationFlag { get; set; }
+    public long? ValidationFlag { get => _ValidationFlag; set { _ValidationFlag = value; _tracker.ValidationFlag = true; }}
     [JsonPropertyName("OperationalUnit")]
-    public long? OperationalUnit { get; set; }
+    public long? OperationalUnit { get => _OperationalUnit; set { _OperationalUnit = value; _tracker.OperationalUnit = true; }}
     [JsonPropertyName("IsInProgress")]
-    public bool? IsInProgress { get; set; }
+    public bool? IsInProgress { get => _IsInProgress; set { _IsInProgress = value; _tracker.IsInProgress = true; }}
     [JsonPropertyName("IsLeave")]
-    public bool? IsLeave { get; set; }
+    public bool? IsLeave { get => _IsLeave; set { _IsLeave = value; _tracker.IsLeave = true; }}
     [JsonPropertyName("LeaveId")]
-    public long? LeaveId { get; set; }
+    public long? LeaveId { get => _LeaveId; set { _LeaveId = value; _tracker.LeaveId = true; }}
     [JsonPropertyName("LeaveRule")]
-    public long? LeaveRule { get; set; }
+    public long? LeaveRule { get => _LeaveRule; set { _LeaveRule = value; _tracker.LeaveRule = true; }}
     [JsonPropertyName("Invoiced")]
-    public bool? Invoiced { get; set; }
+    public bool? Invoiced { get => _Invoiced; set { _Invoiced = value; _tracker.Invoiced = true; }}
     [JsonPropertyName("InvoiceComment")]
-    public string? InvoiceComment { get; set; }
+    public string? InvoiceComment { get => _InvoiceComment; set { _InvoiceComment = value; _tracker.InvoiceComment = true; }}
     [JsonPropertyName("PayRuleApproved")]
-    public bool? PayRuleApproved { get; set; }
+    public bool? PayRuleApproved { get => _PayRuleApproved; set { _PayRuleApproved = value; _tracker.PayRuleApproved = true; }}
     [JsonPropertyName("Exported")]
-    public bool? Exported { get; set; }
+    public bool? Exported { get => _Exported; set { _Exported = value; _tracker.Exported = true; }}
     [JsonPropertyName("StagingId")]
-    public long? StagingId { get; set; }
+    public long? StagingId { get => _StagingId; set { _StagingId = value; _tracker.StagingId = true; }}
     [JsonPropertyName("PayStaged")]
-    public bool? PayStaged { get; set; }
+    public bool? PayStaged { get => _PayStaged; set { _PayStaged = value; _tracker.PayStaged = true; }}
     [JsonPropertyName("PaycycleId")]
-    public long? PaycycleId { get; set; }
+    public long? PaycycleId { get => _PaycycleId; set { _PaycycleId = value; _tracker.PaycycleId = true; }}
     [JsonPropertyName("MarkedPaidUnpaidAt")]
-    public DateTimeOffset? MarkedPaidUnpaidAt { get; set; }
+    public DateTimeOffset? MarkedPaidUnpaidAt { get => _MarkedPaidUnpaidAt; set { _MarkedPaidUnpaidAt = value; _tracker.MarkedPaidUnpaidAt = true; }}
     [JsonPropertyName("AccrualState")]
-    public long? AccrualState { get; set; }
+    public long? AccrualState { get => _AccrualState; set { _AccrualState = value; _tracker.AccrualState = true; }}
     [JsonPropertyName("AccrualStateChangedAt")]
-    public DateTimeOffset? AccrualStateChangedAt { get; set; }
+    public DateTimeOffset? AccrualStateChangedAt { get => _AccrualStateChangedAt; set { _AccrualStateChangedAt = value; _tracker.AccrualStateChangedAt = true; }}
     [JsonPropertyName("AccrualAttempts")]
-    public long? AccrualAttempts { get; set; }
+    public long? AccrualAttempts { get => _AccrualAttempts; set { _AccrualAttempts = value; _tracker.AccrualAttempts = true; }}
     [JsonPropertyName("File")]
-    public long? File { get; set; }
+    public long? File { get => _File; set { _File = value; _tracker.File = true; }}
     [JsonPropertyName("CustomFieldData")]
-    public long? CustomFieldData { get; set; }
+    public long? CustomFieldData { get => _CustomFieldData; set { _CustomFieldData = value; _tracker.CustomFieldData = true; }}
     [JsonPropertyName("RealTime")]
-    public bool? RealTime { get; set; }
+    public bool? RealTime { get => _RealTime; set { _RealTime = value; _tracker.RealTime = true; }}
     [JsonPropertyName("AutoProcessed")]
-    public bool? AutoProcessed { get; set; }
+    public bool? AutoProcessed { get => _AutoProcessed; set { _AutoProcessed = value; _tracker.AutoProcessed = true; }}
     [JsonPropertyName("AutoRounded")]
-    public bool? AutoRounded { get; set; }
+    public bool? AutoRounded { get => _AutoRounded; set { _AutoRounded = value; _tracker.AutoRounded = true; }}
     [JsonPropertyName("AutoTimeApproved")]
-    public bool? AutoTimeApproved { get; set; }
+    public bool? AutoTimeApproved { get => _AutoTimeApproved; set { _AutoTimeApproved = value; _tracker.AutoTimeApproved = true; }}
     [JsonPropertyName("AutoPayRuleApproved")]
-    public bool? AutoPayRuleApproved { get; set; }
+    public bool? AutoPayRuleApproved { get => _AutoPayRuleApproved; set { _AutoPayRuleApproved = value; _tracker.AutoPayRuleApproved = true; }}
     [JsonPropertyName("Metadata")]
-    public string? Metadata { get; set; }
+    public string? Metadata { get => _Metadata; set { _Metadata = value; _tracker.Metadata = true; }}
     [JsonPropertyName("ParentId")]
-    public long? ParentId { get; set; }
+    public long? ParentId { get => _ParentId; set { _ParentId = value; _tracker.ParentId = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<Employee>))]
     public Join<Employee>? EmployeeObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<EmployeeAgreement>))]
     public Join<EmployeeAgreement>? EmployeeAgreementObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Roster>))]
     public Join<Roster>? RosterObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<OperationalUnit>))]
     public Join<OperationalUnit>? OperationalUnitObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Leave>))]
     public Join<Leave>? Leave { get; set; }
-
     [JsonConverter(typeof(JoinConverter<LeaveRules>))]
     public Join<LeaveRules>? LeaveRuleObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<EmployeePaycycle>))]
     public Join<EmployeePaycycle>? Paycycle { get; set; }
-
     [JsonConverter(typeof(JoinConverter<CustomFieldData>))]
     public Join<CustomFieldData>? CustomFieldDataObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Timesheet>))]
     public Join<Timesheet>? Parent { get; set; }
+    TimesheetPropertyTracker IHasPropertyTracker<TimesheetPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<TimesheetPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<TimesheetPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class TimesheetPropertyTracker
+{
+    internal bool Id;
+    internal bool Employee;
+    internal bool EmployeeHistory;
+    internal bool EmployeeAgreement;
+    internal bool Date;
+    internal bool StartTime;
+    internal bool EndTime;
+    internal bool Mealbreak;
+    internal bool MealbreakSlots;
+    internal bool Slots;
+    internal bool TotalTime;
+    internal bool TotalTimeInv;
+    internal bool Cost;
+    internal bool Roster;
+    internal bool EmployeeComment;
+    internal bool SupervisorComment;
+    internal bool Supervisor;
+    internal bool Disputed;
+    internal bool TimeApproved;
+    internal bool TimeApprover;
+    internal bool Discarded;
+    internal bool ValidationFlag;
+    internal bool OperationalUnit;
+    internal bool IsInProgress;
+    internal bool IsLeave;
+    internal bool LeaveId;
+    internal bool LeaveRule;
+    internal bool Invoiced;
+    internal bool InvoiceComment;
+    internal bool PayRuleApproved;
+    internal bool Exported;
+    internal bool StagingId;
+    internal bool PayStaged;
+    internal bool PaycycleId;
+    internal bool MarkedPaidUnpaidAt;
+    internal bool AccrualState;
+    internal bool AccrualStateChangedAt;
+    internal bool AccrualAttempts;
+    internal bool File;
+    internal bool CustomFieldData;
+    internal bool RealTime;
+    internal bool AutoProcessed;
+    internal bool AutoRounded;
+    internal bool AutoTimeApproved;
+    internal bool AutoPayRuleApproved;
+    internal bool Metadata;
+    internal bool ParentId;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Employee = false;
+        EmployeeHistory = false;
+        EmployeeAgreement = false;
+        Date = false;
+        StartTime = false;
+        EndTime = false;
+        Mealbreak = false;
+        MealbreakSlots = false;
+        Slots = false;
+        TotalTime = false;
+        TotalTimeInv = false;
+        Cost = false;
+        Roster = false;
+        EmployeeComment = false;
+        SupervisorComment = false;
+        Supervisor = false;
+        Disputed = false;
+        TimeApproved = false;
+        TimeApprover = false;
+        Discarded = false;
+        ValidationFlag = false;
+        OperationalUnit = false;
+        IsInProgress = false;
+        IsLeave = false;
+        LeaveId = false;
+        LeaveRule = false;
+        Invoiced = false;
+        InvoiceComment = false;
+        PayRuleApproved = false;
+        Exported = false;
+        StagingId = false;
+        PayStaged = false;
+        PaycycleId = false;
+        MarkedPaidUnpaidAt = false;
+        AccrualState = false;
+        AccrualStateChangedAt = false;
+        AccrualAttempts = false;
+        File = false;
+        CustomFieldData = false;
+        RealTime = false;
+        AutoProcessed = false;
+        AutoRounded = false;
+        AutoTimeApproved = false;
+        AutoPayRuleApproved = false;
+        Metadata = false;
+        ParentId = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class TimesheetSerializer : JsonConverter<Timesheet>
+{
+    public override Timesheet? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Timesheet value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<TimesheetPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Employee)
+        {
+            writer.WritePropertyName("Employee");
+            JsonSerializer.Serialize(writer,value.Employee,options);
+        }
+        if (tracker.EmployeeHistory)
+        {
+            writer.WritePropertyName("EmployeeHistory");
+            JsonSerializer.Serialize(writer,value.EmployeeHistory,options);
+        }
+        if (tracker.EmployeeAgreement)
+        {
+            writer.WritePropertyName("EmployeeAgreement");
+            JsonSerializer.Serialize(writer,value.EmployeeAgreement,options);
+        }
+        if (tracker.Date)
+        {
+            writer.WritePropertyName("Date");
+            JsonSerializer.Serialize(writer,value.Date,options);
+        }
+        if (tracker.StartTime)
+        {
+            writer.WritePropertyName("StartTime");
+            JsonSerializer.Serialize(writer,value.StartTime,options);
+        }
+        if (tracker.EndTime)
+        {
+            writer.WritePropertyName("EndTime");
+            JsonSerializer.Serialize(writer,value.EndTime,options);
+        }
+        if (tracker.Mealbreak)
+        {
+            writer.WritePropertyName("Mealbreak");
+            JsonSerializer.Serialize(writer,value.Mealbreak,options);
+        }
+        if (tracker.MealbreakSlots)
+        {
+            writer.WritePropertyName("MealbreakSlots");
+            JsonSerializer.Serialize(writer,value.MealbreakSlots,options);
+        }
+        if (tracker.Slots)
+        {
+            writer.WritePropertyName("Slots");
+            JsonSerializer.Serialize(writer,value.Slots,options);
+        }
+        if (tracker.TotalTime)
+        {
+            writer.WritePropertyName("TotalTime");
+            JsonSerializer.Serialize(writer,value.TotalTime,options);
+        }
+        if (tracker.TotalTimeInv)
+        {
+            writer.WritePropertyName("TotalTimeInv");
+            JsonSerializer.Serialize(writer,value.TotalTimeInv,options);
+        }
+        if (tracker.Cost)
+        {
+            writer.WritePropertyName("Cost");
+            JsonSerializer.Serialize(writer,value.Cost,options);
+        }
+        if (tracker.Roster)
+        {
+            writer.WritePropertyName("Roster");
+            JsonSerializer.Serialize(writer,value.Roster,options);
+        }
+        if (tracker.EmployeeComment)
+        {
+            writer.WritePropertyName("EmployeeComment");
+            JsonSerializer.Serialize(writer,value.EmployeeComment,options);
+        }
+        if (tracker.SupervisorComment)
+        {
+            writer.WritePropertyName("SupervisorComment");
+            JsonSerializer.Serialize(writer,value.SupervisorComment,options);
+        }
+        if (tracker.Supervisor)
+        {
+            writer.WritePropertyName("Supervisor");
+            JsonSerializer.Serialize(writer,value.Supervisor,options);
+        }
+        if (tracker.Disputed)
+        {
+            writer.WritePropertyName("Disputed");
+            JsonSerializer.Serialize(writer,value.Disputed,options);
+        }
+        if (tracker.TimeApproved)
+        {
+            writer.WritePropertyName("TimeApproved");
+            JsonSerializer.Serialize(writer,value.TimeApproved,options);
+        }
+        if (tracker.TimeApprover)
+        {
+            writer.WritePropertyName("TimeApprover");
+            JsonSerializer.Serialize(writer,value.TimeApprover,options);
+        }
+        if (tracker.Discarded)
+        {
+            writer.WritePropertyName("Discarded");
+            JsonSerializer.Serialize(writer,value.Discarded,options);
+        }
+        if (tracker.ValidationFlag)
+        {
+            writer.WritePropertyName("ValidationFlag");
+            JsonSerializer.Serialize(writer,value.ValidationFlag,options);
+        }
+        if (tracker.OperationalUnit)
+        {
+            writer.WritePropertyName("OperationalUnit");
+            JsonSerializer.Serialize(writer,value.OperationalUnit,options);
+        }
+        if (tracker.IsInProgress)
+        {
+            writer.WritePropertyName("IsInProgress");
+            JsonSerializer.Serialize(writer,value.IsInProgress,options);
+        }
+        if (tracker.IsLeave)
+        {
+            writer.WritePropertyName("IsLeave");
+            JsonSerializer.Serialize(writer,value.IsLeave,options);
+        }
+        if (tracker.LeaveId)
+        {
+            writer.WritePropertyName("LeaveId");
+            JsonSerializer.Serialize(writer,value.LeaveId,options);
+        }
+        if (tracker.LeaveRule)
+        {
+            writer.WritePropertyName("LeaveRule");
+            JsonSerializer.Serialize(writer,value.LeaveRule,options);
+        }
+        if (tracker.Invoiced)
+        {
+            writer.WritePropertyName("Invoiced");
+            JsonSerializer.Serialize(writer,value.Invoiced,options);
+        }
+        if (tracker.InvoiceComment)
+        {
+            writer.WritePropertyName("InvoiceComment");
+            JsonSerializer.Serialize(writer,value.InvoiceComment,options);
+        }
+        if (tracker.PayRuleApproved)
+        {
+            writer.WritePropertyName("PayRuleApproved");
+            JsonSerializer.Serialize(writer,value.PayRuleApproved,options);
+        }
+        if (tracker.Exported)
+        {
+            writer.WritePropertyName("Exported");
+            JsonSerializer.Serialize(writer,value.Exported,options);
+        }
+        if (tracker.StagingId)
+        {
+            writer.WritePropertyName("StagingId");
+            JsonSerializer.Serialize(writer,value.StagingId,options);
+        }
+        if (tracker.PayStaged)
+        {
+            writer.WritePropertyName("PayStaged");
+            JsonSerializer.Serialize(writer,value.PayStaged,options);
+        }
+        if (tracker.PaycycleId)
+        {
+            writer.WritePropertyName("PaycycleId");
+            JsonSerializer.Serialize(writer,value.PaycycleId,options);
+        }
+        if (tracker.MarkedPaidUnpaidAt)
+        {
+            writer.WritePropertyName("MarkedPaidUnpaidAt");
+            JsonSerializer.Serialize(writer,value.MarkedPaidUnpaidAt,options);
+        }
+        if (tracker.AccrualState)
+        {
+            writer.WritePropertyName("AccrualState");
+            JsonSerializer.Serialize(writer,value.AccrualState,options);
+        }
+        if (tracker.AccrualStateChangedAt)
+        {
+            writer.WritePropertyName("AccrualStateChangedAt");
+            JsonSerializer.Serialize(writer,value.AccrualStateChangedAt,options);
+        }
+        if (tracker.AccrualAttempts)
+        {
+            writer.WritePropertyName("AccrualAttempts");
+            JsonSerializer.Serialize(writer,value.AccrualAttempts,options);
+        }
+        if (tracker.File)
+        {
+            writer.WritePropertyName("File");
+            JsonSerializer.Serialize(writer,value.File,options);
+        }
+        if (tracker.CustomFieldData)
+        {
+            writer.WritePropertyName("CustomFieldData");
+            JsonSerializer.Serialize(writer,value.CustomFieldData,options);
+        }
+        if (tracker.RealTime)
+        {
+            writer.WritePropertyName("RealTime");
+            JsonSerializer.Serialize(writer,value.RealTime,options);
+        }
+        if (tracker.AutoProcessed)
+        {
+            writer.WritePropertyName("AutoProcessed");
+            JsonSerializer.Serialize(writer,value.AutoProcessed,options);
+        }
+        if (tracker.AutoRounded)
+        {
+            writer.WritePropertyName("AutoRounded");
+            JsonSerializer.Serialize(writer,value.AutoRounded,options);
+        }
+        if (tracker.AutoTimeApproved)
+        {
+            writer.WritePropertyName("AutoTimeApproved");
+            JsonSerializer.Serialize(writer,value.AutoTimeApproved,options);
+        }
+        if (tracker.AutoPayRuleApproved)
+        {
+            writer.WritePropertyName("AutoPayRuleApproved");
+            JsonSerializer.Serialize(writer,value.AutoPayRuleApproved,options);
+        }
+        if (tracker.Metadata)
+        {
+            writer.WritePropertyName("Metadata");
+            JsonSerializer.Serialize(writer,value.Metadata,options);
+        }
+        if (tracker.ParentId)
+        {
+            writer.WritePropertyName("ParentId");
+            JsonSerializer.Serialize(writer,value.ParentId,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

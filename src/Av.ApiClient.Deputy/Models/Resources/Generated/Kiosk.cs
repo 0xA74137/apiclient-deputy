@@ -6,40 +6,181 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Kiosk>))]
-public class Kiosk : IResource
+public class Kiosk : IResource, IHasPropertyTracker<KioskPropertyTracker>
 {
+    private long? _Id;
+    private string? _Name;
+    private string? _InstallationId;
+    private long? _Company;
+    private long? _ConnectionMode;
+    private string? _SubnetRestriction;
+    private long? _AuthenticationMode;
+    private bool? _UseBiometric;
+    private string? _LastActivity;
+    private string? _IpAddress;
+    private bool? _EnableMultiLocations;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private KioskPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Name")]
-    public string? Name { get; set; }
+    public string? Name { get => _Name; set { _Name = value; _tracker.Name = true; }}
     [JsonPropertyName("InstallationId")]
-    public string? InstallationId { get; set; }
+    public string? InstallationId { get => _InstallationId; set { _InstallationId = value; _tracker.InstallationId = true; }}
     [JsonPropertyName("Company")]
-    public long? Company { get; set; }
+    public long? Company { get => _Company; set { _Company = value; _tracker.Company = true; }}
     [JsonPropertyName("ConnectionMode")]
-    public long? ConnectionMode { get; set; }
+    public long? ConnectionMode { get => _ConnectionMode; set { _ConnectionMode = value; _tracker.ConnectionMode = true; }}
     [JsonPropertyName("SubnetRestriction")]
-    public string? SubnetRestriction { get; set; }
+    public string? SubnetRestriction { get => _SubnetRestriction; set { _SubnetRestriction = value; _tracker.SubnetRestriction = true; }}
     [JsonPropertyName("AuthenticationMode")]
-    public long? AuthenticationMode { get; set; }
+    public long? AuthenticationMode { get => _AuthenticationMode; set { _AuthenticationMode = value; _tracker.AuthenticationMode = true; }}
     [JsonPropertyName("UseBiometric")]
-    public bool? UseBiometric { get; set; }
+    public bool? UseBiometric { get => _UseBiometric; set { _UseBiometric = value; _tracker.UseBiometric = true; }}
     [JsonPropertyName("LastActivity")]
-    public string? LastActivity { get; set; }
+    public string? LastActivity { get => _LastActivity; set { _LastActivity = value; _tracker.LastActivity = true; }}
     [JsonPropertyName("IpAddress")]
-    public string? IpAddress { get; set; }
+    public string? IpAddress { get => _IpAddress; set { _IpAddress = value; _tracker.IpAddress = true; }}
     [JsonPropertyName("EnableMultiLocations")]
-    public bool? EnableMultiLocations { get; set; }
+    public bool? EnableMultiLocations { get => _EnableMultiLocations; set { _EnableMultiLocations = value; _tracker.EnableMultiLocations = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<Company>))]
     public Join<Company>? CompanyObject { get; set; }
+    KioskPropertyTracker IHasPropertyTracker<KioskPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<KioskPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<KioskPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class KioskPropertyTracker
+{
+    internal bool Id;
+    internal bool Name;
+    internal bool InstallationId;
+    internal bool Company;
+    internal bool ConnectionMode;
+    internal bool SubnetRestriction;
+    internal bool AuthenticationMode;
+    internal bool UseBiometric;
+    internal bool LastActivity;
+    internal bool IpAddress;
+    internal bool EnableMultiLocations;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Name = false;
+        InstallationId = false;
+        Company = false;
+        ConnectionMode = false;
+        SubnetRestriction = false;
+        AuthenticationMode = false;
+        UseBiometric = false;
+        LastActivity = false;
+        IpAddress = false;
+        EnableMultiLocations = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class KioskSerializer : JsonConverter<Kiosk>
+{
+    public override Kiosk? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Kiosk value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<KioskPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Name)
+        {
+            writer.WritePropertyName("Name");
+            JsonSerializer.Serialize(writer,value.Name,options);
+        }
+        if (tracker.InstallationId)
+        {
+            writer.WritePropertyName("InstallationId");
+            JsonSerializer.Serialize(writer,value.InstallationId,options);
+        }
+        if (tracker.Company)
+        {
+            writer.WritePropertyName("Company");
+            JsonSerializer.Serialize(writer,value.Company,options);
+        }
+        if (tracker.ConnectionMode)
+        {
+            writer.WritePropertyName("ConnectionMode");
+            JsonSerializer.Serialize(writer,value.ConnectionMode,options);
+        }
+        if (tracker.SubnetRestriction)
+        {
+            writer.WritePropertyName("SubnetRestriction");
+            JsonSerializer.Serialize(writer,value.SubnetRestriction,options);
+        }
+        if (tracker.AuthenticationMode)
+        {
+            writer.WritePropertyName("AuthenticationMode");
+            JsonSerializer.Serialize(writer,value.AuthenticationMode,options);
+        }
+        if (tracker.UseBiometric)
+        {
+            writer.WritePropertyName("UseBiometric");
+            JsonSerializer.Serialize(writer,value.UseBiometric,options);
+        }
+        if (tracker.LastActivity)
+        {
+            writer.WritePropertyName("LastActivity");
+            JsonSerializer.Serialize(writer,value.LastActivity,options);
+        }
+        if (tracker.IpAddress)
+        {
+            writer.WritePropertyName("IpAddress");
+            JsonSerializer.Serialize(writer,value.IpAddress,options);
+        }
+        if (tracker.EnableMultiLocations)
+        {
+            writer.WritePropertyName("EnableMultiLocations");
+            JsonSerializer.Serialize(writer,value.EnableMultiLocations,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

@@ -6,41 +6,173 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<SalesData>))]
-public class SalesData : IResource
+public class SalesData : IResource, IHasPropertyTracker<SalesDataPropertyTracker>
 {
+    private long? _Id;
+    private DateTimeOffset? _Date;
+    private long? _Timestamp;
+    private long? _Employee;
+    private long? _OperationalUnit;
+    private string? _SalesType;
+    private string? _SalesRef;
+    private double? _SalesQty;
+    private double? _SalesAmount;
+    private string? _SalesPayload;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private SalesDataPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Date")]
-    public DateTimeOffset? Date { get; set; }
+    public DateTimeOffset? Date { get => _Date; set { _Date = value; _tracker.Date = true; }}
     [JsonPropertyName("Timestamp")]
-    public long? Timestamp { get; set; }
+    public long? Timestamp { get => _Timestamp; set { _Timestamp = value; _tracker.Timestamp = true; }}
     [JsonPropertyName("Employee")]
-    public long? Employee { get; set; }
+    public long? Employee { get => _Employee; set { _Employee = value; _tracker.Employee = true; }}
     [JsonPropertyName("OperationalUnit")]
-    public long? OperationalUnit { get; set; }
+    public long? OperationalUnit { get => _OperationalUnit; set { _OperationalUnit = value; _tracker.OperationalUnit = true; }}
     [JsonPropertyName("SalesType")]
-    public string? SalesType { get; set; }
+    public string? SalesType { get => _SalesType; set { _SalesType = value; _tracker.SalesType = true; }}
     [JsonPropertyName("SalesRef")]
-    public string? SalesRef { get; set; }
+    public string? SalesRef { get => _SalesRef; set { _SalesRef = value; _tracker.SalesRef = true; }}
     [JsonPropertyName("SalesQty")]
-    public double? SalesQty { get; set; }
+    public double? SalesQty { get => _SalesQty; set { _SalesQty = value; _tracker.SalesQty = true; }}
     [JsonPropertyName("SalesAmount")]
-    public double? SalesAmount { get; set; }
+    public double? SalesAmount { get => _SalesAmount; set { _SalesAmount = value; _tracker.SalesAmount = true; }}
     [JsonPropertyName("SalesPayload")]
-    public string? SalesPayload { get; set; }
+    public string? SalesPayload { get => _SalesPayload; set { _SalesPayload = value; _tracker.SalesPayload = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<Employee>))]
     public Join<Employee>? EmployeeObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<OperationalUnit>))]
     public Join<OperationalUnit>? OperationalUnitObject { get; set; }
+    SalesDataPropertyTracker IHasPropertyTracker<SalesDataPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<SalesDataPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<SalesDataPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class SalesDataPropertyTracker
+{
+    internal bool Id;
+    internal bool Date;
+    internal bool Timestamp;
+    internal bool Employee;
+    internal bool OperationalUnit;
+    internal bool SalesType;
+    internal bool SalesRef;
+    internal bool SalesQty;
+    internal bool SalesAmount;
+    internal bool SalesPayload;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Date = false;
+        Timestamp = false;
+        Employee = false;
+        OperationalUnit = false;
+        SalesType = false;
+        SalesRef = false;
+        SalesQty = false;
+        SalesAmount = false;
+        SalesPayload = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class SalesDataSerializer : JsonConverter<SalesData>
+{
+    public override SalesData? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,SalesData value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<SalesDataPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Date)
+        {
+            writer.WritePropertyName("Date");
+            JsonSerializer.Serialize(writer,value.Date,options);
+        }
+        if (tracker.Timestamp)
+        {
+            writer.WritePropertyName("Timestamp");
+            JsonSerializer.Serialize(writer,value.Timestamp,options);
+        }
+        if (tracker.Employee)
+        {
+            writer.WritePropertyName("Employee");
+            JsonSerializer.Serialize(writer,value.Employee,options);
+        }
+        if (tracker.OperationalUnit)
+        {
+            writer.WritePropertyName("OperationalUnit");
+            JsonSerializer.Serialize(writer,value.OperationalUnit,options);
+        }
+        if (tracker.SalesType)
+        {
+            writer.WritePropertyName("SalesType");
+            JsonSerializer.Serialize(writer,value.SalesType,options);
+        }
+        if (tracker.SalesRef)
+        {
+            writer.WritePropertyName("SalesRef");
+            JsonSerializer.Serialize(writer,value.SalesRef,options);
+        }
+        if (tracker.SalesQty)
+        {
+            writer.WritePropertyName("SalesQty");
+            JsonSerializer.Serialize(writer,value.SalesQty,options);
+        }
+        if (tracker.SalesAmount)
+        {
+            writer.WritePropertyName("SalesAmount");
+            JsonSerializer.Serialize(writer,value.SalesAmount,options);
+        }
+        if (tracker.SalesPayload)
+        {
+            writer.WritePropertyName("SalesPayload");
+            JsonSerializer.Serialize(writer,value.SalesPayload,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

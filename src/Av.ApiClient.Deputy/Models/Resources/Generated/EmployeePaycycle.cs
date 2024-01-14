@@ -6,56 +6,235 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<EmployeePaycycle>))]
-public class EmployeePaycycle : IResource
+public class EmployeePaycycle : IResource, IHasPropertyTracker<EmployeePaycyclePropertyTracker>
 {
+    private long? _Id;
+    private long? _EmployeeId;
+    private long? _EmployeeAgreementId;
+    private long? _PeriodId;
+    private bool? _RecommendedLoadings;
+    private long? _Timesheets;
+    private long? _TimesheetsTimeApproved;
+    private long? _TimesheetsPayApproved;
+    private long? _PaycycleRules;
+    private long? _PaycycleRulesApproved;
+    private bool? _Exported;
+    private long? _ExportId;
+    private bool? _Paid;
+    private double? _TimeTotal;
+    private double? _CostTotal;
+    private long? _EmployeeAgreementHistoryId;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private EmployeePaycyclePropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("EmployeeId")]
-    public long? EmployeeId { get; set; }
+    public long? EmployeeId { get => _EmployeeId; set { _EmployeeId = value; _tracker.EmployeeId = true; }}
     [JsonPropertyName("EmployeeAgreementId")]
-    public long? EmployeeAgreementId { get; set; }
+    public long? EmployeeAgreementId { get => _EmployeeAgreementId; set { _EmployeeAgreementId = value; _tracker.EmployeeAgreementId = true; }}
     [JsonPropertyName("PeriodId")]
-    public long? PeriodId { get; set; }
+    public long? PeriodId { get => _PeriodId; set { _PeriodId = value; _tracker.PeriodId = true; }}
     [JsonPropertyName("RecommendedLoadings")]
-    public bool? RecommendedLoadings { get; set; }
+    public bool? RecommendedLoadings { get => _RecommendedLoadings; set { _RecommendedLoadings = value; _tracker.RecommendedLoadings = true; }}
     [JsonPropertyName("Timesheets")]
-    public long? Timesheets { get; set; }
+    public long? Timesheets { get => _Timesheets; set { _Timesheets = value; _tracker.Timesheets = true; }}
     [JsonPropertyName("TimesheetsTimeApproved")]
-    public long? TimesheetsTimeApproved { get; set; }
+    public long? TimesheetsTimeApproved { get => _TimesheetsTimeApproved; set { _TimesheetsTimeApproved = value; _tracker.TimesheetsTimeApproved = true; }}
     [JsonPropertyName("TimesheetsPayApproved")]
-    public long? TimesheetsPayApproved { get; set; }
+    public long? TimesheetsPayApproved { get => _TimesheetsPayApproved; set { _TimesheetsPayApproved = value; _tracker.TimesheetsPayApproved = true; }}
     [JsonPropertyName("PaycycleRules")]
-    public long? PaycycleRules { get; set; }
+    public long? PaycycleRules { get => _PaycycleRules; set { _PaycycleRules = value; _tracker.PaycycleRules = true; }}
     [JsonPropertyName("PaycycleRulesApproved")]
-    public long? PaycycleRulesApproved { get; set; }
+    public long? PaycycleRulesApproved { get => _PaycycleRulesApproved; set { _PaycycleRulesApproved = value; _tracker.PaycycleRulesApproved = true; }}
     [JsonPropertyName("Exported")]
-    public bool? Exported { get; set; }
+    public bool? Exported { get => _Exported; set { _Exported = value; _tracker.Exported = true; }}
     [JsonPropertyName("ExportId")]
-    public long? ExportId { get; set; }
+    public long? ExportId { get => _ExportId; set { _ExportId = value; _tracker.ExportId = true; }}
     [JsonPropertyName("Paid")]
-    public bool? Paid { get; set; }
+    public bool? Paid { get => _Paid; set { _Paid = value; _tracker.Paid = true; }}
     [JsonPropertyName("TimeTotal")]
-    public double? TimeTotal { get; set; }
+    public double? TimeTotal { get => _TimeTotal; set { _TimeTotal = value; _tracker.TimeTotal = true; }}
     [JsonPropertyName("CostTotal")]
-    public double? CostTotal { get; set; }
+    public double? CostTotal { get => _CostTotal; set { _CostTotal = value; _tracker.CostTotal = true; }}
     [JsonPropertyName("EmployeeAgreementHistoryId")]
-    public long? EmployeeAgreementHistoryId { get; set; }
+    public long? EmployeeAgreementHistoryId { get => _EmployeeAgreementHistoryId; set { _EmployeeAgreementHistoryId = value; _tracker.EmployeeAgreementHistoryId = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<Employee>))]
     public Join<Employee>? Employee { get; set; }
-
     [JsonConverter(typeof(JoinConverter<EmployeeAgreement>))]
     public Join<EmployeeAgreement>? EmployeeAgreement { get; set; }
-
     [JsonConverter(typeof(JoinConverter<CompanyPeriod>))]
     public Join<CompanyPeriod>? Period { get; set; }
+    EmployeePaycyclePropertyTracker IHasPropertyTracker<EmployeePaycyclePropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<EmployeePaycyclePropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<EmployeePaycyclePropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class EmployeePaycyclePropertyTracker
+{
+    internal bool Id;
+    internal bool EmployeeId;
+    internal bool EmployeeAgreementId;
+    internal bool PeriodId;
+    internal bool RecommendedLoadings;
+    internal bool Timesheets;
+    internal bool TimesheetsTimeApproved;
+    internal bool TimesheetsPayApproved;
+    internal bool PaycycleRules;
+    internal bool PaycycleRulesApproved;
+    internal bool Exported;
+    internal bool ExportId;
+    internal bool Paid;
+    internal bool TimeTotal;
+    internal bool CostTotal;
+    internal bool EmployeeAgreementHistoryId;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        EmployeeId = false;
+        EmployeeAgreementId = false;
+        PeriodId = false;
+        RecommendedLoadings = false;
+        Timesheets = false;
+        TimesheetsTimeApproved = false;
+        TimesheetsPayApproved = false;
+        PaycycleRules = false;
+        PaycycleRulesApproved = false;
+        Exported = false;
+        ExportId = false;
+        Paid = false;
+        TimeTotal = false;
+        CostTotal = false;
+        EmployeeAgreementHistoryId = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class EmployeePaycycleSerializer : JsonConverter<EmployeePaycycle>
+{
+    public override EmployeePaycycle? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,EmployeePaycycle value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<EmployeePaycyclePropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.EmployeeId)
+        {
+            writer.WritePropertyName("EmployeeId");
+            JsonSerializer.Serialize(writer,value.EmployeeId,options);
+        }
+        if (tracker.EmployeeAgreementId)
+        {
+            writer.WritePropertyName("EmployeeAgreementId");
+            JsonSerializer.Serialize(writer,value.EmployeeAgreementId,options);
+        }
+        if (tracker.PeriodId)
+        {
+            writer.WritePropertyName("PeriodId");
+            JsonSerializer.Serialize(writer,value.PeriodId,options);
+        }
+        if (tracker.RecommendedLoadings)
+        {
+            writer.WritePropertyName("RecommendedLoadings");
+            JsonSerializer.Serialize(writer,value.RecommendedLoadings,options);
+        }
+        if (tracker.Timesheets)
+        {
+            writer.WritePropertyName("Timesheets");
+            JsonSerializer.Serialize(writer,value.Timesheets,options);
+        }
+        if (tracker.TimesheetsTimeApproved)
+        {
+            writer.WritePropertyName("TimesheetsTimeApproved");
+            JsonSerializer.Serialize(writer,value.TimesheetsTimeApproved,options);
+        }
+        if (tracker.TimesheetsPayApproved)
+        {
+            writer.WritePropertyName("TimesheetsPayApproved");
+            JsonSerializer.Serialize(writer,value.TimesheetsPayApproved,options);
+        }
+        if (tracker.PaycycleRules)
+        {
+            writer.WritePropertyName("PaycycleRules");
+            JsonSerializer.Serialize(writer,value.PaycycleRules,options);
+        }
+        if (tracker.PaycycleRulesApproved)
+        {
+            writer.WritePropertyName("PaycycleRulesApproved");
+            JsonSerializer.Serialize(writer,value.PaycycleRulesApproved,options);
+        }
+        if (tracker.Exported)
+        {
+            writer.WritePropertyName("Exported");
+            JsonSerializer.Serialize(writer,value.Exported,options);
+        }
+        if (tracker.ExportId)
+        {
+            writer.WritePropertyName("ExportId");
+            JsonSerializer.Serialize(writer,value.ExportId,options);
+        }
+        if (tracker.Paid)
+        {
+            writer.WritePropertyName("Paid");
+            JsonSerializer.Serialize(writer,value.Paid,options);
+        }
+        if (tracker.TimeTotal)
+        {
+            writer.WritePropertyName("TimeTotal");
+            JsonSerializer.Serialize(writer,value.TimeTotal,options);
+        }
+        if (tracker.CostTotal)
+        {
+            writer.WritePropertyName("CostTotal");
+            JsonSerializer.Serialize(writer,value.CostTotal,options);
+        }
+        if (tracker.EmployeeAgreementHistoryId)
+        {
+            writer.WritePropertyName("EmployeeAgreementHistoryId");
+            JsonSerializer.Serialize(writer,value.EmployeeAgreementHistoryId,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

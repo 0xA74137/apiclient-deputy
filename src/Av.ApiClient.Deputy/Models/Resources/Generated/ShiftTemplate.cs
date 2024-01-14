@@ -6,43 +6,183 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<ShiftTemplate>))]
-public class ShiftTemplate : IResource
+public class ShiftTemplate : IResource, IHasPropertyTracker<ShiftTemplatePropertyTracker>
 {
+    private long? _Id;
+    private string? _Name;
+    private double? _TotalTime;
+    private string? _Slots;
+    private long? _Schedule;
+    private bool? _Active;
+    private bool? _AutoCommitBreak;
+    private bool? _BlockEarlyBreakEnd;
+    private bool? _BlockEarlyBreakStart;
+    private string? _AdditionalConfig;
+    private long? _Country;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private ShiftTemplatePropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("Name")]
-    public string? Name { get; set; }
+    public string? Name { get => _Name; set { _Name = value; _tracker.Name = true; }}
     [JsonPropertyName("TotalTime")]
-    public double? TotalTime { get; set; }
+    public double? TotalTime { get => _TotalTime; set { _TotalTime = value; _tracker.TotalTime = true; }}
     [JsonPropertyName("Slots")]
-    public string? Slots { get; set; }
+    public string? Slots { get => _Slots; set { _Slots = value; _tracker.Slots = true; }}
     [JsonPropertyName("Schedule")]
-    public long? Schedule { get; set; }
+    public long? Schedule { get => _Schedule; set { _Schedule = value; _tracker.Schedule = true; }}
     [JsonPropertyName("Active")]
-    public bool? Active { get; set; }
+    public bool? Active { get => _Active; set { _Active = value; _tracker.Active = true; }}
     [JsonPropertyName("AutoCommitBreak")]
-    public bool? AutoCommitBreak { get; set; }
+    public bool? AutoCommitBreak { get => _AutoCommitBreak; set { _AutoCommitBreak = value; _tracker.AutoCommitBreak = true; }}
     [JsonPropertyName("BlockEarlyBreakEnd")]
-    public bool? BlockEarlyBreakEnd { get; set; }
+    public bool? BlockEarlyBreakEnd { get => _BlockEarlyBreakEnd; set { _BlockEarlyBreakEnd = value; _tracker.BlockEarlyBreakEnd = true; }}
     [JsonPropertyName("BlockEarlyBreakStart")]
-    public bool? BlockEarlyBreakStart { get; set; }
+    public bool? BlockEarlyBreakStart { get => _BlockEarlyBreakStart; set { _BlockEarlyBreakStart = value; _tracker.BlockEarlyBreakStart = true; }}
     [JsonPropertyName("AdditionalConfig")]
-    public string? AdditionalConfig { get; set; }
+    public string? AdditionalConfig { get => _AdditionalConfig; set { _AdditionalConfig = value; _tracker.AdditionalConfig = true; }}
     [JsonPropertyName("Country")]
-    public long? Country { get; set; }
+    public long? Country { get => _Country; set { _Country = value; _tracker.Country = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<Schedule>))]
     public Join<Schedule>? ScheduleObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Country>))]
     public Join<Country>? CountryObject { get; set; }
+    ShiftTemplatePropertyTracker IHasPropertyTracker<ShiftTemplatePropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<ShiftTemplatePropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<ShiftTemplatePropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class ShiftTemplatePropertyTracker
+{
+    internal bool Id;
+    internal bool Name;
+    internal bool TotalTime;
+    internal bool Slots;
+    internal bool Schedule;
+    internal bool Active;
+    internal bool AutoCommitBreak;
+    internal bool BlockEarlyBreakEnd;
+    internal bool BlockEarlyBreakStart;
+    internal bool AdditionalConfig;
+    internal bool Country;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        Name = false;
+        TotalTime = false;
+        Slots = false;
+        Schedule = false;
+        Active = false;
+        AutoCommitBreak = false;
+        BlockEarlyBreakEnd = false;
+        BlockEarlyBreakStart = false;
+        AdditionalConfig = false;
+        Country = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class ShiftTemplateSerializer : JsonConverter<ShiftTemplate>
+{
+    public override ShiftTemplate? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,ShiftTemplate value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<ShiftTemplatePropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.Name)
+        {
+            writer.WritePropertyName("Name");
+            JsonSerializer.Serialize(writer,value.Name,options);
+        }
+        if (tracker.TotalTime)
+        {
+            writer.WritePropertyName("TotalTime");
+            JsonSerializer.Serialize(writer,value.TotalTime,options);
+        }
+        if (tracker.Slots)
+        {
+            writer.WritePropertyName("Slots");
+            JsonSerializer.Serialize(writer,value.Slots,options);
+        }
+        if (tracker.Schedule)
+        {
+            writer.WritePropertyName("Schedule");
+            JsonSerializer.Serialize(writer,value.Schedule,options);
+        }
+        if (tracker.Active)
+        {
+            writer.WritePropertyName("Active");
+            JsonSerializer.Serialize(writer,value.Active,options);
+        }
+        if (tracker.AutoCommitBreak)
+        {
+            writer.WritePropertyName("AutoCommitBreak");
+            JsonSerializer.Serialize(writer,value.AutoCommitBreak,options);
+        }
+        if (tracker.BlockEarlyBreakEnd)
+        {
+            writer.WritePropertyName("BlockEarlyBreakEnd");
+            JsonSerializer.Serialize(writer,value.BlockEarlyBreakEnd,options);
+        }
+        if (tracker.BlockEarlyBreakStart)
+        {
+            writer.WritePropertyName("BlockEarlyBreakStart");
+            JsonSerializer.Serialize(writer,value.BlockEarlyBreakStart,options);
+        }
+        if (tracker.AdditionalConfig)
+        {
+            writer.WritePropertyName("AdditionalConfig");
+            JsonSerializer.Serialize(writer,value.AdditionalConfig,options);
+        }
+        if (tracker.Country)
+        {
+            writer.WritePropertyName("Country");
+            JsonSerializer.Serialize(writer,value.Country,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

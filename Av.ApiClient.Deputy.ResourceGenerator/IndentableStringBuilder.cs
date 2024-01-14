@@ -18,6 +18,12 @@ namespace Av.ApiClients.Deputy.ResourceGenerator
             _indent = indent;
         }
 
+        public IndentableStringBuilder Append(string value)
+        {
+            _sb.Append(value);
+            return this;
+        }
+
         public IndentableStringBuilder AppendLine()
         {
             _sb.AppendLine();
@@ -32,6 +38,10 @@ namespace Av.ApiClients.Deputy.ResourceGenerator
             _sb.AppendLine(line);
             return this;
         }
+
+        public IDisposable Block() => Block("{", "}");
+        public IDisposable Block(string openBlock, string closeBlock)
+            => new IndentContext(this, openBlock, closeBlock);
 
         public IndentableStringBuilder Indent()
         {
@@ -48,6 +58,26 @@ namespace Av.ApiClients.Deputy.ResourceGenerator
         public override string ToString()
         {
             return _sb.ToString();
+        }
+
+        class IndentContext : IDisposable
+        {
+            private readonly IndentableStringBuilder _sb;
+            private readonly string _closeBlock;
+
+            public IndentContext(IndentableStringBuilder sb, string openBlock, string closeBlock)
+            {
+                _sb = sb;
+                _closeBlock = closeBlock;
+                _sb.AppendLine(openBlock);
+                _sb.Indent();
+            }
+
+            public void Dispose()
+            {
+                _sb.Dedent();
+                _sb.AppendLine(_closeBlock);
+            }
         }
     }
 }

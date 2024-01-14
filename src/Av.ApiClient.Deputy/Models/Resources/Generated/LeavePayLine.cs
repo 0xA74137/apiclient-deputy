@@ -6,51 +6,197 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<LeavePayLine>))]
-public class LeavePayLine : IResource
+public class LeavePayLine : IResource, IHasPropertyTracker<LeavePayLinePropertyTracker>
 {
+    private long? _Id;
+    private long? _LeaveId;
+    private long? _LeaveRule;
+    private long? _EmployeeAgreement;
+    private DateTimeOffset? _Date;
+    private DateTimeOffset? _StartTime;
+    private DateTimeOffset? _EndTime;
+    private string? _Hours;
+    private string? _Comment;
+    private long? _TimesheetId;
+    private double? _Cost;
+    private bool? _RecalculateWithReferencePeriod;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private LeavePayLinePropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("LeaveId")]
-    public long? LeaveId { get; set; }
+    public long? LeaveId { get => _LeaveId; set { _LeaveId = value; _tracker.LeaveId = true; }}
     [JsonPropertyName("LeaveRule")]
-    public long? LeaveRule { get; set; }
+    public long? LeaveRule { get => _LeaveRule; set { _LeaveRule = value; _tracker.LeaveRule = true; }}
     [JsonPropertyName("EmployeeAgreement")]
-    public long? EmployeeAgreement { get; set; }
+    public long? EmployeeAgreement { get => _EmployeeAgreement; set { _EmployeeAgreement = value; _tracker.EmployeeAgreement = true; }}
     [JsonPropertyName("Date")]
-    public DateTimeOffset? Date { get; set; }
+    public DateTimeOffset? Date { get => _Date; set { _Date = value; _tracker.Date = true; }}
     [JsonPropertyName("StartTime")]
-    public DateTimeOffset? StartTime { get; set; }
+    public DateTimeOffset? StartTime { get => _StartTime; set { _StartTime = value; _tracker.StartTime = true; }}
     [JsonPropertyName("EndTime")]
-    public DateTimeOffset? EndTime { get; set; }
+    public DateTimeOffset? EndTime { get => _EndTime; set { _EndTime = value; _tracker.EndTime = true; }}
     [JsonPropertyName("Hours")]
-    public string? Hours { get; set; }
+    public string? Hours { get => _Hours; set { _Hours = value; _tracker.Hours = true; }}
     [JsonPropertyName("Comment")]
-    public string? Comment { get; set; }
+    public string? Comment { get => _Comment; set { _Comment = value; _tracker.Comment = true; }}
     [JsonPropertyName("TimesheetId")]
-    public long? TimesheetId { get; set; }
+    public long? TimesheetId { get => _TimesheetId; set { _TimesheetId = value; _tracker.TimesheetId = true; }}
     [JsonPropertyName("Cost")]
-    public double? Cost { get; set; }
+    public double? Cost { get => _Cost; set { _Cost = value; _tracker.Cost = true; }}
     [JsonPropertyName("RecalculateWithReferencePeriod")]
-    public bool? RecalculateWithReferencePeriod { get; set; }
+    public bool? RecalculateWithReferencePeriod { get => _RecalculateWithReferencePeriod; set { _RecalculateWithReferencePeriod = value; _tracker.RecalculateWithReferencePeriod = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
-
-
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
     [JsonConverter(typeof(JoinConverter<Leave>))]
     public Join<Leave>? Leave { get; set; }
-
     [JsonConverter(typeof(JoinConverter<LeaveRules>))]
     public Join<LeaveRules>? LeaveRuleObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<EmployeeAgreement>))]
     public Join<EmployeeAgreement>? EmployeeAgreementObject { get; set; }
-
     [JsonConverter(typeof(JoinConverter<Timesheet>))]
     public Join<Timesheet>? Timesheet { get; set; }
+    LeavePayLinePropertyTracker IHasPropertyTracker<LeavePayLinePropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<LeavePayLinePropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<LeavePayLinePropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class LeavePayLinePropertyTracker
+{
+    internal bool Id;
+    internal bool LeaveId;
+    internal bool LeaveRule;
+    internal bool EmployeeAgreement;
+    internal bool Date;
+    internal bool StartTime;
+    internal bool EndTime;
+    internal bool Hours;
+    internal bool Comment;
+    internal bool TimesheetId;
+    internal bool Cost;
+    internal bool RecalculateWithReferencePeriod;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        LeaveId = false;
+        LeaveRule = false;
+        EmployeeAgreement = false;
+        Date = false;
+        StartTime = false;
+        EndTime = false;
+        Hours = false;
+        Comment = false;
+        TimesheetId = false;
+        Cost = false;
+        RecalculateWithReferencePeriod = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class LeavePayLineSerializer : JsonConverter<LeavePayLine>
+{
+    public override LeavePayLine? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,LeavePayLine value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<LeavePayLinePropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.LeaveId)
+        {
+            writer.WritePropertyName("LeaveId");
+            JsonSerializer.Serialize(writer,value.LeaveId,options);
+        }
+        if (tracker.LeaveRule)
+        {
+            writer.WritePropertyName("LeaveRule");
+            JsonSerializer.Serialize(writer,value.LeaveRule,options);
+        }
+        if (tracker.EmployeeAgreement)
+        {
+            writer.WritePropertyName("EmployeeAgreement");
+            JsonSerializer.Serialize(writer,value.EmployeeAgreement,options);
+        }
+        if (tracker.Date)
+        {
+            writer.WritePropertyName("Date");
+            JsonSerializer.Serialize(writer,value.Date,options);
+        }
+        if (tracker.StartTime)
+        {
+            writer.WritePropertyName("StartTime");
+            JsonSerializer.Serialize(writer,value.StartTime,options);
+        }
+        if (tracker.EndTime)
+        {
+            writer.WritePropertyName("EndTime");
+            JsonSerializer.Serialize(writer,value.EndTime,options);
+        }
+        if (tracker.Hours)
+        {
+            writer.WritePropertyName("Hours");
+            JsonSerializer.Serialize(writer,value.Hours,options);
+        }
+        if (tracker.Comment)
+        {
+            writer.WritePropertyName("Comment");
+            JsonSerializer.Serialize(writer,value.Comment,options);
+        }
+        if (tracker.TimesheetId)
+        {
+            writer.WritePropertyName("TimesheetId");
+            JsonSerializer.Serialize(writer,value.TimesheetId,options);
+        }
+        if (tracker.Cost)
+        {
+            writer.WritePropertyName("Cost");
+            JsonSerializer.Serialize(writer,value.Cost,options);
+        }
+        if (tracker.RecalculateWithReferencePeriod)
+        {
+            writer.WritePropertyName("RecalculateWithReferencePeriod");
+            JsonSerializer.Serialize(writer,value.RecalculateWithReferencePeriod,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 

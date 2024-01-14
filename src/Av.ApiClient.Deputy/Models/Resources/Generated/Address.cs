@@ -6,46 +6,229 @@ using Av.ApiClients.Deputy.Models.Resources;
 
 namespace Av.ApiClients.Deputy.Models.Resources;
 
+using System.Text.Json;
 [JsonConverter(typeof(ResourceConverter<Address>))]
-public class Address : IResource
+public class Address : IResource, IHasPropertyTracker<AddressPropertyTracker>
 {
+    private long? _Id;
+    private string? _ContactName;
+    private string? _UnitNo;
+    private string? _StreetNo;
+    private string? _SuiteNo;
+    private string? _PoBox;
+    private string? _Street1;
+    private string? _Street2;
+    private string? _City;
+    private string? _State;
+    private string? _Postcode;
+    private long? _Country;
+    private string? _Phone;
+    private string? _Notes;
+    private long? _Format;
+    private bool? _Saved;
+    private long? _Creator;
+    private DateTimeOffset? _Created;
+    private DateTimeOffset? _Modified;
+    private AddressPropertyTracker _tracker = new();
+
     [JsonPropertyName("Id")]
-    public long? Id { get; set; }
+    public long? Id { get => _Id; set { _Id = value; _tracker.Id = true; }}
     [JsonPropertyName("ContactName")]
-    public string? ContactName { get; set; }
+    public string? ContactName { get => _ContactName; set { _ContactName = value; _tracker.ContactName = true; }}
     [JsonPropertyName("UnitNo")]
-    public string? UnitNo { get; set; }
+    public string? UnitNo { get => _UnitNo; set { _UnitNo = value; _tracker.UnitNo = true; }}
     [JsonPropertyName("StreetNo")]
-    public string? StreetNo { get; set; }
+    public string? StreetNo { get => _StreetNo; set { _StreetNo = value; _tracker.StreetNo = true; }}
     [JsonPropertyName("SuiteNo")]
-    public string? SuiteNo { get; set; }
+    public string? SuiteNo { get => _SuiteNo; set { _SuiteNo = value; _tracker.SuiteNo = true; }}
     [JsonPropertyName("PoBox")]
-    public string? PoBox { get; set; }
+    public string? PoBox { get => _PoBox; set { _PoBox = value; _tracker.PoBox = true; }}
     [JsonPropertyName("Street1")]
-    public string? Street1 { get; set; }
+    public string? Street1 { get => _Street1; set { _Street1 = value; _tracker.Street1 = true; }}
     [JsonPropertyName("Street2")]
-    public string? Street2 { get; set; }
+    public string? Street2 { get => _Street2; set { _Street2 = value; _tracker.Street2 = true; }}
     [JsonPropertyName("City")]
-    public string? City { get; set; }
+    public string? City { get => _City; set { _City = value; _tracker.City = true; }}
     [JsonPropertyName("State")]
-    public string? State { get; set; }
+    public string? State { get => _State; set { _State = value; _tracker.State = true; }}
     [JsonPropertyName("Postcode")]
-    public string? Postcode { get; set; }
+    public string? Postcode { get => _Postcode; set { _Postcode = value; _tracker.Postcode = true; }}
     [JsonPropertyName("Country")]
-    public long? Country { get; set; }
+    public long? Country { get => _Country; set { _Country = value; _tracker.Country = true; }}
     [JsonPropertyName("Phone")]
-    public string? Phone { get; set; }
+    public string? Phone { get => _Phone; set { _Phone = value; _tracker.Phone = true; }}
     [JsonPropertyName("Notes")]
-    public string? Notes { get; set; }
+    public string? Notes { get => _Notes; set { _Notes = value; _tracker.Notes = true; }}
     [JsonPropertyName("Format")]
-    public long? Format { get; set; }
+    public long? Format { get => _Format; set { _Format = value; _tracker.Format = true; }}
     [JsonPropertyName("Saved")]
-    public bool? Saved { get; set; }
+    public bool? Saved { get => _Saved; set { _Saved = value; _tracker.Saved = true; }}
     [JsonPropertyName("Creator")]
-    public long? Creator { get; set; }
+    public long? Creator { get => _Creator; set { _Creator = value; _tracker.Creator = true; }}
     [JsonPropertyName("Created")]
-    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Created { get => _Created; set { _Created = value; _tracker.Created = true; }}
     [JsonPropertyName("Modified")]
-    public DateTimeOffset? Modified { get; set; }
+    public DateTimeOffset? Modified { get => _Modified; set { _Modified = value; _tracker.Modified = true; }}
+    AddressPropertyTracker IHasPropertyTracker<AddressPropertyTracker>.Tracker => _tracker;
+
+    void IHasPropertyTracker<AddressPropertyTracker>.ClearTrackedProperties() => ((IHasPropertyTracker<AddressPropertyTracker>)this).Tracker.Clear();
+
+}
+
+internal class AddressPropertyTracker
+{
+    internal bool Id;
+    internal bool ContactName;
+    internal bool UnitNo;
+    internal bool StreetNo;
+    internal bool SuiteNo;
+    internal bool PoBox;
+    internal bool Street1;
+    internal bool Street2;
+    internal bool City;
+    internal bool State;
+    internal bool Postcode;
+    internal bool Country;
+    internal bool Phone;
+    internal bool Notes;
+    internal bool Format;
+    internal bool Saved;
+    internal bool Creator;
+    internal bool Created;
+    internal bool Modified;
+
+    internal void Clear()
+    {
+        Id = false;
+        ContactName = false;
+        UnitNo = false;
+        StreetNo = false;
+        SuiteNo = false;
+        PoBox = false;
+        Street1 = false;
+        Street2 = false;
+        City = false;
+        State = false;
+        Postcode = false;
+        Country = false;
+        Phone = false;
+        Notes = false;
+        Format = false;
+        Saved = false;
+        Creator = false;
+        Created = false;
+        Modified = false;
+    }
+
+}
+
+internal class AddressSerializer : JsonConverter<Address>
+{
+    public override Address? Read(ref Utf8JsonReader reader,Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+    public override void Write(Utf8JsonWriter writer,Address value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        var tracker = ((IHasPropertyTracker<AddressPropertyTracker>)value).Tracker;
+        if (tracker.Id)
+        {
+            writer.WritePropertyName("Id");
+            JsonSerializer.Serialize(writer,value.Id,options);
+        }
+        if (tracker.ContactName)
+        {
+            writer.WritePropertyName("ContactName");
+            JsonSerializer.Serialize(writer,value.ContactName,options);
+        }
+        if (tracker.UnitNo)
+        {
+            writer.WritePropertyName("UnitNo");
+            JsonSerializer.Serialize(writer,value.UnitNo,options);
+        }
+        if (tracker.StreetNo)
+        {
+            writer.WritePropertyName("StreetNo");
+            JsonSerializer.Serialize(writer,value.StreetNo,options);
+        }
+        if (tracker.SuiteNo)
+        {
+            writer.WritePropertyName("SuiteNo");
+            JsonSerializer.Serialize(writer,value.SuiteNo,options);
+        }
+        if (tracker.PoBox)
+        {
+            writer.WritePropertyName("PoBox");
+            JsonSerializer.Serialize(writer,value.PoBox,options);
+        }
+        if (tracker.Street1)
+        {
+            writer.WritePropertyName("Street1");
+            JsonSerializer.Serialize(writer,value.Street1,options);
+        }
+        if (tracker.Street2)
+        {
+            writer.WritePropertyName("Street2");
+            JsonSerializer.Serialize(writer,value.Street2,options);
+        }
+        if (tracker.City)
+        {
+            writer.WritePropertyName("City");
+            JsonSerializer.Serialize(writer,value.City,options);
+        }
+        if (tracker.State)
+        {
+            writer.WritePropertyName("State");
+            JsonSerializer.Serialize(writer,value.State,options);
+        }
+        if (tracker.Postcode)
+        {
+            writer.WritePropertyName("Postcode");
+            JsonSerializer.Serialize(writer,value.Postcode,options);
+        }
+        if (tracker.Country)
+        {
+            writer.WritePropertyName("Country");
+            JsonSerializer.Serialize(writer,value.Country,options);
+        }
+        if (tracker.Phone)
+        {
+            writer.WritePropertyName("Phone");
+            JsonSerializer.Serialize(writer,value.Phone,options);
+        }
+        if (tracker.Notes)
+        {
+            writer.WritePropertyName("Notes");
+            JsonSerializer.Serialize(writer,value.Notes,options);
+        }
+        if (tracker.Format)
+        {
+            writer.WritePropertyName("Format");
+            JsonSerializer.Serialize(writer,value.Format,options);
+        }
+        if (tracker.Saved)
+        {
+            writer.WritePropertyName("Saved");
+            JsonSerializer.Serialize(writer,value.Saved,options);
+        }
+        if (tracker.Creator)
+        {
+            writer.WritePropertyName("Creator");
+            JsonSerializer.Serialize(writer,value.Creator,options);
+        }
+        if (tracker.Created)
+        {
+            writer.WritePropertyName("Created");
+            JsonSerializer.Serialize(writer,value.Created,options);
+        }
+        if (tracker.Modified)
+        {
+            writer.WritePropertyName("Modified");
+            JsonSerializer.Serialize(writer,value.Modified,options);
+        }
+        writer.WriteEndObject();
+    }
+
 }
 
